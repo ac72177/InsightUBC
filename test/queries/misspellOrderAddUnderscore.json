@@ -1,0 +1,27 @@
+{
+    "title": "Invalid keys in OPTIONS. ",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "LT": {
+                        "courses_avg": 65
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "*l"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_avg"
+            ],
+            "ORDE_R": "courses_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

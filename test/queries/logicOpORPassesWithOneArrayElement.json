@@ -1,0 +1,76 @@
+{
+    "title": "OR passes with one array element",
+    "query": {
+        "WHERE": {
+            "OR": [
+                {
+                    "LT": {
+                        "courses_pass": 1
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_pass",
+                "courses_fail",
+                "courses_audit",
+                "courses_year"
+            ],
+            "ORDER": "courses_year"
+        }
+    },
+    "isQueryValid": true,
+    "result": [
+        {
+            "courses_dept": "wood",
+            "courses_pass": 0,
+            "courses_fail": 2,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "lfs",
+            "courses_pass": 0,
+            "courses_fail": 1,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "frst",
+            "courses_pass": 0,
+            "courses_fail": 1,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "busi",
+            "courses_pass": 0,
+            "courses_fail": 1,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "lfs",
+            "courses_pass": 0,
+            "courses_fail": 1,
+            "courses_audit": 0,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "fopr",
+            "courses_pass": 0,
+            "courses_fail": 4,
+            "courses_audit": 0,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "busi",
+            "courses_pass": 0,
+            "courses_fail": 1,
+            "courses_audit": 0,
+            "courses_year": 2016
+        }
+    ]
+}

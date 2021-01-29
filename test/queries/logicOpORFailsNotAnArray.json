@@ -1,0 +1,24 @@
+{
+    "title": "OR must be an array. OR Fails",
+    "query": {
+        "WHERE": {
+            "OR": {
+                "LT": {
+                    "courses_pass": 1000
+                }
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_pass",
+                "courses_fail",
+                "courses_audit",
+                "courses_year"
+            ],
+            "ORDER": "courses_year"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

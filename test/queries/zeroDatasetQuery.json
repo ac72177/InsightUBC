@@ -1,0 +1,29 @@
+{
+    "title": "dataset searched for is an empty string",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "IS": {
+                        "_title": "intro*"
+                    }
+                },
+                {
+                    "IS": {
+                        "_dept": "stat"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "_id",
+                "_title",
+                "_instructor"
+            ],
+            "ORDER": "courses_title"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

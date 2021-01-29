@@ -1,0 +1,27 @@
+{
+    "title": "NOT is given an array not object",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "NOT": []
+                },
+                {
+                    "IS": {
+                        "courses_dept": "math"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dne",
+                "courses_title",
+                "courses_instructor"
+            ],
+            "ORDER": "courses_title"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

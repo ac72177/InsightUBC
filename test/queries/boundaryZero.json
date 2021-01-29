@@ -1,0 +1,38 @@
+{
+    "title": "negative number passed into query",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "EQ": {
+                        "courses_year": 0
+                    }
+                },
+                {
+                    "GT": {
+                        "courses_avg": 0
+                    }
+                },
+                {
+                    "LT": {
+                        "courses_fail": 0
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "cpsc"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_title",
+                "courses_instructor"
+            ]
+        }
+    },
+    "isQueryValid": true,
+    "result": []
+}

@@ -1,0 +1,18 @@
+{
+    "title": "Select year where dept is an empty string",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses_dept": ""
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_year"
+            ],
+            "ORDER": "courses_year"
+        }
+    },
+    "isQueryValid": true,
+    "result": []
+}

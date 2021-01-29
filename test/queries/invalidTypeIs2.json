@@ -1,0 +1,32 @@
+{
+    "title": "pass [] to order instead of normal strings",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "NOT": {
+                        "IS": {
+                            "courses_title": "intro*"
+                        },
+                        "IS": "Bacon"
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "math"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_title",
+                "courses_instructor"
+            ],
+            "ORDER": "courses_title"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

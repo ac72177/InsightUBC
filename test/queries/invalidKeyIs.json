@@ -1,0 +1,29 @@
+{
+    "title": "Keys dont have 'key' section",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "IS": {
+                        "title": "intro*"
+                    }
+                },
+                {
+                    "IS": {
+                        "dept": "stat"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_title",
+                "courses_instructor"
+            ],
+            "ORDER": "courses_title"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

@@ -1,0 +1,3961 @@
+{
+    "title": "Select dept, avg, year Where dept is r*",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses_dept": "r*"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg",
+                "courses_year"
+            ],
+            "ORDER": "courses_year"
+        }
+    },
+    "isQueryValid": true,
+    "result": [
+        {
+            "courses_dept": "russ",
+            "courses_avg": 77.79,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 82.18,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 81.05,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 87.57,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 86.55,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 80.85,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 84.36,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 89.54,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 83.15,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 78.59,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 88.45,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 86.78,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 85.25,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 84.13,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 77.96,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 78.33,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 92.3,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 83.46,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 82.4,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 84.94,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 79.38,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 82.28,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 79,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 78.26,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 84.83,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 78.88,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 76.93,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 80.52,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 80.58,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 82.1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 81.55,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 77.51,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 76.45,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 79.98,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 79.9,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 80.53,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 83.83,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 83.33,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 73.24,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 74.54,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 80.83,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 77.97,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 72.6,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 68.39,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 81.3,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 86.16,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 83.93,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 84,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 84.19,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 80.54,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 81.28,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 85.85,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.43,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.02,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 81.15,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.87,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 82.45,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.26,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88.78,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.31,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.25,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.82,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 91.7,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.78,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 90.39,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.8,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.19,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 83.87,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.38,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.06,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.48,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.74,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.41,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88.58,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.33,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.08,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88.68,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.28,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.76,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 81.94,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 80.85,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 82.44,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 82.46,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.98,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 80.63,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.91,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.6,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 82.59,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.27,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.63,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 80.8,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 83.35,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 80.7,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 77.98,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.84,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88.28,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 82.41,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.38,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.82,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.27,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.26,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.6,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.6,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.33,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.7,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.13,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88.67,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.42,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.81,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.45,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 82.27,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.7,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 83.77,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88.63,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.38,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.04,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.06,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.87,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.98,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 78.87,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.87,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 83.12,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.66,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 83.56,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88.02,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.58,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.6,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 82.15,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 83.75,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.38,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.79,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 77.33,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 70,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 79,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 75.41,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 61.21,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 67.2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 69.23,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 67,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 63.81,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 69.07,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 89,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.5,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.29,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 82.17,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.8,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 88.67,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.22,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.64,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 88.47,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 85.47,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 88.15,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 85.67,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.27,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 85,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 89.2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.3,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 85.33,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 84.91,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 82,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 81.71,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 78.63,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 74.33,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 81.61,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 77.87,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 77,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 84,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 82,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 83.7,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 81.14,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 78.5,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 80.54,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 76.54,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 77.27,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 83.33,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 84.71,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 80,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 79.91,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 78.53,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 76.38,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 76.44,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 80.4,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 80.78,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 82.43,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.75,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.07,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 84.65,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 85.56,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.67,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.83,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.55,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 85.91,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.5,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 84.11,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 88.25,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 84.47,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 83.64,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.39,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.64,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 83.6,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 88,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 81.76,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 82.21,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 82.44,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 83.86,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 85.14,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 80.61,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 82.75,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.43,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 89.38,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 89.42,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 79.11,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 90.83,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.72,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 83.38,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.5,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.88,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.25,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 91.92,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 83.63,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.4,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.19,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.73,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.79,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.26,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.81,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 83.86,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.82,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.45,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 82.56,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.46,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.58,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 89,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 90.5,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.67,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.14,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 81.54,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 77.65,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 91.27,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.63,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.76,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 81.09,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.71,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.67,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 83.07,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 80.8,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 89.33,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 90.67,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.44,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.76,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.89,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 76,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.33,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.36,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.6,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.79,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.03,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.5,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 91.44,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 81.2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.81,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.82,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.7,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 89.63,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.45,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.6,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 82.04,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.11,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.29,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 81.08,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.09,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.96,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.35,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.92,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.14,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.42,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.88,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.18,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.63,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 78.67,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 67.43,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 80.33,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 76.64,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 80.58,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 78.09,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 79,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 80.4,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 79.76,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 84.6,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.47,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 77.7,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 82.59,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 81.52,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.22,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.05,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 77.63,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.59,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 80.17,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.71,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 69.71,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 75.48,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 77.63,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.28,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.17,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 82.22,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 75.08,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.24,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 80.36,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 77.13,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.71,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.27,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 74.3,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 80.59,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 80.23,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 81.1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 67.86,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 69.56,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 65.38,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 77.55,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 71.35,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 75.67,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 81.06,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.33,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 72.71,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.92,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 74.6,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 74.17,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 69.88,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.45,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 79.66,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 73.26,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.23,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.89,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.76,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.88,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 74.02,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 75,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.5,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.28,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 82.59,
+            "courses_year": 2007
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.71,
+            "courses_year": 2007
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 73.6,
+            "courses_year": 2007
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 74.81,
+            "courses_year": 2007
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 77.96,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 79,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 81.55,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 74.69,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 72.3,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.87,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.38,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.08,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 82.46,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.63,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.38,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.13,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 83.77,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 78.87,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.6,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 63.81,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 89,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 81,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 85.33,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 81.61,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 81.14,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 83.33,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 80.78,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 88,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 82.75,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 90.67,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 94,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.67,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.2,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.5,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 89.71,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.8,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.86,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.67,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.5,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 82.33,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.83,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.57,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.14,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.4,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.5,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 91.44,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.11,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.18,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 78.67,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 77.7,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 77.63,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 65.38,
+            "courses_year": 2008
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 80.85,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 78.33,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 78.26,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 77.51,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 80.47,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 67.69,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 81.15,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.82,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 83.87,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.33,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 82.44,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 82.59,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88.28,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.7,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 82.27,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.87,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.58,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 69.07,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 88,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 83.5,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 88,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.64,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 85.67,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 85,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 81.71,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 84,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 76.54,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 78.53,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 82.44,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.2,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.17,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.78,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 83.89,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 78.63,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.9,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.13,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.33,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.44,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.5,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.75,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 95,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.27,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 89.63,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.42,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.88,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 80.58,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 78.59,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 84.94,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 80.56,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 80.53,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 70.1,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 64.13,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.02,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.25,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.19,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88.58,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 80.85,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 77.98,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.6,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.33,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 83.56,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.79,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 79,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 69.23,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 89.25,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 84.67,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.25,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 74.33,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 83.7,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 77.27,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 80.4,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 83.6,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 80.61,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.2,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.2,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.78,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.14,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 91.5,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 77,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 77.33,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 81.4,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 83.86,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 90.67,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 82.67,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 91.4,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 89.67,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 82.04,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.92,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 67.43,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 79.76,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 81.52,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 77.13,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 80.59,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 74.17,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.89,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 81.05,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 83.15,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 82.4,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 76.93,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 79.9,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 72.6,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.26,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.78,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.48,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.28,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 80.63,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 80.7,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.26,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.42,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.04,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.66,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.38,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 75.41,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 61.21,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.22,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 77,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 78.5,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 80,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 84.47,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 81.76,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 79,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 79.25,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 91,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.86,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.2,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 90,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 91,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.29,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.5,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 68.5,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 81.57,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.5,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.2,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 73.44,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 89.5,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 70.83,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 81.2,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.29,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.96,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 79,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 77.63,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 69.56,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 79.66,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 74.02,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 89.54,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 83.46,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 78.88,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 79.98,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 77.97,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 88.5,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 80,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 90.5,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 84.43,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 87.38,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88.78,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 90.39,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.74,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.76,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.91,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.27,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 82.41,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.81,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.7,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.98,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.1,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 82,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 80.54,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 79.91,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.75,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 85.91,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 83.64,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 82.21,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.44,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.4,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.82,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.67,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 81.2,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 89.86,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 89.33,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.82,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.7,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.45,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.35,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 76.64,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.47,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.05,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 75.48,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 81.06,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.45,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.88,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 86.55,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 84.13,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 82.28,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 82.1,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 83.33,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 83.09,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 90.17,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 88,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 76.63,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 82,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 82.45,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 91.7,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.06,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88.68,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.98,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 83.35,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.27,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88.67,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.38,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 83.12,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 83.75,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 67,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 85.47,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.3,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 82,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 76.44,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 84.65,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.83,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 84.11,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.64,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 85.14,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 91.92,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.86,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.71,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 89,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 91.27,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 83.07,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.22,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.17,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.81,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 81.08,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.14,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 78.09,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 80.17,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.28,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.27,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 81.1,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 72.77,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 70.63,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.33,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.23,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.2,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 82.18,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 84.36,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 86.78,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 92.3,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 84.83,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 76.45,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 80.83,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 87.78,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 83.5,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 80.9,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 77.67,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 87.4,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 77.69,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.43,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.31,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.8,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.41,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 81.94,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.6,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 84.84,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.6,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 87.45,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 86.39,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88.02,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 77.33,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 88.47,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 89.2,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 78.63,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 76.38,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.07,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.67,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.5,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.44,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 87.33,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 83.86,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 91,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 83.63,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 82.9,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.25,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 91.36,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 89.77,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 82.71,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.11,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 80.8,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.88,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.71,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 81.38,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.82,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.09,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 85.63,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 80.33,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.59,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 82.22,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.24,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 77.55,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.92,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 73.26,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 75,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.28,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 77.79,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 87.38,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 88.45,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 85.25,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 79.38,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 80.58,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 83.83,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 83.38,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 79.33,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 81.59,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 82.12,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 85.5,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 82.67,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "russ",
+            "courses_avg": 85.84,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 80.8,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.82,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 88.63,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 85.87,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rsot",
+            "courses_avg": 82.15,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 70,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rmst",
+            "courses_avg": 67.2,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 88.15,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.27,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 84.91,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 77.87,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 84.71,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 82.43,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 85.56,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.55,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 88.25,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rmes",
+            "courses_avg": 86.43,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.25,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 91.5,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 83.91,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.33,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 83.78,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.6,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.73,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.23,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 81.54,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.67,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 84.5,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.54,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.5,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.6,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "rgla",
+            "courses_avg": 80.4,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 84.6,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.22,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 69.71,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.17,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 75.08,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 80.36,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 78.71,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 80.23,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 67.86,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 75.67,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 72.71,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 74.6,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 69.88,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.76,
+            "courses_year": 2015
+        },
+        {
+            "courses_dept": "relg",
+            "courses_avg": 76.5,
+            "courses_year": 2015
+        }
+    ]
+}

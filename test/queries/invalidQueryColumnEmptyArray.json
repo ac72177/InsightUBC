@@ -1,0 +1,16 @@
+{
+    "title": "COLUMNS must be a non-empty array.",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses_dept": "r*"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [],
+            "ORDER": "courses_year"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

@@ -1,0 +1,27 @@
+{
+    "title": "Invalid filter key: XOR. for where",
+    "query": {
+        "WHERE": {
+            "XOR": [
+                {
+                    "LT": {
+                        "courses_avg": 65
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "*l"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

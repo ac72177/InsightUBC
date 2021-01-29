@@ -1,0 +1,19 @@
+{
+    "title": "The result is too big. Only queries with a maximum of 5000 results are supported. with where filter",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses_year": 1900
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "ResultTooLargeError"
+}

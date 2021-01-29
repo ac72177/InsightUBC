@@ -1,0 +1,61 @@
+{
+    "title": "GT must be object.",
+    "query": {
+        "WHERE": {
+            "OR": [
+                {
+                    "AND": [
+                        {
+                            "GT": [
+                                {
+                                    "courses_avg": 90
+                                }
+                            ]
+                        },
+                        {
+                            "AND": [
+                                {
+                                    "IS": {
+                                        "courses_uuid": "1*"
+                                    }
+                                },
+                                {
+                                    "NOT": {
+                                        "LT": {
+                                            "courses_fail": 9
+                                        }
+                                    }
+                                },
+                                {
+                                    "IS": {
+                                        "courses_instructor": "1*"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "IS": {
+                                "courses_id": "16"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "EQ": {
+                        "courses_avg": 95
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_id",
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

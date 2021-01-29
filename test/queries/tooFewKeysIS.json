@@ -1,0 +1,20 @@
+{
+    "title": "IS has no keys",
+    "query": {
+        "WHERE": {
+            "IS": {
+
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_title",
+                "courses_instructor"
+            ],
+            "ORDER": "courses_id"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

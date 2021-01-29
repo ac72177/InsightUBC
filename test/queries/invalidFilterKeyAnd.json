@@ -1,0 +1,29 @@
+{
+    "title": "AND query with invalid filter keys",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "NOT": {
+                        "IS": {
+                            "courses_id": "2*"
+                        }
+                    }
+                },
+                {
+                    "courses_dept": "math"
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dne",
+                "courses_title",
+                "courses_instructor"
+            ],
+            "ORDER": "courses_title"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

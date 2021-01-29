@@ -1,0 +1,16 @@
+{
+    "title": "NOT has no keys",
+    "query": {
+        "WHERE": {
+            "NOT": {}
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+
+            ],
+            "ORDER": "courses_id"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}
