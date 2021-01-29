@@ -1,0 +1,27 @@
+{
+    "title": "OPTIONS missing COLUMNS. ",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "LT": {
+                        "courses_avg": 65
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "*l"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMN S": [
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

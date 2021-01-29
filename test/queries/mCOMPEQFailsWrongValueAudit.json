@@ -1,0 +1,22 @@
+{
+    "title": "Invalid value type for audit in EQ, should be number.",
+    "query": {
+        "WHERE": {
+            "EQ": {
+                "courses_audit": "cpsc"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_id",
+                "courses_instructor",
+                "courses_title",
+                "courses_uuid"
+            ],
+            "ORDER": "courses_uuid"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

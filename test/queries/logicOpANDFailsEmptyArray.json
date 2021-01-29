@@ -1,0 +1,20 @@
+{
+    "title": "AND must be a non-empty array.",
+    "query": {
+        "WHERE": {
+            "AND": []
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_pass",
+                "courses_fail",
+                "courses_audit",
+                "courses_year"
+            ],
+            "ORDER": "courses_year"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

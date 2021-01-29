@@ -1,0 +1,18 @@
+{
+    "title": "ORDER key must be in COLUMNS.",
+    "query": {
+        "WHERE": {
+            "EQ": {
+                "courses_year": 1900
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_avg"
+            ],
+            "ORDER": "courses_year"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

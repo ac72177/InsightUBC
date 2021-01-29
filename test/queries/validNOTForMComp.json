@@ -1,0 +1,1117 @@
+{
+    "title": "Not Succeeds for MComp",
+    "query": {
+        "WHERE": {
+            "NOT": {
+                "LT": {
+                    "courses_pass": 1000
+                }
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_pass",
+                "courses_fail",
+                "courses_audit",
+                "courses_year"
+            ],
+            "ORDER": "courses_year"
+        }
+    },
+    "isQueryValid": true,
+    "result": [
+        {
+            "courses_dept": "wrds",
+            "courses_pass": 1856,
+            "courses_fail": 87,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "wrds",
+            "courses_pass": 1721,
+            "courses_fail": 72,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "psyc",
+            "courses_pass": 1067,
+            "courses_fail": 75,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "psyc",
+            "courses_pass": 1785,
+            "courses_fail": 146,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "psyc",
+            "courses_pass": 2095,
+            "courses_fail": 144,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "psyc",
+            "courses_pass": 2289,
+            "courses_fail": 135,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "psyc",
+            "courses_pass": 1442,
+            "courses_fail": 102,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "psyc",
+            "courses_pass": 1188,
+            "courses_fail": 81,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "psyc",
+            "courses_pass": 1391,
+            "courses_fail": 113,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "psyc",
+            "courses_pass": 1053,
+            "courses_fail": 96,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "psyc",
+            "courses_pass": 1953,
+            "courses_fail": 169,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "psyc",
+            "courses_pass": 1966,
+            "courses_fail": 175,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "psyc",
+            "courses_pass": 2201,
+            "courses_fail": 172,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "psyc",
+            "courses_pass": 1438,
+            "courses_fail": 134,
+            "courses_audit": 2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "psyc",
+            "courses_pass": 1058,
+            "courses_fail": 90,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "psyc",
+            "courses_pass": 1383,
+            "courses_fail": 125,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "phys",
+            "courses_pass": 1521,
+            "courses_fail": 109,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "phys",
+            "courses_pass": 1395,
+            "courses_fail": 171,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "phys",
+            "courses_pass": 1460,
+            "courses_fail": 162,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "phys",
+            "courses_pass": 1558,
+            "courses_fail": 184,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "phys",
+            "courses_pass": 1342,
+            "courses_fail": 177,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "phys",
+            "courses_pass": 1423,
+            "courses_fail": 171,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "phys",
+            "courses_pass": 1497,
+            "courses_fail": 90,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "phys",
+            "courses_pass": 1247,
+            "courses_fail": 99,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "phil",
+            "courses_pass": 1245,
+            "courses_fail": 87,
+            "courses_audit": 3,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "math",
+            "courses_pass": 1065,
+            "courses_fail": 107,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "math",
+            "courses_pass": 1166,
+            "courses_fail": 190,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "math",
+            "courses_pass": 1018,
+            "courses_fail": 186,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "math",
+            "courses_pass": 1390,
+            "courses_fail": 205,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "math",
+            "courses_pass": 1137,
+            "courses_fail": 190,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "math",
+            "courses_pass": 1050,
+            "courses_fail": 193,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "math",
+            "courses_pass": 1114,
+            "courses_fail": 145,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "math",
+            "courses_pass": 1012,
+            "courses_fail": 203,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "math",
+            "courses_pass": 1122,
+            "courses_fail": 222,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "math",
+            "courses_pass": 1058,
+            "courses_fail": 120,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "math",
+            "courses_pass": 1171,
+            "courses_fail": 91,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "math",
+            "courses_pass": 1020,
+            "courses_fail": 70,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "math",
+            "courses_pass": 1044,
+            "courses_fail": 106,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "math",
+            "courses_pass": 1064,
+            "courses_fail": 72,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "eosc",
+            "courses_pass": 1059,
+            "courses_fail": 55,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "eosc",
+            "courses_pass": 1475,
+            "courses_fail": 52,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "eosc",
+            "courses_pass": 1227,
+            "courses_fail": 36,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "eosc",
+            "courses_pass": 1064,
+            "courses_fail": 48,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "eosc",
+            "courses_pass": 2015,
+            "courses_fail": 62,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "eosc",
+            "courses_pass": 2016,
+            "courses_fail": 85,
+            "courses_audit": 2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "eosc",
+            "courses_pass": 1738,
+            "courses_fail": 32,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "eosc",
+            "courses_pass": 1470,
+            "courses_fail": 21,
+            "courses_audit": 3,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "eosc",
+            "courses_pass": 1830,
+            "courses_fail": 52,
+            "courses_audit": 2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "eosc",
+            "courses_pass": 1950,
+            "courses_fail": 69,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 2502,
+            "courses_fail": 65,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 2557,
+            "courses_fail": 59,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 2655,
+            "courses_fail": 52,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 1294,
+            "courses_fail": 33,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 2466,
+            "courses_fail": 69,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 2491,
+            "courses_fail": 57,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 2698,
+            "courses_fail": 79,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 2994,
+            "courses_fail": 63,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 2498,
+            "courses_fail": 45,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 1590,
+            "courses_fail": 23,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 1398,
+            "courses_fail": 20,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 1626,
+            "courses_fail": 19,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 1474,
+            "courses_fail": 29,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 1435,
+            "courses_fail": 25,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 1990,
+            "courses_fail": 32,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 1948,
+            "courses_fail": 27,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "engl",
+            "courses_pass": 1579,
+            "courses_fail": 34,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 2169,
+            "courses_fail": 166,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 2019,
+            "courses_fail": 145,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 2083,
+            "courses_fail": 119,
+            "courses_audit": 2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 1866,
+            "courses_fail": 142,
+            "courses_audit": 2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 1705,
+            "courses_fail": 135,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 1705,
+            "courses_fail": 187,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 1827,
+            "courses_fail": 135,
+            "courses_audit": 6,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 1787,
+            "courses_fail": 187,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 2134,
+            "courses_fail": 142,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 2378,
+            "courses_fail": 132,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 2286,
+            "courses_fail": 126,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 2438,
+            "courses_fail": 135,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 2063,
+            "courses_fail": 172,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 1962,
+            "courses_fail": 181,
+            "courses_audit": 2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 2023,
+            "courses_fail": 145,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 2099,
+            "courses_fail": 79,
+            "courses_audit": 2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 2124,
+            "courses_fail": 221,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 2278,
+            "courses_fail": 149,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "econ",
+            "courses_pass": 1948,
+            "courses_fail": 120,
+            "courses_audit": 2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "crwr",
+            "courses_pass": 1111,
+            "courses_fail": 16,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "comm",
+            "courses_pass": 1309,
+            "courses_fail": 37,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "comm",
+            "courses_pass": 1288,
+            "courses_fail": 100,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "comm",
+            "courses_pass": 1367,
+            "courses_fail": 3,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1057,
+            "courses_fail": 2,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1156,
+            "courses_fail": 1,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1042,
+            "courses_fail": 1,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1086,
+            "courses_fail": 1,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1084,
+            "courses_fail": 4,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1049,
+            "courses_fail": 3,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1073,
+            "courses_fail": 129,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1006,
+            "courses_fail": 213,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1159,
+            "courses_fail": 48,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1545,
+            "courses_fail": 121,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1386,
+            "courses_fail": 168,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1441,
+            "courses_fail": 97,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1530,
+            "courses_fail": 115,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1394,
+            "courses_fail": 112,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1359,
+            "courses_fail": 157,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1409,
+            "courses_fail": 63,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1699,
+            "courses_fail": 251,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1634,
+            "courses_fail": 260,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1674,
+            "courses_fail": 287,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1667,
+            "courses_fail": 250,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1551,
+            "courses_fail": 235,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1586,
+            "courses_fail": 192,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1762,
+            "courses_fail": 264,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "chem",
+            "courses_pass": 1526,
+            "courses_fail": 266,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1091,
+            "courses_fail": 123,
+            "courses_audit": 2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1146,
+            "courses_fail": 81,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1174,
+            "courses_fail": 95,
+            "courses_audit": 2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1257,
+            "courses_fail": 45,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1126,
+            "courses_fail": 72,
+            "courses_audit": 6,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1062,
+            "courses_fail": 143,
+            "courses_audit": 2,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1133,
+            "courses_fail": 133,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1147,
+            "courses_fail": 86,
+            "courses_audit": 7,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1571,
+            "courses_fail": 26,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1501,
+            "courses_fail": 19,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1377,
+            "courses_fail": 4,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1518,
+            "courses_fail": 10,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1318,
+            "courses_fail": 20,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1476,
+            "courses_fail": 14,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1501,
+            "courses_fail": 17,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1525,
+            "courses_fail": 17,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1483,
+            "courses_fail": 15,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1817,
+            "courses_fail": 131,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1795,
+            "courses_fail": 73,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1760,
+            "courses_fail": 84,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1758,
+            "courses_fail": 136,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1761,
+            "courses_fail": 73,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1670,
+            "courses_fail": 116,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1780,
+            "courses_fail": 110,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1768,
+            "courses_fail": 162,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1648,
+            "courses_fail": 147,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1419,
+            "courses_fail": 142,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1586,
+            "courses_fail": 84,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1710,
+            "courses_fail": 53,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1442,
+            "courses_fail": 116,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1630,
+            "courses_fail": 69,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1215,
+            "courses_fail": 230,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1153,
+            "courses_fail": 26,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1578,
+            "courses_fail": 150,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1546,
+            "courses_fail": 137,
+            "courses_audit": 0,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1307,
+            "courses_fail": 162,
+            "courses_audit": 1,
+            "courses_year": 1900
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1026,
+            "courses_fail": 106,
+            "courses_audit": 1,
+            "courses_year": 2009
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1158,
+            "courses_fail": 24,
+            "courses_audit": 0,
+            "courses_year": 2010
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1087,
+            "courses_fail": 66,
+            "courses_audit": 3,
+            "courses_year": 2011
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1084,
+            "courses_fail": 122,
+            "courses_audit": 0,
+            "courses_year": 2012
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1126,
+            "courses_fail": 74,
+            "courses_audit": 0,
+            "courses_year": 2013
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1126,
+            "courses_fail": 72,
+            "courses_audit": 2,
+            "courses_year": 2014
+        },
+        {
+            "courses_dept": "biol",
+            "courses_pass": 1174,
+            "courses_fail": 95,
+            "courses_audit": 1,
+            "courses_year": 2015
+        }
+    ]
+}

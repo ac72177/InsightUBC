@@ -1,0 +1,21 @@
+{
+    "title": "Invalid ORDER type. is array",
+    "query": {
+        "WHERE": {
+            "LT": {
+                "courses_avg": 23
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ],
+            "ORDER": [
+                "courses_avg"
+            ]
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}
