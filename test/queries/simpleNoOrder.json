@@ -1,0 +1,40 @@
+{
+    "title": "No order in options",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "EQ": {
+                        "courses_year": 2012
+                    }
+                },
+                {
+                    "GT": {
+                        "courses_pass": 130
+                    }
+                },
+                {
+                    "LT": {
+                        "courses_fail": 20
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "cpsc"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_title",
+                "courses_instructor"
+            ]
+        }
+    },
+    "isQueryValid": true,
+    "result": [
+        {"courses_id":"121","courses_title":"model comptn","courses_instructor":"tsiknis, georgios"},{"courses_id":"213","courses_title":"intro comp sys","courses_instructor":"tsiknis, georgios"},{"courses_id":"259","courses_title":"dta&alg elec eng","courses_instructor":"knorr, edwin max"},{"courses_id":"310","courses_title":"intr sftwr eng","courses_instructor":"allen, meghan"},{"courses_id":"320","courses_title":"intr alg dsgn&an","courses_instructor":"belleville, patrice"}
+    ]
+}

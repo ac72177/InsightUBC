@@ -1,0 +1,20 @@
+{
+    "title": "refer to a dataset that hasnt been added yet",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses_avg": 97
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "akjdaslk_dept",
+                "akjdaslk_dept",
+                "akjdaslk_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

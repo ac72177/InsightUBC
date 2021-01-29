@@ -1,0 +1,25 @@
+{
+    "title": "Options missing Columns",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "IS": {
+                        "courses_title": "intro*"
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "stat"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+
+            "please": "haaaaaaalp"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

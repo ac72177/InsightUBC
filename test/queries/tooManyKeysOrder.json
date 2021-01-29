@@ -1,0 +1,34 @@
+{
+    "title": "Order is given multiple keys",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "IS": {
+                        "courses_title": "intro*"
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "stat"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_title",
+                "courses_instructor"
+            ],
+            "ORDER": "courses_instructor",
+            "ORDER": "courses_id",
+            "ORDER": "courses_title"
+
+        }
+    },
+    "isQueryValid": true,
+    "result": [
+        {"result":[{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"lim, yew wei"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"lim, yew wei"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"ushey, kevin michael"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"marin, michael"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"marin, michael"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"lim, yew wei"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"lim, yew wei"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"lee, melissa"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"lee, melissa"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"lim, yew wei"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"marin, michael"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"yu, hoi yin eugenia"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"marin, michael"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"marin, michael"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"lee, melissa"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"lee, melissa"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"lim, yew wei"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":""},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"lim, yew wei;yapa, gaitri"},{"courses_id":"241","courses_title":"intro prob&stats","courses_instructor":"lim, yew wei"}]}
+    ]
+}

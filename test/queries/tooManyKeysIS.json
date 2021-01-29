@@ -1,0 +1,21 @@
+{
+    "title": "IS has too many keys",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses_title": "intro*",
+                "courses_dept": "math"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_title",
+                "courses_instructor"
+            ],
+            "ORDER": "courses_id"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}
