@@ -1,0 +1,18 @@
+{
+    "title": "Invalid key courses_* in IS.",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses_*": 99
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

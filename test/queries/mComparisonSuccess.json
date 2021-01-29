@@ -1,0 +1,102 @@
+{
+    "title": "Test All M Comparisons for valid query",
+    "query": {
+        "WHERE": {
+            "OR": [
+                {
+                    "AND": [
+                        {
+                            "LT": {
+                                "courses_avg": 90
+                            }
+                        },
+                        {
+                            "LT": {
+                                "courses_pass": 90
+                            }
+                        },
+                        {
+                            "LT": {
+                                "courses_fail": 2
+                            }
+                        },
+                        {
+                            "LT": {
+                                "courses_audit": 231
+                            }
+                        },
+                        {
+                            "LT": {
+                                "courses_year": 2020
+                            }
+                        },
+                        {
+                            "EQ": {
+                                "courses_avg": 90
+                            }
+                        },
+                        {
+                            "EQ": {
+                                "courses_pass": 90
+                            }
+                        },
+                        {
+                            "EQ": {
+                                "courses_fail": 2
+                            }
+                        },
+                        {
+                            "EQ": {
+                                "courses_audit": 231
+                            }
+                        },
+                        {
+                            "EQ": {
+                                "courses_year": 2020
+                            }
+                        }
+                    ]
+                },
+                {
+                    "AND": [
+                        {
+                            "GT": {
+                                "courses_avg": 90
+                            }
+                        },
+                        {
+                            "GT": {
+                                "courses_pass": 90
+                            }
+                        },
+                        {
+                            "GT": {
+                                "courses_fail": 2
+                            }
+                        },
+                        {
+                            "GT": {
+                                "courses_audit": 231
+                            }
+                        },
+                        {
+                            "GT": {
+                                "courses_year": 2020
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_id",
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": true,
+    "result": []
+}

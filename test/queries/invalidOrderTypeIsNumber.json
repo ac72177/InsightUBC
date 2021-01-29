@@ -1,0 +1,15 @@
+{
+    "title": "Invalid ORDER type. is number",
+    "query": {
+        "WHERE": {},
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ],
+            "ORDER": 45
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

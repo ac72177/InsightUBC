@@ -1,0 +1,22 @@
+{
+    "title": "Invalid key courses_dept in LT.",
+    "query": {
+        "WHERE": {
+            "LT": {
+                "courses_dept": "cpsc"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_id",
+                "courses_instructor",
+                "courses_title",
+                "courses_uuid"
+            ],
+            "ORDER": "courses_uuid"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

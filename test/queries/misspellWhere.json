@@ -1,0 +1,27 @@
+{
+    "title": "Missing WHERE. misspelled where",
+    "query": {
+        "HERE": {
+            "AND": [
+                {
+                    "LT": {
+                        "courses_avg": 65
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "*l"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

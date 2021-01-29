@@ -1,0 +1,616 @@
+{
+    "title": "different Order query",
+    "query": {
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        },
+        "WHERE": {
+            "AND": [
+                {
+                    "LT": {
+                        "courses_avg": 65
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "*l"
+                    }
+                }
+            ]
+        }
+    },
+    "isQueryValid": true,
+    "result": [
+        {
+            "courses_avg": 33
+        },
+        {
+            "courses_avg": 33.2
+        },
+        {
+            "courses_avg": 49.25
+        },
+        {
+            "courses_avg": 53.5
+        },
+        {
+            "courses_avg": 53.5
+        },
+        {
+            "courses_avg": 55.33
+        },
+        {
+            "courses_avg": 55.5
+        },
+        {
+            "courses_avg": 55.75
+        },
+        {
+            "courses_avg": 55.86
+        },
+        {
+            "courses_avg": 55.96
+        },
+        {
+            "courses_avg": 56.33
+        },
+        {
+            "courses_avg": 56.38
+        },
+        {
+            "courses_avg": 56.42
+        },
+        {
+            "courses_avg": 56.5
+        },
+        {
+            "courses_avg": 57.32
+        },
+        {
+            "courses_avg": 57.4
+        },
+        {
+            "courses_avg": 57.4
+        },
+        {
+            "courses_avg": 58.43
+        },
+        {
+            "courses_avg": 58.62
+        },
+        {
+            "courses_avg": 58.73
+        },
+        {
+            "courses_avg": 58.9
+        },
+        {
+            "courses_avg": 58.9
+        },
+        {
+            "courses_avg": 59.08
+        },
+        {
+            "courses_avg": 59.14
+        },
+        {
+            "courses_avg": 59.14
+        },
+        {
+            "courses_avg": 59.35
+        },
+        {
+            "courses_avg": 59.45
+        },
+        {
+            "courses_avg": 59.47
+        },
+        {
+            "courses_avg": 59.47
+        },
+        {
+            "courses_avg": 59.5
+        },
+        {
+            "courses_avg": 59.64
+        },
+        {
+            "courses_avg": 59.64
+        },
+        {
+            "courses_avg": 59.67
+        },
+        {
+            "courses_avg": 59.97
+        },
+        {
+            "courses_avg": 59.97
+        },
+        {
+            "courses_avg": 59.98
+        },
+        {
+            "courses_avg": 59.98
+        },
+        {
+            "courses_avg": 60
+        },
+        {
+            "courses_avg": 60.14
+        },
+        {
+            "courses_avg": 60.59
+        },
+        {
+            "courses_avg": 60.59
+        },
+        {
+            "courses_avg": 60.73
+        },
+        {
+            "courses_avg": 60.73
+        },
+        {
+            "courses_avg": 60.86
+        },
+        {
+            "courses_avg": 61
+        },
+        {
+            "courses_avg": 61
+        },
+        {
+            "courses_avg": 61
+        },
+        {
+            "courses_avg": 61.04
+        },
+        {
+            "courses_avg": 61.11
+        },
+        {
+            "courses_avg": 61.32
+        },
+        {
+            "courses_avg": 61.47
+        },
+        {
+            "courses_avg": 61.55
+        },
+        {
+            "courses_avg": 61.55
+        },
+        {
+            "courses_avg": 61.59
+        },
+        {
+            "courses_avg": 61.68
+        },
+        {
+            "courses_avg": 61.71
+        },
+        {
+            "courses_avg": 62
+        },
+        {
+            "courses_avg": 62
+        },
+        {
+            "courses_avg": 62.04
+        },
+        {
+            "courses_avg": 62.05
+        },
+        {
+            "courses_avg": 62.05
+        },
+        {
+            "courses_avg": 62.06
+        },
+        {
+            "courses_avg": 62.14
+        },
+        {
+            "courses_avg": 62.28
+        },
+        {
+            "courses_avg": 62.28
+        },
+        {
+            "courses_avg": 62.45
+        },
+        {
+            "courses_avg": 62.46
+        },
+        {
+            "courses_avg": 62.54
+        },
+        {
+            "courses_avg": 62.57
+        },
+        {
+            "courses_avg": 62.57
+        },
+        {
+            "courses_avg": 62.57
+        },
+        {
+            "courses_avg": 62.59
+        },
+        {
+            "courses_avg": 62.66
+        },
+        {
+            "courses_avg": 62.66
+        },
+        {
+            "courses_avg": 62.68
+        },
+        {
+            "courses_avg": 62.72
+        },
+        {
+            "courses_avg": 62.74
+        },
+        {
+            "courses_avg": 62.75
+        },
+        {
+            "courses_avg": 62.79
+        },
+        {
+            "courses_avg": 62.89
+        },
+        {
+            "courses_avg": 62.89
+        },
+        {
+            "courses_avg": 62.92
+        },
+        {
+            "courses_avg": 62.94
+        },
+        {
+            "courses_avg": 62.98
+        },
+        {
+            "courses_avg": 63
+        },
+        {
+            "courses_avg": 63
+        },
+        {
+            "courses_avg": 63.04
+        },
+        {
+            "courses_avg": 63.06
+        },
+        {
+            "courses_avg": 63.13
+        },
+        {
+            "courses_avg": 63.13
+        },
+        {
+            "courses_avg": 63.16
+        },
+        {
+            "courses_avg": 63.16
+        },
+        {
+            "courses_avg": 63.19
+        },
+        {
+            "courses_avg": 63.19
+        },
+        {
+            "courses_avg": 63.2
+        },
+        {
+            "courses_avg": 63.23
+        },
+        {
+            "courses_avg": 63.3
+        },
+        {
+            "courses_avg": 63.37
+        },
+        {
+            "courses_avg": 63.38
+        },
+        {
+            "courses_avg": 63.38
+        },
+        {
+            "courses_avg": 63.48
+        },
+        {
+            "courses_avg": 63.48
+        },
+        {
+            "courses_avg": 63.59
+        },
+        {
+            "courses_avg": 63.59
+        },
+        {
+            "courses_avg": 63.61
+        },
+        {
+            "courses_avg": 63.63
+        },
+        {
+            "courses_avg": 63.63
+        },
+        {
+            "courses_avg": 63.66
+        },
+        {
+            "courses_avg": 63.66
+        },
+        {
+            "courses_avg": 63.67
+        },
+        {
+            "courses_avg": 63.67
+        },
+        {
+            "courses_avg": 63.68
+        },
+        {
+            "courses_avg": 63.69
+        },
+        {
+            "courses_avg": 63.7
+        },
+        {
+            "courses_avg": 63.77
+        },
+        {
+            "courses_avg": 63.8
+        },
+        {
+            "courses_avg": 63.8
+        },
+        {
+            "courses_avg": 63.83
+        },
+        {
+            "courses_avg": 63.83
+        },
+        {
+            "courses_avg": 63.87
+        },
+        {
+            "courses_avg": 63.88
+        },
+        {
+            "courses_avg": 63.91
+        },
+        {
+            "courses_avg": 63.92
+        },
+        {
+            "courses_avg": 63.94
+        },
+        {
+            "courses_avg": 63.95
+        },
+        {
+            "courses_avg": 63.95
+        },
+        {
+            "courses_avg": 63.96
+        },
+        {
+            "courses_avg": 63.97
+        },
+        {
+            "courses_avg": 64.03
+        },
+        {
+            "courses_avg": 64.06
+        },
+        {
+            "courses_avg": 64.08
+        },
+        {
+            "courses_avg": 64.08
+        },
+        {
+            "courses_avg": 64.08
+        },
+        {
+            "courses_avg": 64.09
+        },
+        {
+            "courses_avg": 64.09
+        },
+        {
+            "courses_avg": 64.11
+        },
+        {
+            "courses_avg": 64.12
+        },
+        {
+            "courses_avg": 64.17
+        },
+        {
+            "courses_avg": 64.22
+        },
+        {
+            "courses_avg": 64.22
+        },
+        {
+            "courses_avg": 64.25
+        },
+        {
+            "courses_avg": 64.27
+        },
+        {
+            "courses_avg": 64.27
+        },
+        {
+            "courses_avg": 64.29
+        },
+        {
+            "courses_avg": 64.3
+        },
+        {
+            "courses_avg": 64.32
+        },
+        {
+            "courses_avg": 64.32
+        },
+        {
+            "courses_avg": 64.33
+        },
+        {
+            "courses_avg": 64.39
+        },
+        {
+            "courses_avg": 64.39
+        },
+        {
+            "courses_avg": 64.4
+        },
+        {
+            "courses_avg": 64.4
+        },
+        {
+            "courses_avg": 64.45
+        },
+        {
+            "courses_avg": 64.45
+        },
+        {
+            "courses_avg": 64.5
+        },
+        {
+            "courses_avg": 64.5
+        },
+        {
+            "courses_avg": 64.5
+        },
+        {
+            "courses_avg": 64.51
+        },
+        {
+            "courses_avg": 64.55
+        },
+        {
+            "courses_avg": 64.56
+        },
+        {
+            "courses_avg": 64.57
+        },
+        {
+            "courses_avg": 64.57
+        },
+        {
+            "courses_avg": 64.57
+        },
+        {
+            "courses_avg": 64.59
+        },
+        {
+            "courses_avg": 64.6
+        },
+        {
+            "courses_avg": 64.6
+        },
+        {
+            "courses_avg": 64.61
+        },
+        {
+            "courses_avg": 64.65
+        },
+        {
+            "courses_avg": 64.65
+        },
+        {
+            "courses_avg": 64.68
+        },
+        {
+            "courses_avg": 64.69
+        },
+        {
+            "courses_avg": 64.71
+        },
+        {
+            "courses_avg": 64.71
+        },
+        {
+            "courses_avg": 64.72
+        },
+        {
+            "courses_avg": 64.72
+        },
+        {
+            "courses_avg": 64.73
+        },
+        {
+            "courses_avg": 64.73
+        },
+        {
+            "courses_avg": 64.75
+        },
+        {
+            "courses_avg": 64.75
+        },
+        {
+            "courses_avg": 64.76
+        },
+        {
+            "courses_avg": 64.77
+        },
+        {
+            "courses_avg": 64.82
+        },
+        {
+            "courses_avg": 64.82
+        },
+        {
+            "courses_avg": 64.84
+        },
+        {
+            "courses_avg": 64.85
+        },
+        {
+            "courses_avg": 64.85
+        },
+        {
+            "courses_avg": 64.87
+        },
+        {
+            "courses_avg": 64.88
+        },
+        {
+            "courses_avg": 64.89
+        },
+        {
+            "courses_avg": 64.9
+        },
+        {
+            "courses_avg": 64.91
+        },
+        {
+            "courses_avg": 64.91
+        },
+        {
+            "courses_avg": 64.96
+        },
+        {
+            "courses_avg": 64.97
+        },
+        {
+            "courses_avg": 64.97
+        },
+        {
+            "courses_avg": 64.98
+        }
+    ]
+}

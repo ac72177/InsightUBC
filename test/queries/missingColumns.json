@@ -1,0 +1,13 @@
+{
+    "title": "OPTIONS missing COLUMNS. Fails",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses_avg": 97
+            }
+        },
+        "OPTIONS": {}
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

@@ -1,0 +1,44 @@
+{
+    "title": "Test All S keys for valid query",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "IS": {
+                        "courses_id": "90"
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "cpsc"
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_instructor": "hello"
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_title": "hello"
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_uuid": "2020"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_id",
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": true,
+    "result": []
+}
