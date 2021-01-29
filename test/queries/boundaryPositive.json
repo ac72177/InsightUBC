@@ -1,0 +1,38 @@
+{
+    "title": "very large positive number passed into query",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "EQ": {
+                        "courses_year": 2020
+                    }
+                },
+                {
+                    "GT": {
+                        "courses_avg": 9009850195303925809581587120957923423948972934098203918049750139802983402
+                    }
+                },
+                {
+                    "LT": {
+                        "courses_fail": -20
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "cpsc"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_title",
+                "courses_instructor"
+            ]
+        }
+    },
+    "isQueryValid": true,
+    "result": []
+}

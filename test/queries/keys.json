@@ -1,0 +1,20 @@
+{
+    "title": "Query using unused or uncommon keys",
+    "query": {
+      "WHERE": {
+        "IS": {
+          "courses_instructor": "belleville, patrice"
+        }
+      },
+      "OPTIONS": {
+        "COLUMNS": [
+          "courses_id",
+          "courses_title",
+          "courses_audit",
+          "courses_uuid"
+        ],
+        "ORDER": "courses_id"
+      }
+    },
+    "isQueryValid": true,
+    "result": {"result":[{"courses_id":"121","courses_title":"model comptn","courses_audit":0,"courses_uuid":"90511"},{"courses_id":"121","courses_title":"model comptn","courses_audit":0,"courses_uuid":"83399"},{"courses_id":"121","courses_title":"model comptn","courses_audit":0,"courses_uuid":"83398"},{"courses_id":"121","courses_title":"model comptn","courses_audit":0,"courses_uuid":"83397"},{"courses_id":"121","courses_title":"model comptn","courses_audit":0,"courses_uuid":"72327"},{"courses_id":"121","courses_title":"model comptn","courses_audit":0,"courses_uuid":"62354"},{"courses_id":"121","courses_title":"model comptn","courses_audit":0,"courses_uuid":"62353"},{"courses_id":"121","courses_title":"model comptn","courses_audit":0,"courses_uuid":"62351"},{"courses_id":"121","courses_title":"model comptn","courses_audit":0,"courses_uuid":"61089"},{"courses_id":"121","courses_title":"model comptn","courses_audit":0,"courses_uuid":"49857"},{"courses_id":"121","courses_title":"model comptn","courses_audit":0,"courses_uuid":"1261"},{"courses_id":"121","courses_title":"model comptn","courses_audit":0,"courses_uuid":"1260"},{"courses_id":"261","courses_title":"basics comp syst","courses_audit":0,"courses_uuid":"62374"},{"courses_id":"261","courses_title":"basics comp syst","courses_audit":0,"courses_uuid":"1282"},{"courses_id":"313","courses_title":"comp hard&os","courses_audit":0,"courses_uuid":"83439"},{"courses_id":"313","courses_title":"comp hard&os","courses_audit":0,"courses_uuid":"72366"},{"courses_id":"313","courses_title":"comp hard&os","courses_audit":0,"courses_uuid":"63260"},{"courses_id":"313","courses_title":"comp hard&os","courses_audit":0,"courses_uuid":"62392"},{"courses_id":"313","courses_title":"comp hard&os","courses_audit":0,"courses_uuid":"61130"},{"courses_id":"313","courses_title":"comp hard&os","courses_audit":0,"courses_uuid":"1300"},{"courses_id":"320","courses_title":"intr alg dsgn&an","courses_audit":0,"courses_uuid":"90558"},{"courses_id":"320","courses_title":"intr alg dsgn&an","courses_audit":0,"courses_uuid":"90557"},{"courses_id":"320","courses_title":"intr alg dsgn&an","courses_audit":0,"courses_uuid":"83449"},{"courses_id":"320","courses_title":"intr alg dsgn&an","courses_audit":0,"courses_uuid":"72378"},{"courses_id":"320","courses_title":"intr alg dsgn&an","courses_audit":0,"courses_uuid":"72377"},{"courses_id":"320","courses_title":"intr alg dsgn&an","courses_audit":0,"courses_uuid":"61140"},{"courses_id":"320","courses_title":"intr alg dsgn&an","courses_audit":0,"courses_uuid":"49911"},{"courses_id":"320","courses_title":"intr alg dsgn&an","courses_audit":0,"courses_uuid":"49910"},{"courses_id":"320","courses_title":"intr alg dsgn&an","courses_audit":0,"courses_uuid":"1311"},{"courses_id":"420","courses_title":"adv alg dsgn&anl","courses_audit":0,"courses_uuid":"90582"}]}}

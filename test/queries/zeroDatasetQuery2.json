@@ -1,0 +1,29 @@
+{
+    "title": "empty string dataset referencing two datasets",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "IS": {
+                        "_title": "intro*"
+                    }
+                },
+                {
+                    "IS": {
+                        "_dept": "stat"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_title",
+                "courses_instructor"
+            ],
+            "ORDER": "courses_title"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

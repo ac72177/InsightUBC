@@ -1,0 +1,29 @@
+{
+    "title": "refer to two different datasets WHERE and OPTIONS different",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "IS": {
+                        "asdasd_title": "intro*"
+                    }
+                },
+                {
+                    "IS": {
+                        "asdasd_dept": "stat"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_title",
+                "courses_instructor"
+            ],
+            "ORDER": "courses_title"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

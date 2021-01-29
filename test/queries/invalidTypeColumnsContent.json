@@ -1,0 +1,27 @@
+{
+    "title": "invalid column key type - content",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "IS": {
+                        "courses_title": "intro*"
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "stat"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                [],[],[]
+            ],
+            "ORDER": "courses_title"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

@@ -1,0 +1,16 @@
+{
+    "title": "OR has no keys",
+    "query": {
+        "WHERE": {
+            "OR": []
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+
+            ],
+            "ORDER": "courses_id"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

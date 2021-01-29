@@ -1,0 +1,22 @@
+{
+    "title": "Missing Options",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "IS": {
+                        "courses_title": "intro*"
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "stat"
+                    }
+                }
+            ]
+        }
+
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

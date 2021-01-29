@@ -1,0 +1,16 @@
+{
+    "title": "OR is passed a string instead of an array",
+    "query": {
+        "WHERE": {
+            "OR": "courses_id"
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+
+            ],
+            "ORDER": "courses_id"
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}
