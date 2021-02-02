@@ -10,10 +10,23 @@ import {InsightError, NotFoundError} from "./IInsightFacade";
 export default class InsightFacade implements IInsightFacade {
 
     constructor() {
+        let myMap = new Map();
         Log.trace("InsightFacadeImpl::init()");
     }
 
     public addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
+        let allWhiteSpace: boolean = true;
+        for (let char of id) {
+            if (char === "_") {
+                return Promise.reject("InsightError");
+            }
+            if ((char !== "/t") && (char !== "/n")  && (char !==  " ")) {
+                allWhiteSpace = false;
+            }
+       }
+        if (allWhiteSpace) {
+           return Promise.reject("InsightError");
+        }
         return Promise.reject("Not implemented.");
     }
 
@@ -28,4 +41,6 @@ export default class InsightFacade implements IInsightFacade {
     public listDatasets(): Promise<InsightDataset[]> {
         return Promise.reject("Not implemented.");
     }
+
+
 }
