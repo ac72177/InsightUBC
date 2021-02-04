@@ -1,6 +1,6 @@
 import Log from "../Util";
-import {IInsightFacade, InsightDataset, InsightDatasetKind} from "./IInsightFacade";
-import {InsightError, NotFoundError} from "./IInsightFacade";
+import {IInsightFacade, InsightDataset, InsightDatasetKind, InsightError} from "./IInsightFacade";
+import * as JSZip from "jszip";
 
 /**
  * This is the main programmatic entry point for the project.
@@ -8,10 +8,12 @@ import {InsightError, NotFoundError} from "./IInsightFacade";
  *
  */
 export default class InsightFacade implements IInsightFacade {
+    private myMap: any;
+    private currentDatasets: string[];
 
     constructor() {
-        let myMap = new Map();
-        let currentDatasets = [];
+        this.myMap = new Map();
+        this.currentDatasets = [];
         Log.trace("InsightFacadeImpl::init()");
     }
     /**
@@ -40,9 +42,14 @@ export default class InsightFacade implements IInsightFacade {
      * be successfully answered.
      */
     public addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
+        if (id === null || id === undefined || content === null || content === undefined || kind === null
+            || kind === undefined || kind !== InsightDatasetKind.Courses) {
+            return Promise.reject(new InsightError());
+        }
+
         return this.promiseToVerifyId(id)
             .then(() => {
-                return this.promiseToVerifyDataset(content);
+                return this.promiseToAddVerifiedDataset(content);
             });
     }
 
@@ -51,19 +58,19 @@ export default class InsightFacade implements IInsightFacade {
      * If there is an error, reject with an Insight Error
      * @param id
      */
-    private promiseToVerifyId(id: string): Promise<string[]> {
-        return new Promise<string[]> ((resolve, reject) => {
+    private promiseToVerifyId(id: string): Promise<void> {
+        return new Promise<void> ((resolve, reject) => {
             let allWhiteSpace: boolean = true;
             for (let char of id) {
                 if (char === "_") {
-                    reject("InsightError");
+                    reject(new InsightError());
                 }
                 if ((char !== "/t") && (char !== "/n")  && (char !==  " ")) {
                     allWhiteSpace = false;
                 }
             }
-            if (allWhiteSpace) {
-                reject("InsightError");
+            if (allWhiteSpace || this.myMap.has(id)) {
+                reject(new InsightError());
             } else {
                 resolve();
             }
@@ -75,9 +82,20 @@ export default class InsightFacade implements IInsightFacade {
      * If there is an error, reject it with an InsightError, JSZip content will go here
      * @param content
      */
-    private promiseToVerifyDataset(content: string): Promise<string[]> {
-        // TODO
-        return Promise.reject("Not implemented.");
+    private promiseToAddVerifiedDataset(content: string): Promise<any> {
+        let currentZip = new JSZip();
+        return currentZip.loadAsync(content)
+            .then((jsZip) => {
+                let coursesUnzipped = jsZip.folder("courses");
+                let futureFiles: Array<Promise<string>> = [];
+                coursesUnzipped.forEach((relativePath, file) => {
+                    let futureFile = file.async("string");
+                    futureFiles.concat(futureFile);
+                });
+                return Promise.all(futureFiles).then((currentFiles) => {
+                    // manually parse
+                });
+            });
     }
 
     public removeDataset(id: string): Promise<string> {
