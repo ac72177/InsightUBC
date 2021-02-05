@@ -25,6 +25,11 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
     // automatically be loaded in the 'before' hook.
     const datasetsToLoad: { [id: string]: string } = {
         courses: "./test/data/courses.zip",
+        invalidStructure: "./test/data/invalidStructure.zip",
+        noValidSections: "./test/data/noValidSections.zip",
+        invalidJSON: "./test/data/invalidJSON.zip",
+        shouldAddWithInvalid: "./test/data/shouldAddWithInvalid.zip",
+        shouldAddWithInvalid2: "./test/data/shouldAddWithInvalid2.zip",
     };
     let datasets: { [id: string]: string } = {};
     let insightFacade: InsightFacade;
