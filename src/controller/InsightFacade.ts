@@ -1,6 +1,7 @@
 import Log from "../Util";
 import {IInsightFacade, InsightDataset, InsightDatasetKind, InsightError} from "./IInsightFacade";
 import * as JSZip from "jszip";
+import {QueryObject, semanticsCheck, syntaxCheck} from "./QueryObject";
 
 /**
  * This is the main programmatic entry point for the project.
@@ -178,7 +179,30 @@ export default class InsightFacade implements IInsightFacade {
     }
 
     public performQuery(query: any): Promise<any[]> {
-        return Promise.reject("Not implemented.");
+        // I think query can only be either a JSON or a string
+        let localQuery: string = query;
+        let jsonQuery: JSON;
+
+        try {
+            jsonQuery = JSON.parse(localQuery);
+            syntaxCheck(jsonQuery);
+            semanticsCheck(jsonQuery);
+        } catch (e) {
+            // if (e === SyntaxError) { return Promise.reject("Invalid JSON Syntax"); }
+            return Promise.reject(e); // can be either syntax error or Insight Error
+        }
+
+
+        let queryObject: QueryObject = new QueryObject(jsonQuery);
+
+        let res: JSON[];
+        try {
+            res = queryObject.getQueryResults();
+        } catch (e) {
+            return Promise.reject(e); // ResultTooLargeError thrown from queryObject
+        }
+
+        return Promise.resolve(res);
     }
 
     public listDatasets(): Promise<InsightDataset[]> {
