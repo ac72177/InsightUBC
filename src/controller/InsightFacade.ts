@@ -1,7 +1,7 @@
 import Log from "../Util";
 import {IInsightFacade, InsightDataset, InsightDatasetKind, ResultTooLargeError} from "./IInsightFacade";
 import {InsightError, NotFoundError} from "./IInsightFacade";
-import {QueryObject} from "./QueryObject";
+import {syntaxCheck, semanticsCheck, QueryObject} from "./QueryObject";
 
 /**
  * This is the main programmatic entry point for the project.
@@ -22,11 +22,7 @@ export default class InsightFacade implements IInsightFacade {
         return Promise.reject("Not implemented.");
     }
 
-    // !!! TODO: Implement a method that validates the syntax and grammar
-    private validateQuery(query: JSON) {
-        // throw new InsightError();
-        return;
-    }
+
     public performQuery(query: any): Promise<any[]> {
         // I think query can only be either a JSON or a string
         let localQuery: string = query;
@@ -34,7 +30,8 @@ export default class InsightFacade implements IInsightFacade {
 
         try {
             jsonQuery = JSON.parse(localQuery);
-            this.validateQuery(jsonQuery);
+            syntaxCheck(jsonQuery);
+            semanticsCheck(jsonQuery);
         } catch (e) {
             // if (e === SyntaxError) { return Promise.reject("Invalid JSON Syntax"); }
             return Promise.reject(e); // can be either syntax error or Insight Error
