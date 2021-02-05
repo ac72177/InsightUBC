@@ -61,8 +61,9 @@ export default class InsightFacade implements IInsightFacade {
      * @private
      */
     private promiseToAddVerifiedDataset(id: string, content: string): Promise<string[]> {
+        Log.info("line 64");
         let currentZip = new JSZip();
-        return currentZip.loadAsync(content)
+        return currentZip.loadAsync(content, {base64: true})
             .then((jsZip) => {
                 let coursesUnzipped = jsZip.folder("courses");
                 let futureFiles: Array<Promise<string>> = [];
@@ -75,10 +76,12 @@ export default class InsightFacade implements IInsightFacade {
                         return this.addToDataStructureIfValid(currentFiles)
                             .then((nestedMap) => {
                                 this.myMap.set(id, nestedMap);
-                                this.currentDatasets.concat(id);
+                                this.currentDatasets.push(id);
                                 return Promise.resolve(this.currentDatasets);
                         });
                     });
+            }).catch((error) => {
+                return Promise.reject(new InsightError());
             });
     }
 
