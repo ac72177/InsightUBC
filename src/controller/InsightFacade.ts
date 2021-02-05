@@ -16,31 +16,7 @@ export default class InsightFacade implements IInsightFacade {
         this.currentDatasets = [];
         Log.trace("InsightFacadeImpl::init()");
     }
-    /**
-     * Add a dataset to insightUBC. delete this later // todo
-     *
-     * @param id  The id of the dataset being added. Follows the format /^[^_]+$/
-     * @param content  The base64 content of the dataset. This content should be in the form of a serialized zip file.
-     * @param kind  The kind of the dataset
-     *
-     * @return Promise <string[]>
-     *
-     * The promise should fulfill on a successful add, reject for any failures.
-     * The promise should fulfill with a string array,
-     * containing the ids of all currently added datasets upon a successful add.
-     * The promise should reject with an InsightError describing the error.
-     *
-     * An id is invalid if it contains an underscore, or is only whitespace characters.
-     * If id is the same as the id of an already added dataset, the dataset should be rejected and not saved.
-     *
-     * After receiving the dataset, it should be processed into a data structure of
-     * your design. The processed data structure should be persisted to disk; your
-     * system should be able to load this persisted value into memory for answering
-     * queries.
-     *
-     * Ultimately, a dataset must be added or loaded from disk before queries can
-     * be successfully answered.
-     */
+
     public addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
         if (id === null || id === undefined || content === null || content === undefined || kind === null
             || kind === undefined || kind !== InsightDatasetKind.Courses) {
@@ -49,7 +25,7 @@ export default class InsightFacade implements IInsightFacade {
 
         return this.promiseToVerifyId(id)
             .then(() => {
-                return this.promiseToAddVerifiedDataset(content);
+                return this.promiseToAddVerifiedDataset(id, content);
             });
     }
 
@@ -78,11 +54,13 @@ export default class InsightFacade implements IInsightFacade {
     }
 
     /**
-     * Turns verifying a dataset into a promise, adds the dataset to currentDatasets
-     * If there is an error, reject it with an InsightError, JSZip content will go here
+     * Turns adding a verified dataset into a promise, helper function for addDataset
+     * Rejects with Insight Error
+     * @param id
      * @param content
+     * @private
      */
-    private promiseToAddVerifiedDataset(content: string): Promise<any> {
+    private promiseToAddVerifiedDataset(id: string, content: string): Promise<string[]> {
         let currentZip = new JSZip();
         return currentZip.loadAsync(content)
             .then((jsZip) => {
@@ -92,10 +70,104 @@ export default class InsightFacade implements IInsightFacade {
                     let futureFile = file.async("string");
                     futureFiles.concat(futureFile);
                 });
-                return Promise.all(futureFiles).then((currentFiles) => {
-                    // manually parse
-                });
+                return Promise.all(futureFiles)
+                    .then((currentFiles) => {
+                        return this.addToDataStructureIfValid(currentFiles)
+                            .then((nestedMap) => {
+                                this.myMap.set(id, nestedMap);
+                                this.currentDatasets.concat(id);
+                                return Promise.resolve(this.currentDatasets);
+                        });
+                    });
             });
+    }
+
+    /**
+     * Turns adding to the data structure into a Promise, helper function for addDataset
+     * If any errors, rejects with Insight Error
+     * @param currentFiles
+     * @private
+     */
+    private addToDataStructureIfValid(currentFiles: string[]): Promise<Map<string, string>> {
+        return new Promise<Map<string, string>> ((resolve, reject) => {
+            let nestedMap1 = new Map<string, string>();
+            for (let JSONString of currentFiles) {
+                let hasValidCourseSection: boolean = false;
+                let JSONObjectCourse = JSON.parse(JSONString);
+                if (JSONObjectCourse.hasOwnProperty("result")) {
+                    let JSONArray = JSONObjectCourse.result;
+                    for (let i of JSONArray) {
+                        let JSONObjectSection = JSON.parse(JSONArray[i]);
+                        let DesiredJSONString;
+                        if (InsightFacade.verifyHasCorrectProperties(JSONObjectSection)) {
+                            DesiredJSONString = InsightFacade.createNewJSONStringData(JSONObjectSection);
+                        } else {
+                            return reject(new InsightError());
+                        }
+                        nestedMap1.set(JSONObjectSection.id, DesiredJSONString);
+                        hasValidCourseSection = true;
+                    }
+                } else {
+                    return reject(new InsightError());
+                }
+            }
+            return resolve(nestedMap1);
+        });
+    }
+
+    /**
+     * Given a valid section, returns a new JSON String with the desired data
+     * @param JSONObjectSection
+     * @private
+     */
+    private static createNewJSONStringData(JSONObjectSection: any): any {
+        let year: string;
+        if (JSONObjectSection.hasOwnProperty("Section") && JSONObjectSection.Section === "overall") {
+            year = "1900";
+        } else {
+            year = JSONObjectSection.Year;
+        }
+        return JSON.stringify({
+                Dept: JSONObjectSection.Subject,
+                Avg: JSONObjectSection.Avg,
+                Uuid: JSONObjectSection.id.toString(),
+                Title: JSONObjectSection.Title,
+                Id: JSONObjectSection.Course,
+                Instructor: JSONObjectSection.Professor,
+                Pass: JSONObjectSection.Pass,
+                Fail: JSONObjectSection.Fail,
+                Audit: JSONObjectSection.Audit,
+                Year: year
+        });
+    }
+
+    /**
+     * Verifies if the parsed object has the correct properties and each property has the correct value
+     * @param JSONObject
+     * @private
+     */
+    private static verifyHasCorrectProperties(JSONObject: any): boolean {
+        return JSONObject.hasOwnProperty("Subject")
+            && JSONObject.hasOwnProperty("Avg")
+            && JSONObject.hasOwnProperty("id")
+            && JSONObject.hasOwnProperty("Title")
+            && JSONObject.hasOwnProperty("Course")
+            && JSONObject.hasOwnProperty("Professor")
+            && JSONObject.hasOwnProperty("Pass")
+            && JSONObject.hasOwnProperty("Fail")
+            && JSONObject.hasOwnProperty("Audit")
+            && JSONObject.hasOwnProperty("Year")
+            && (JSONObject.Subject instanceof String)
+            && (JSONObject.Avg instanceof Number)
+            && (JSONObject.id instanceof Number) // becomes string
+            && (JSONObject.Title instanceof String)
+            && (JSONObject.Course instanceof String)
+            && (JSONObject.Professor instanceof String)
+            && (JSONObject.Pass instanceof Number)
+            && (JSONObject.Fail instanceof Number)
+            && (JSONObject.Audit instanceof Number)
+            && (JSONObject.Year instanceof String); // becomes number
+
     }
 
     public removeDataset(id: string): Promise<string> {
