@@ -730,6 +730,19 @@ describe("InsightFacade PerformQuery", () => {
         });
     });
 
+
+    it("Should query simple query", function () {
+        let testQuery;
+        for (const test of testQueries) {
+            if (test.filename === "test/queries/simple.json") {
+                testQuery = test;
+                break;
+            }
+        }
+        const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
+        return TestUtil.verifyQueryResult(futureResult, testQuery);
+    });
+
     it("Should not query null query", function () {
         const futureResult: Promise<any[]> = insightFacade.performQuery(null);
         return expect(futureResult).to.be.rejectedWith(InsightError);

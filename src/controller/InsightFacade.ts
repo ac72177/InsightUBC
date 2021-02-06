@@ -179,21 +179,17 @@ export default class InsightFacade implements IInsightFacade {
     }
 
     public performQuery(query: any): Promise<any[]> {
-        // I think query can only be either a JSON or a string
-        let localQuery: string = query;
-        let jsonQuery: JSON;
 
         try {
-            jsonQuery = JSON.parse(localQuery);
-            syntaxCheck(jsonQuery);
-            semanticsCheck(jsonQuery);
+            syntaxCheck(query);
+            semanticsCheck(query);
         } catch (e) {
             // if (e === SyntaxError) { return Promise.reject("Invalid JSON Syntax"); }
             return Promise.reject(e); // can be either syntax error or Insight Error
         }
 
 
-        let queryObject: QueryObject = new QueryObject(jsonQuery);
+        let queryObject: QueryObject = new QueryObject(query);
 
         let res: JSON[];
         try {

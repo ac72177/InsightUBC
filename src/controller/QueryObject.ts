@@ -1,28 +1,90 @@
-import {ResultTooLargeError} from "./IInsightFacade";
+import {InsightError, ResultTooLargeError} from "./IInsightFacade";
 
-enum FILTERS {}
-enum LOGIC {}
-enum MCOMPARATOR {}
-enum Mfield {}
-enum SCOMPARATOR {IS}
-enum Sfield {}
+const LOGIC: string[] = [];
+const MCOMPARATOR: string[] = ["GT"];
+const Mfield: string[] = [];
+const SCOMPARATOR: string[] = [];
+const Sfield: string[] = [];
 
 
 // !!! TODO: Implement method to check syntax and grammar of query
 // query contains WHERE and OPTIONS
-// OPTIONS contains COLUMNS
-// WHERE contains only FILTERS
-// LOGIC comparisons value must be array containing only FILTER JSON objs
-// NEGATION value must be one JSON obj containing a FILTER
-// MCOMPARATOR key must be MKEY, value must be one JSON obj
-//      obj key must be Mkey and value must be number
-// SCOMPARATOR key must be MKEY, value must be one JSON obj
-//      obj key must be Skey, value must be (valid)inputString
-// COLUMNS must be array with valid keys
-// if ORDER, value must be a string
-// Mkey and Skey check that idstring is valid. check *
-export function syntaxCheck(query: JSON) {
+export function syntaxCheck(query: any) {
     // throw new InsightError();
+    if (!(query.hasOwnProperty("WHERE") && query.hasOwnProperty("OPTIONS"))) { throw new InsightError(); }
+    try {
+        syntaxCheckFilters(query.WHERE);
+        syntaxCheckOPTIONS(query.OPTIONS);
+    } catch (e) {
+        throw new InsightError();
+    }
+    return;
+}
+
+// WHERE contains only FILTERS
+function syntaxCheckFilters(query: any) {
+    for (const key in query) {
+
+        if (LOGIC.includes(key)) {
+            syntaxCheckLogic(query[key]);
+        } else if (MCOMPARATOR.includes(key)) {
+            syntaxCheckMComparator(query[key]);
+        } else if (SCOMPARATOR.includes(query[key])) {
+            syntaxCheckSComparator(query[key]);
+        } else if (key === "NOT") {
+            syntaxCheckNegation(query[key]);
+        } else { // key is not a filter. throw error
+            throw new InsightError();
+        }
+    }
+    return;
+}
+
+// OPTIONS contains COLUMNS
+function syntaxCheckOPTIONS(query: any) {
+    if (!query.hasOwnProperty("COLUMNS")) {throw new InsightError(); }
+
+    for (const key in query) {
+        if (key === "COLUMNS") {
+            syntaxCheckCols(query[key]);
+        } else if (key === "ORDER") {
+            syntaxCheckOrder(query[key]);
+        } else { throw new InsightError(); }
+    }
+    return;
+}
+
+// LOGIC comparisons value must be array containing only FILTER JSON objs
+function syntaxCheckLogic(query: any) { // query must be an array
+    return;
+}
+
+// MCOMPARATOR value must be one JSON obj
+//      obj key must be Mkey and value must be number
+// Mkey and Skey check that idstring is valid.
+function syntaxCheckMComparator(query: any) { // must be one json obj
+    return;
+}
+
+// SCOMPARATOR value must be one JSON obj
+//      obj key must be Skey, value must be (valid)inputString. Check *
+// Mkey and Skey check that idstring is valid.
+function syntaxCheckSComparator(query: any) {
+    return;
+}
+
+// NEGATION value must be one JSON obj containing a FILTER
+function syntaxCheckNegation(query: any) { // query must be an object
+    return;
+}
+
+// COLUMNS must be array of strings
+function syntaxCheckCols(query: any) { // must be array
+    return;
+}
+
+// if ORDER, value must be a string
+function syntaxCheckOrder(query: any) {
     return;
 }
 
@@ -44,7 +106,7 @@ export class QueryObject {
         return;
     }
     public getQueryResults(): JSON[] {
-        let res: JSON[];
+        let res: JSON[] = [];
         if (res.length > this.MAX_RES_SIZE) {
             throw new ResultTooLargeError();
         }
