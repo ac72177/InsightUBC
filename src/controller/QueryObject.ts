@@ -1,10 +1,11 @@
 import {InsightError, ResultTooLargeError} from "./IInsightFacade";
 
-const LOGIC: string[] = [];
-const MCOMPARATOR: string[] = ["GT"];
-const Mfield: string[] = [];
-const SCOMPARATOR: string[] = [];
-const Sfield: string[] = [];
+const LOGIC: string[] = ["AND", "OR"];
+const MCOMPARATOR: string[] = ["GT", "EQ", "LT"];
+const Mfield: string[] = ["avg", "pass", "fail", "audit", "year"];
+const SCOMPARATOR: string[] = ["IS"];
+const Sfield: string[] = ["dept", "id", "instructor", "title", "uuid"];
+const NEG: string[] = ["NOT"];
 
 
 // !!! TODO: Implement method to check syntax and grammar of query
@@ -29,9 +30,9 @@ function syntaxCheckFilters(query: any) {
             syntaxCheckLogic(query[key]);
         } else if (MCOMPARATOR.includes(key)) {
             syntaxCheckMComparator(query[key]);
-        } else if (SCOMPARATOR.includes(query[key])) {
+        } else if (SCOMPARATOR.includes(key)) {
             syntaxCheckSComparator(query[key]);
-        } else if (key === "NOT") {
+        } else if (NEG.includes(key)) {
             syntaxCheckNegation(query[key]);
         } else { // key is not a filter. throw error
             throw new InsightError();
@@ -55,7 +56,11 @@ function syntaxCheckOPTIONS(query: any) {
 }
 
 // LOGIC comparisons value must be array containing only FILTER JSON objs
-function syntaxCheckLogic(query: any) { // query must be an array
+function syntaxCheckLogic(queryArr: any) { // query must be an array
+    if (!Array.isArray(queryArr)) { throw new InsightError(); }
+    for (const i in queryArr) {
+        syntaxCheckFilters(queryArr[i]);
+    }
     return;
 }
 

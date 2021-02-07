@@ -730,11 +730,41 @@ describe("InsightFacade PerformQuery", () => {
         });
     });
 
+    // Dynamically create and run a test for each query in testQueries
+    it("Should validate query properly", function () {
+        describe("Dynamic InsightFacade PerformQuery tests", function () {
+            for (const test of testQueries) {
+                it(`[${test.filename}] ${test.title}`, function () {
+                    let queryValidity: boolean = true;
+                    try {
+                        const futureResult: Promise<any[]> = insightFacade.performQuery(test.query);
+                    } catch (e) {
+                        // query invalid
+                        queryValidity = false;
+                    }
+                    return expect(queryValidity).to.eventually.deep.equal(test.isQueryValid);
+                });
+            }
+        });
+    });
+
 
     it("Should query simple query", function () {
         let testQuery;
         for (const test of testQueries) {
             if (test.filename === "test/queries/simple.json") {
+                testQuery = test;
+                break;
+            }
+        }
+        const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
+        return TestUtil.verifyQueryResult(futureResult, testQuery);
+    });
+
+    it("Should query complex query", function () {
+        let testQuery;
+        for (const test of testQueries) {
+            if (test.filename === "test/queries/complex.json") {
                 testQuery = test;
                 break;
             }
