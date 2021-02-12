@@ -1,7 +1,8 @@
 import Log from "../Util";
-import {IInsightFacade, InsightDataset, InsightDatasetKind, InsightError} from "./IInsightFacade";
+import {IInsightFacade, InsightDataset, InsightDatasetKind, InsightError, NotFoundError} from "./IInsightFacade";
 import * as JSZip from "jszip";
 import {QueryObject, semanticsCheck, syntaxCheck} from "./QueryObject";
+
 
 /**
  * This is the main programmatic entry point for the project.
@@ -26,6 +27,9 @@ export default class InsightFacade implements IInsightFacade {
 
         return this.promiseToVerifyId(id)
             .then(() => {
+                if (this.myMap.has(id)) {
+                    return Promise.reject(new InsightError());
+                }
                 return this.promiseToAddVerifiedDataset(id, content);
             });
     }
@@ -42,11 +46,11 @@ export default class InsightFacade implements IInsightFacade {
                 if (char === "_") {
                     reject(new InsightError());
                 }
-                if ((char !== "/t") && (char !== "/n")  && (char !==  " ")) {
+                if ((char !== "\t") && (char !== "\n")  && (char !==  " ")) {
                     allWhiteSpace = false;
                 }
             }
-            if (allWhiteSpace || this.myMap.has(id)) {
+            if (allWhiteSpace) {
                 reject(new InsightError());
             } else {
                 resolve();
@@ -62,28 +66,28 @@ export default class InsightFacade implements IInsightFacade {
      * @private
      */
     private promiseToAddVerifiedDataset(id: string, content: string): Promise<string[]> {
-        Log.info("line 64");
         let currentZip = new JSZip();
-        return currentZip.loadAsync(content, {base64: true})
-            .then((jsZip) => {
-                let coursesUnzipped = jsZip.folder("courses");
-                let futureFiles: Array<Promise<string>> = [];
-                coursesUnzipped.forEach((relativePath, file) => {
-                    let futureFile = file.async("string");
-                    futureFiles.concat(futureFile);
-                });
-                return Promise.all(futureFiles)
-                    .then((currentFiles) => {
-                        return this.addToDataStructureIfValid(currentFiles)
-                            .then((nestedMap) => {
-                                this.myMap.set(id, nestedMap);
-                                this.currentDatasets.push(id);
-                                return Promise.resolve(this.currentDatasets);
-                        });
+        return new Promise<string[]>((resolve, reject) => {
+            return currentZip.loadAsync(content, {base64: true})
+                .then((jsZip) => {
+                    let coursesUnzippedArray = jsZip.folder("courses");
+                    let futureFiles: Array<Promise<string>> = [];
+                    coursesUnzippedArray.forEach((relativePath, file) => {
+                        futureFiles.push(file.async("string"));
                     });
-            }).catch((error) => {
-                return Promise.reject(new InsightError());
-            });
+                    return Promise.all(futureFiles)
+                        .then((currentFiles) => {
+                            return this.addToDataStructureIfValid(currentFiles)
+                                .then((nestedMap) => {
+                                    this.myMap.set(id, nestedMap);
+                                    this.currentDatasets.push(id);
+                                    return resolve(this.currentDatasets);
+                                });
+                        });
+                }).catch((error) => {
+                    return reject(new InsightError());
+                });
+        });
     }
 
     /**
@@ -93,29 +97,32 @@ export default class InsightFacade implements IInsightFacade {
      * @private
      */
     private addToDataStructureIfValid(currentFiles: string[]): Promise<Map<string, string>> {
+        let nestedMap1 = new Map<string, string>();
+        let hasValidCourseSection: boolean = false;
         return new Promise<Map<string, string>> ((resolve, reject) => {
-            let nestedMap1 = new Map<string, string>();
             for (let JSONString of currentFiles) {
-                let hasValidCourseSection: boolean = false;
                 let JSONObjectCourse = JSON.parse(JSONString);
                 if (JSONObjectCourse.hasOwnProperty("result")) {
-                    let JSONArray = JSONObjectCourse.result;
-                    for (let i of JSONArray) {
-                        let JSONObjectSection = JSON.parse(JSONArray[i]);
+                    let myJSONArray = JSONObjectCourse.result;
+                    for (let JSONObjectSection of myJSONArray) {
                         let DesiredJSONString;
                         if (InsightFacade.verifyHasCorrectProperties(JSONObjectSection)) {
                             DesiredJSONString = InsightFacade.createNewJSONStringData(JSONObjectSection);
-                        } else {
-                            return reject(new InsightError());
+                            if (!nestedMap1.has(JSONObjectSection.id)) {
+                                nestedMap1.set(JSONObjectSection.id, DesiredJSONString);
+                                hasValidCourseSection = true;
+                            }
                         }
-                        nestedMap1.set(JSONObjectSection.id, DesiredJSONString);
-                        hasValidCourseSection = true;
                     }
                 } else {
                     return reject(new InsightError());
                 }
             }
-            return resolve(nestedMap1);
+            if (hasValidCourseSection) {
+                return resolve(nestedMap1);
+            } else {
+                return reject(new InsightError());
+            }
         });
     }
 
@@ -161,21 +168,34 @@ export default class InsightFacade implements IInsightFacade {
             && JSONObject.hasOwnProperty("Fail")
             && JSONObject.hasOwnProperty("Audit")
             && JSONObject.hasOwnProperty("Year")
-            && (JSONObject.Subject instanceof String)
-            && (JSONObject.Avg instanceof Number)
-            && (JSONObject.id instanceof Number) // becomes string
-            && (JSONObject.Title instanceof String)
-            && (JSONObject.Course instanceof String)
-            && (JSONObject.Professor instanceof String)
-            && (JSONObject.Pass instanceof Number)
-            && (JSONObject.Fail instanceof Number)
-            && (JSONObject.Audit instanceof Number)
-            && (JSONObject.Year instanceof String); // becomes number
+            && (typeof(JSONObject.Subject) === "string")
+            && (typeof(JSONObject.Avg) === "number")
+            && (typeof(JSONObject.id) === "number") // becomes string
+            && (typeof(JSONObject.Title) === "string")
+            && (typeof(JSONObject.Course) === "string")
+            && (typeof(JSONObject.Professor) === "string")
+            && (typeof(JSONObject.Pass) === "number")
+            && (typeof(JSONObject.Fail) === "number")
+            && (typeof(JSONObject.Audit) === "number")
+            && (typeof(JSONObject.Year) === "string"); // becomes number
 
     }
 
     public removeDataset(id: string): Promise<string> {
-        return Promise.reject("Not implemented.");
+        if (id === null || id === undefined) {
+            return Promise.reject(new InsightError());
+        }
+
+        return this.promiseToVerifyId(id)
+            .then(() => {
+                if (!this.myMap.has(id)) {
+                    return Promise.reject(new NotFoundError());
+                }
+                this.myMap.delete(id);
+                let removedIndex = this.currentDatasets.indexOf(id);
+                this.currentDatasets.splice(removedIndex, 1);
+                return Promise.resolve("Remove Success");
+            });
     }
 
     public performQuery(query: any): Promise<any[]> {
