@@ -280,7 +280,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
 
-    it("Should not add existing dataset chain", function () { // todo update on dev
+    it("Should not add existing dataset chain", function () {
         let id: string = "courses";
         let expected: string[] = [id];
         let futureResult: Promise<string[]> = insightFacade.addDataset(
@@ -348,8 +348,8 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
             let listExpected: InsightDataset[] = [];
             let listResult: Promise<InsightDataset[]> = insightFacade.listDatasets();
             return expect(listResult).to.eventually.deep.equal(listExpected).then(() => {
-                id = "shouldAddWithInvalid";
-                expected = [id];
+                let id1 = "shouldAddWithInvalid";
+                expected = [id, id1];
                 futureResult = insightFacade.addDataset(
                     id,
                     datasets[id],
@@ -442,7 +442,88 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
 
-    it("TEST", function () {
+    it("Should not add existing dataset chain", function () {
+        let id: string = "courses";
+        let expected: string[] = [id];
+        let futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Courses,
+        );
+        return expect(futureResult).to.eventually.deep.equal(expected).then(() => {
+            futureResult = insightFacade.addDataset(
+                id,
+                datasets[id],
+                InsightDatasetKind.Courses,
+            );
+            return expect(futureResult).to.be.rejectedWith(InsightError).then(() => {
+                // after error, can still add a valid dataset
+                id = "shouldAddWithInvalid";
+                expected = [id];
+                futureResult = insightFacade.addDataset(
+                    id,
+                    datasets[id],
+                    InsightDatasetKind.Courses,
+                );
+                return expect(futureResult).to.eventually.deep.equal(expected);
+            });
+        });
+    });
+    it("add same dataset twice (fail second time), remove dataset, add successful", function () {
+        let id: string = "courses";
+        let expected: string[] = [id];
+        let futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Courses,
+        );
+        return expect(futureResult).to.eventually.deep.equal(expected).then(() => {
+            // fail to add same dataset again
+            futureResult = insightFacade.addDataset(
+                id,
+                datasets[id],
+                InsightDatasetKind.Courses,
+            );
+            return expect(futureResult).to.be.rejectedWith(InsightError).then(() => {
+                let removeExpected: string = "Remove Success";
+                let removeResult: Promise<string> = insightFacade.removeDataset(id);
+                return expect(removeResult).to.eventually.deep.equal(removeExpected).then(() => {
+                    // can add it again after its removal
+                    futureResult = insightFacade.addDataset(
+                        id,
+                        datasets[id],
+                        InsightDatasetKind.Courses,
+                    );
+                    return expect(futureResult).to.eventually.deep.equal(expected).then(() => {
+                        // can remove again after added
+                        removeResult = insightFacade.removeDataset(id);
+                        return expect(removeResult).to.eventually.deep.equal(removeExpected);
+                    });
+                });
+            });
+        });
+    });
+    it("remove fail, add success, remove success", function () {
+        let id: string = "courses";
+        let removeExpected: string = "Remove Success";
+        let removeResult: Promise<string> = insightFacade.removeDataset(id);
+        return expect(removeResult).to.be.rejectedWith(InsightError).then(() => {
+            let expected: string[] = [id];
+            let futureResult: Promise<string[]> = insightFacade.addDataset(
+                id,
+                datasets[id],
+                InsightDatasetKind.Courses,
+            );
+            return expect(futureResult).to.eventually.deep.equal(expected).then(() => {
+                // can remove now
+                removeResult = insightFacade.removeDataset(id);
+                return expect(removeResult).to.eventually.deep.equal(removeExpected);
+            });
+        });
+    });
+
+
+    it("should not add null", function () {
         let id: string = "some string";
         let expected: string[] = [id];
         let futureResult: Promise<string[]> = insightFacade.addDataset(
