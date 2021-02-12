@@ -719,16 +719,16 @@ describe("InsightFacade PerformQuery", () => {
 
     // Dynamically create and run a test for each query in testQueries
     // Creates an extra "test" called "Should run test queries" as a byproduct. Don't worry about it
-    // it("Should run test queries", function () {
-    //     describe("Dynamic InsightFacade PerformQuery tests", function () {
-    //         for (const test of testQueries) {
-    //             it(`[${test.filename}] ${test.title}`, function () {
-    //                 const futureResult: Promise<any[]> = insightFacade.performQuery(test.query);
-    //                 return TestUtil.verifyQueryResult(futureResult, test);
-    //             });
-    //         }
-    //     });
-    // });
+    it("Should run test queries", function () {
+        describe("Dynamic InsightFacade PerformQuery tests", function () {
+            for (const test of testQueries) {
+                it(`[${test.filename}] ${test.title}`, function () {
+                    const futureResult: Promise<any[]> = insightFacade.performQuery(test.query);
+                    return TestUtil.verifyQueryResult(futureResult, test);
+                });
+            }
+        });
+    });
 
     // Dynamically create and run a test for each query in testQueries
     // Tests that the query syntax and semantic checks are working properly
