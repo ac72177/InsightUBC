@@ -12,10 +12,12 @@ import {QueryObject, semanticsCheck, syntaxCheck} from "./QueryObject";
 export default class InsightFacade implements IInsightFacade {
     private myMap: any;
     private currentDatasets: string[];
+    private insightDatasetList: InsightDataset[];
 
     constructor() {
         this.myMap = new Map();
         this.currentDatasets = [];
+        this.insightDatasetList = [];
         Log.trace("InsightFacadeImpl::init()");
     }
 
@@ -101,21 +103,25 @@ export default class InsightFacade implements IInsightFacade {
         let hasValidCourseSection: boolean = false;
         return new Promise<Map<string, string>> ((resolve, reject) => {
             for (let JSONString of currentFiles) {
-                let JSONObjectCourse = JSON.parse(JSONString);
-                if (JSONObjectCourse.hasOwnProperty("result")) {
-                    let myJSONArray = JSONObjectCourse.result;
-                    for (let JSONObjectSection of myJSONArray) {
-                        let DesiredJSONString;
-                        if (InsightFacade.verifyHasCorrectProperties(JSONObjectSection)) {
-                            DesiredJSONString = InsightFacade.createNewJSONStringData(JSONObjectSection);
-                            if (!nestedMap1.has(JSONObjectSection.id)) {
-                                nestedMap1.set(JSONObjectSection.id, DesiredJSONString);
-                                hasValidCourseSection = true;
+                try {
+                    let JSONObjectCourse = JSON.parse(JSONString);
+                    if (JSONObjectCourse.hasOwnProperty("result")) {
+                        let myJSONArray = JSONObjectCourse.result;
+                        for (let JSONObjectSection of myJSONArray) {
+                            let DesiredJSONString;
+                            if (InsightFacade.verifyHasCorrectProperties(JSONObjectSection)) {
+                                DesiredJSONString = InsightFacade.createNewJSONStringData(JSONObjectSection);
+                                if (!nestedMap1.has(JSONObjectSection.id)) {
+                                    nestedMap1.set(JSONObjectSection.id, DesiredJSONString);
+                                    hasValidCourseSection = true;
+                                }
                             }
                         }
+                    } else {
+                        return reject(new InsightError());
                     }
-                } else {
-                    return reject(new InsightError());
+                } catch (e) {
+                    continue;
                 }
             }
             if (hasValidCourseSection) {
@@ -123,9 +129,9 @@ export default class InsightFacade implements IInsightFacade {
             } else {
                 return reject(new InsightError());
             }
+
         });
     }
-
     /**
      * Given a valid section, returns a new JSON String with the desired data
      * @param JSONObjectSection
@@ -194,6 +200,7 @@ export default class InsightFacade implements IInsightFacade {
                 this.myMap.delete(id);
                 let removedIndex = this.currentDatasets.indexOf(id);
                 this.currentDatasets.splice(removedIndex, 1);
+                // this.insightDatasetList; // todo do stuff here with it
                 return Promise.resolve("Remove Success");
             });
     }
@@ -226,7 +233,7 @@ export default class InsightFacade implements IInsightFacade {
     }
 
     public listDatasets(): Promise<InsightDataset[]> {
-        return Promise.reject("Not implemented.");
+        return Promise.resolve(this.insightDatasetList);
     }
 
 
