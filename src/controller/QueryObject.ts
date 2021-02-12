@@ -7,14 +7,20 @@ const SCOMPARATOR: string[] = ["IS"];
 const Sfield: string[] = ["dept", "id", "instructor", "title", "uuid"];
 const NEG: string[] = ["NOT"];
 
+let currentID: string = "";
+let currentDatasets: string[];
+
 // jsonConstructor check from https://stackoverflow.com/questions/11182924/how-to-check-if-javascript-object-is-json
 const jsonConstructor = ({}).constructor;
 
 // !!! TODO: Implement method to check syntax and grammar of query
 // query contains WHERE and OPTIONS
-export function syntaxCheck(query: any) {
-    // throw new InsightError();
+export function syntaxCheck(query: any, datasets: string[]) {
+    currentDatasets = datasets;
+    currentID = ""; // initialize current id
+    if (query.constructor !== jsonConstructor) { throw new InsightError(); }
     if (!(query.hasOwnProperty("WHERE") && query.hasOwnProperty("OPTIONS"))) { throw new InsightError(); }
+    if (Object.keys(query).length !== 2) { throw new InsightError(); }
     try {
         syntaxCheckFilters(query.WHERE);
         syntaxCheckOPTIONS(query.OPTIONS);
@@ -49,14 +55,13 @@ function syntaxCheckFilters(query: any) {
 
 // OPTIONS contains COLUMNS
 function syntaxCheckOPTIONS(query: any) {
-    if (!query.hasOwnProperty("COLUMNS")) {throw new InsightError(); }
+    if (!query.hasOwnProperty("COLUMNS") || Object.keys(query).length > 2) {throw new InsightError(); }
+    syntaxCheckCols(query["COLUMNS"]);
 
-    for (const key in query) {
-        if (key === "COLUMNS") {
-            syntaxCheckCols(query[key]);
-        } else if (key === "ORDER") {
-            syntaxCheckOrder(query[key]);
-        } else { throw new InsightError(); }
+    if (Object.keys(query).length === 2) {
+        if (!query.hasOwnProperty("ORDER")) { throw new InsightError(); }
+        syntaxCheckOrder(query["ORDER"]);
+        if (!query["COLUMNS"].includes(query["ORDER"])) { throw new InsightError(); }
     }
     return;
 }
@@ -66,6 +71,7 @@ function syntaxCheckLogic(queryArr: any) { // query must be an array
     if (!Array.isArray(queryArr) || queryArr.length <= 0) { throw new InsightError(); }
     for (const i in queryArr) {
         if (queryArr[i].constructor !== jsonConstructor) {throw new InsightError(); }
+        if (Object.keys(queryArr[i]).length === 0) { throw new InsightError(); }
         syntaxCheckFilters(queryArr[i]);
     }
     return;
@@ -75,12 +81,32 @@ function syntaxCheckLogic(queryArr: any) { // query must be an array
 // !!! TODO: Ask TA what about all spaces?
 function syntaxCheckValidId(id: string) {
     if (id.includes("_") || id.length < 1) { throw new InsightError(); }
+    if (!currentDatasets.includes(id)) { throw new InsightError(); }
+    if (currentID !== "" && id !== currentID) {
+        throw new InsightError();
+    } else {
+        currentID = id;
+    }
     return;
 }
 
 function syntaxCheckValidInputString(str: string) {
     let parsed = str.split("*");
-    if (parsed.length > 1 || parsed[0].length < 1) { throw new InsightError(); }
+    // if (parsed.length > 3 || parsed[0].length < 1) { throw new InsightError(); }
+    switch (parsed.length) {
+        case 1:
+            break;
+        case 2:
+            if (parsed[0].length !== 0 && parsed[1].length !== 0) {throw new InsightError(); }
+            break;
+
+        case 3:
+            if (parsed[0].length !== 0 || parsed[2].length !== 0) {throw new InsightError(); }
+            break;
+
+        default:
+            throw new InsightError();
+    }
     return;
 }
 
@@ -89,13 +115,13 @@ function syntaxCheckValidInputString(str: string) {
 // Mkey and Skey check that idstring is valid.
 function syntaxCheckMComparator(query: any) { // must be one json obj
     if (!(query.constructor === jsonConstructor)) { throw new InsightError(); }
-    for (let mkey in query) {
-        let parsed = mkey.split("_");
-        if (parsed.length !== 2) { throw new InsightError(); }
-        syntaxCheckValidId(parsed[0]);
-        if (!Mfield.includes(parsed[1])) { throw new InsightError(); }
-        if (typeof(query[mkey]) !== "number") { throw new InsightError(); }
-    }
+    if (Object.keys(query).length !== 1) {throw new InsightError(); }
+    let mkey = Object.keys(query)[0];
+    let parsed = mkey.split("_");
+    if (parsed.length !== 2) { throw new InsightError(); }
+    syntaxCheckValidId(parsed[0]);
+    if (!Mfield.includes(parsed[1])) { throw new InsightError(); }
+    if (typeof(query[mkey]) !== "number") { throw new InsightError(); }
     return;
 }
 
@@ -104,14 +130,14 @@ function syntaxCheckMComparator(query: any) { // must be one json obj
 // Mkey and Skey check that idstring is valid.
 function syntaxCheckSComparator(query: any) {
     if (!(query.constructor === jsonConstructor)) { throw new InsightError(); }
-    for (let skey in query) {
-        let parsed = skey.split("_");
-        if (parsed.length !== 2) { throw new InsightError(); }
-        syntaxCheckValidId(parsed[0]);
-        if (!Sfield.includes(parsed[1])) { throw new InsightError(); }
-        if (typeof query[skey] !== "string") { throw new InsightError(); }
-        syntaxCheckValidInputString(query[skey]);
-    }
+    if (Object.keys(query).length !== 1) {throw new InsightError(); }
+    let skey = Object.keys(query)[0];
+    let parsed = skey.split("_");
+    if (parsed.length !== 2) { throw new InsightError(); }
+    syntaxCheckValidId(parsed[0]);
+    if (!Sfield.includes(parsed[1])) { throw new InsightError(); }
+    if (typeof query[skey] !== "string") { throw new InsightError(); }
+    syntaxCheckValidInputString(query[skey]);
     return;
 }
 
@@ -126,7 +152,11 @@ function syntaxCheckNegation(query: any) { // query must be an object
 function syntaxCheckCols(queryArr: any) { // must be array
     if (!Array.isArray(queryArr)) { throw new InsightError(); }
     for (const str of queryArr) {
-        if (typeof str !== "string") {throw new InsightError(); }
+        if (typeof str !== "string") { throw new InsightError(); }
+        let parsed = str.split("_");
+        if (parsed.length !== 2) { throw new InsightError(); }
+        syntaxCheckValidId(parsed[0]);
+        if (!Mfield.includes(parsed[1]) && !Sfield.includes(parsed[1])) { throw new InsightError(); }
     }
     return;
 }
@@ -137,21 +167,18 @@ function syntaxCheckOrder(query: any) {
     return;
 }
 
-// !!! TODO: Implement method to check semantics of query
-// The key for ORDER is in the COLUMNS array. Only consider one ORDER key.
-// Queries reference only one dataset. That dataset must already be added.
-export function semanticsCheck(query: JSON) {
-    return;
-}
-
 // !!! TODO: Implement this class. Look into AST
+// dataset referenced must already be added.
+// throws resultsTooLarge exception if result length > 5000
 export class QueryObject {
     private MAX_RES_SIZE: number = 5000;
     private qWhere: JSON;
     private qOption: JSON;
+    private id: string;
 
 
-    constructor(query: JSON) {
+    constructor(query: any) {
+        this.id = "";
         return;
     }
     public getQueryResults(): JSON[] {
@@ -159,6 +186,6 @@ export class QueryObject {
         if (res.length > this.MAX_RES_SIZE) {
             throw new ResultTooLargeError();
         }
-        return;
+        return res;
     }
 }

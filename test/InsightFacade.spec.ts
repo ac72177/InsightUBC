@@ -719,29 +719,24 @@ describe("InsightFacade PerformQuery", () => {
 
     // Dynamically create and run a test for each query in testQueries
     // Creates an extra "test" called "Should run test queries" as a byproduct. Don't worry about it
-    it("Should run test queries", function () {
-        describe("Dynamic InsightFacade PerformQuery tests", function () {
-            for (const test of testQueries) {
-                it(`[${test.filename}] ${test.title}`, function () {
-                    const futureResult: Promise<any[]> = insightFacade.performQuery(test.query);
-                    return TestUtil.verifyQueryResult(futureResult, test);
-                });
-            }
-        });
-    });
+    // it("Should run test queries", function () {
+    //     describe("Dynamic InsightFacade PerformQuery tests", function () {
+    //         for (const test of testQueries) {
+    //             it(`[${test.filename}] ${test.title}`, function () {
+    //                 const futureResult: Promise<any[]> = insightFacade.performQuery(test.query);
+    //                 return TestUtil.verifyQueryResult(futureResult, test);
+    //             });
+    //         }
+    //     });
+    // });
 
     // Dynamically create and run a test for each query in testQueries
+    // Tests that the query syntax and semantic checks are working properly
     it("Should validate query properly", function () {
         describe("Dynamic InsightFacade PerformQuery tests", function () {
             for (const test of testQueries) {
                 it(`[${test.filename}] ${test.title}`, function () {
-                    let queryValidity: boolean = true;
-                    try {
-                        const futureResult: Promise<any[]> = insightFacade.performQuery(test.query);
-                    } catch (e) {
-                        // query invalid
-                        queryValidity = false;
-                    }
+                    const queryValidity: Promise<boolean> = insightFacade.testIsQueryValid(test.query);
                     return expect(queryValidity).to.eventually.deep.equal(test.isQueryValid);
                 });
             }
@@ -749,32 +744,44 @@ describe("InsightFacade PerformQuery", () => {
     });
 
 
-    it("Should query simple query", function () {
+    // it("Should query simple query", function () {
+    //     let testQuery;
+    //     for (const test of testQueries) {
+    //         if (test.filename === "test/queries/simple.json") {
+    //             testQuery = test;
+    //             break;
+    //         }
+    //     }
+    //     const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
+    //     return TestUtil.verifyQueryResult(futureResult, testQuery);
+    // });
+    //
+    // it("Should query complex query", function () {
+    //     let testQuery;
+    //     for (const test of testQueries) {
+    //         if (test.filename === "test/queries/complex.json") {
+    //             testQuery = test;
+    //             break;
+    //         }
+    //     }
+    //     const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
+    //     return TestUtil.verifyQueryResult(futureResult, testQuery);
+    // });
+    //
+    // it("Should not query null query", function () {
+    //     const futureResult: Promise<any[]> = insightFacade.performQuery(null);
+    //     return expect(futureResult).to.be.rejectedWith(InsightError);
+    // });
+
+    it("Should validate test", function () {
         let testQuery;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/simple.json") {
+            if (test.filename === "test/queries/sCompAsterikFront.json") {
                 testQuery = test;
                 break;
             }
         }
-        const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
-        return TestUtil.verifyQueryResult(futureResult, testQuery);
-    });
-
-    it("Should query complex query", function () {
-        let testQuery;
-        for (const test of testQueries) {
-            if (test.filename === "test/queries/complex.json") {
-                testQuery = test;
-                break;
-            }
-        }
-        const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
-        return TestUtil.verifyQueryResult(futureResult, testQuery);
-    });
-
-    it("Should not query null query", function () {
-        const futureResult: Promise<any[]> = insightFacade.performQuery(null);
-        return expect(futureResult).to.be.rejectedWith(InsightError);
+        const queryValidity: Promise<boolean> = insightFacade.testIsQueryValid(testQuery.query);
+        return expect(queryValidity).to.eventually.deep.equal(testQuery.isQueryValid);
     });
 });
