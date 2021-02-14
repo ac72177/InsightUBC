@@ -15,8 +15,8 @@ export default class InsightFacade implements IInsightFacade {
     private insightDatasetList: InsightDataset[];
 
     constructor() {
-        this.myMap = new Map();
-        this.currentDatasets = [];
+        this.myMap = new Map(); // load from disk
+        this.currentDatasets = []; // load from disk todo
         this.insightDatasetList = [];
         Log.trace("InsightFacadeImpl::init()");
     }
@@ -83,6 +83,12 @@ export default class InsightFacade implements IInsightFacade {
                                 .then((nestedMap) => {
                                     this.myMap.set(id, nestedMap);
                                     this.currentDatasets.push(id);
+                                    const myDataset: InsightDataset = {
+                                        id: id,
+                                        kind: InsightDatasetKind.Courses,
+                                        numRows: nestedMap.size,
+                                    };
+                                    this.insightDatasetList.push(myDataset);
                                     return resolve(this.currentDatasets);
                                 });
                         });
@@ -200,7 +206,7 @@ export default class InsightFacade implements IInsightFacade {
                 this.myMap.delete(id);
                 let removedIndex = this.currentDatasets.indexOf(id);
                 this.currentDatasets.splice(removedIndex, 1);
-                // this.insightDatasetList; // todo do stuff here with it
+                this.insightDatasetList.splice(removedIndex, 1);
                 return Promise.resolve("Remove Success");
             });
     }

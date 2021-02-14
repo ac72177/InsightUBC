@@ -227,7 +227,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.be.rejectedWith(InsightError);
     });
 
-    it("Should add valid dataset containing invalid files", function () {    // TODO UPDATE THIS ON DEV
+    it("Should add valid dataset containing invalid files", function () {
         // JSON file contains 2 courses, invalid names
         const id: string = "shouldAddWithInvalid";
         const expected: string[] = [id];
@@ -239,7 +239,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
 
-    it("Should add valid dataset containing invalid files 2", function () { // TODO UPDATE THIS ON DEV
+    it("Should add valid dataset containing invalid files 2", function () {
         // JSON file contains 2 courses, invalid names
         const id: string = "shouldAddWithInvalid2";
         const expected: string[] = [id];
