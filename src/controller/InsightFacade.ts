@@ -123,8 +123,6 @@ export default class InsightFacade implements IInsightFacade {
                                 }
                             }
                         }
-                    } else {
-                        return reject(new InsightError());
                     }
                 } catch (e) {
                     continue;
