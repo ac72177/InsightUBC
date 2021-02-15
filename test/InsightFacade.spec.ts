@@ -124,7 +124,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         });
     });
 
-    it("Should add a valid dataset already in disk", function () {
+    it("Should not add a valid dataset already in disk", function () {
         let id: string = "courses";
         let expected: string[] = [id];
         let futureResult: Promise<string[]> = insightFacade.addDataset(
@@ -140,7 +140,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
                 datasets[id],
                 InsightDatasetKind.Courses,
             );
-            return expect(futureResult).to.eventually.deep.equal(expected);
+            return expect(futureResult).to.be.rejectedWith(InsightError);
         });
     });
 

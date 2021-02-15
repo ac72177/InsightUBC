@@ -228,8 +228,6 @@ export default class InsightFacade implements IInsightFacade {
                     .then(() => {
                         return Promise.resolve("Remove Success");
                     });
-            }).catch((error) => {
-                return Promise.reject(new InsightError());
             });
     }
 
