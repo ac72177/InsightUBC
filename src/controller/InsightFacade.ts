@@ -2,6 +2,7 @@ import Log from "../Util";
 import {IInsightFacade, InsightDataset, InsightDatasetKind, InsightError, NotFoundError} from "./IInsightFacade";
 import * as JSZip from "jszip";
 import {QueryObject, syntaxCheck} from "./QueryObject";
+import * as fs from "fs-extra";
 
 
 /**
@@ -10,15 +11,40 @@ import {QueryObject, syntaxCheck} from "./QueryObject";
  *
  */
 export default class InsightFacade implements IInsightFacade {
-    private myMap: any;
+    private myMap: Map<string, Map<string, string>>;
     private currentDatasets: string[];
     private insightDatasetList: InsightDataset[];
 
     constructor() {
-        this.myMap = new Map(); // load from disk
-        this.currentDatasets = []; // load from disk todo
-        this.insightDatasetList = [];
+        if (fs.existsSync("./data/mySavedData")) {
+            this.loadFromDisk("./data/mySavedData");
+        } else {
+            this.myMap = new Map();
+            this.currentDatasets = [];
+            this.insightDatasetList = [];
+        }
         Log.trace("InsightFacadeImpl::init()");
+    }
+
+    private loadFromDisk(path: string) {
+        let loadedData = fs.readFileSync(path).toString("utf8");
+        try {
+            this.myMap = new Map();
+            let JSONObjectData = JSON.parse(loadedData);
+            let JSONMapData = JSONObjectData.Map;
+            let nestedMap: Map<string, string> = new Map();
+            for (let nestedMapKey in JSONMapData) {
+                let nestedMapObject = JSONMapData[nestedMapKey];
+                for (let key in nestedMapObject) {
+                    nestedMap.set(key, nestedMapObject[key]);
+                }
+                this.myMap.set(nestedMapKey, nestedMap);
+            }
+            this.currentDatasets = JSONObjectData.DatasetListString;
+            this.insightDatasetList = JSONObjectData.InsightDatasetList;
+        } catch (e) {
+            Log.error("Could not load from disk");
+        }
     }
 
     public addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
@@ -39,7 +65,6 @@ export default class InsightFacade implements IInsightFacade {
     /**
      * Turns verifying an id into a Promise
      * If there is an error, reject with an Insight Error
-     * @param id
      */
     private promiseToVerifyId(id: string): Promise<void> {
         return new Promise<void> ((resolve, reject) => {
@@ -63,9 +88,6 @@ export default class InsightFacade implements IInsightFacade {
     /**
      * Turns adding a verified dataset into a promise, helper function for addDataset
      * Rejects with Insight Error
-     * @param id
-     * @param content
-     * @private
      */
     private promiseToAddVerifiedDataset(id: string, content: string): Promise<string[]> {
         let currentZip = new JSZip();
@@ -89,7 +111,10 @@ export default class InsightFacade implements IInsightFacade {
                                         numRows: nestedMap.size,
                                     };
                                     this.insightDatasetList.push(myDataset);
-                                    return resolve(this.currentDatasets);
+                                    return this.writeToDisk(this.myMap, this.currentDatasets, this.insightDatasetList)
+                                        .then (() => {
+                                            return resolve(this.currentDatasets);
+                                        });
                                 });
                         });
                 }).catch((error) => {
@@ -101,8 +126,6 @@ export default class InsightFacade implements IInsightFacade {
     /**
      * Turns adding to the data structure into a Promise, helper function for addDataset
      * If any errors, rejects with Insight Error
-     * @param currentFiles
-     * @private
      */
     private addToDataStructureIfValid(currentFiles: string[]): Promise<Map<string, string>> {
         let nestedMap1 = new Map<string, string>();
@@ -116,7 +139,7 @@ export default class InsightFacade implements IInsightFacade {
                         for (let JSONObjectSection of myJSONArray) {
                             let DesiredJSONString;
                             if (InsightFacade.verifyHasCorrectProperties(JSONObjectSection)) {
-                                DesiredJSONString = InsightFacade.createNewJSONStringData(JSONObjectSection);
+                                DesiredJSONString = InsightFacade.createNewJSONCourseStringData(JSONObjectSection);
                                 if (!nestedMap1.has(JSONObjectSection.id)) {
                                     nestedMap1.set(JSONObjectSection.id, DesiredJSONString);
                                     hasValidCourseSection = true;
@@ -138,10 +161,8 @@ export default class InsightFacade implements IInsightFacade {
     }
     /**
      * Given a valid section, returns a new JSON String with the desired data
-     * @param JSONObjectSection
-     * @private
      */
-    private static createNewJSONStringData(JSONObjectSection: any): any {
+    private static createNewJSONCourseStringData(JSONObjectSection: any): any {
         let year: string;
         if (JSONObjectSection.hasOwnProperty("Section") && JSONObjectSection.Section === "overall") {
             year = "1900";
@@ -164,8 +185,6 @@ export default class InsightFacade implements IInsightFacade {
 
     /**
      * Verifies if the parsed object has the correct properties and each property has the correct value
-     * @param JSONObject
-     * @private
      */
     private static verifyHasCorrectProperties(JSONObject: any): boolean {
         return JSONObject.hasOwnProperty("Subject")
@@ -205,10 +224,42 @@ export default class InsightFacade implements IInsightFacade {
                 let removedIndex = this.currentDatasets.indexOf(id);
                 this.currentDatasets.splice(removedIndex, 1);
                 this.insightDatasetList.splice(removedIndex, 1);
-                return Promise.resolve("Remove Success");
+                return this.writeToDisk(this.myMap, this.currentDatasets, this.insightDatasetList)
+                    .then(() => {
+                        return Promise.resolve("Remove Success");
+                    });
+            }).catch((error) => {
+                return Promise.reject(new InsightError());
             });
     }
 
+    /**
+     * Write the current global variables to the disk
+     */
+    private writeToDisk(map: Map<string, Map<string, string>>, datasets: string[], insightDatasets: InsightDataset[]) {
+        const diskData = InsightFacade.createNewJSONDiskData(map, datasets, insightDatasets);
+        return fs.writeFile("./data/mySavedData", diskData);
+    }
+
+    /**
+     * Given the current map, datasets, and insightDataset List, converts to a json string
+     */
+    private static createNewJSONDiskData(map: Map<string, Map<string, string>>, datasets: string[],
+                                         insightDatasets: InsightDataset[]): string {
+        let JSONMap: { [x: string]: any; } = {};
+        map.forEach((value, key) => {
+            let nestedJSONMap: { [x: string]: string; } = {};
+            value.forEach((value1, key1) => {
+                nestedJSONMap[key1] = value1;
+            });
+            JSONMap[key] = nestedJSONMap;
+        });
+        return JSON.stringify ({
+            Map: JSONMap,
+            DatasetListString: datasets,
+            InsightDatasetList: insightDatasets,
+        });
+    }
     public performQuery(query: any): Promise<any[]> {
 
         try {
@@ -237,6 +288,4 @@ export default class InsightFacade implements IInsightFacade {
     public listDatasets(): Promise<InsightDataset[]> {
         return Promise.resolve(this.insightDatasetList);
     }
-
-
 }

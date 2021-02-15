@@ -96,28 +96,29 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
     it("Should read from disk", function () {
         const id: string = "courses";
         const expected: string[] = [id];
-        let futureResult: Promise<string[]> = insightFacade.addDataset(
-            id,
-            datasets[id],
-            InsightDatasetKind.Courses,
-        );
+        let futureResult: Promise<string[]> = insightFacade.addDataset(id, datasets[id], InsightDatasetKind.Courses);
         return expect(futureResult).to.eventually.deep.equal(expected).then(() => {
             let diskFacade: InsightFacade;
             diskFacade = new InsightFacade();
-            let expectedList: InsightDataset[] = [];
+            const myDataset1: InsightDataset = {
+                id: "courses",
+                kind: InsightDatasetKind.Courses,
+                numRows: 64612,
+            };
+            let expectedList: InsightDataset[] = [myDataset1];
             let listResult: Promise<InsightDataset[]> = diskFacade.listDatasets();
             return expect(listResult).to.eventually.deep.equal(expectedList).then(() => {
                 // dataset should be removed from disk
                 let expectedRemove: string = "Remove Success";
                 let removeResult: Promise<string> = diskFacade.removeDataset(id);
                 return expect(removeResult).to.eventually.deep.equal(expectedRemove).then(() => {
-                    // should add to memory already on disk
+                    // should not add to memory already on disk
                     futureResult = insightFacade.addDataset(
                         id,
                         datasets[id],
                         InsightDatasetKind.Courses,
                     );
-                    return expect(futureResult).to.eventually.deep.equal(expected);
+                    return expect(futureResult).to.be.rejectedWith(InsightError);
                 });
             });
         });
