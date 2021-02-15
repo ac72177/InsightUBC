@@ -109,7 +109,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
             let listResult: Promise<InsightDataset[]> = diskFacade.listDatasets();
             return expect(listResult).to.eventually.deep.equal(expectedList).then(() => {
                 // dataset should be removed from disk
-                let expectedRemove: string = "Remove Success";
+                let expectedRemove: string = id;
                 let removeResult: Promise<string> = diskFacade.removeDataset(id);
                 return expect(removeResult).to.eventually.deep.equal(expectedRemove).then(() => {
                     // should not add to memory already on disk
@@ -308,7 +308,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
             InsightDatasetKind.Courses,
         );
         return expect(futureResult).to.eventually.deep.equal(expected).then(() => {
-            let removeExpected: string = "Remove Success";
+            let removeExpected: string = id;
             let removeResult: Promise<string> = insightFacade.removeDataset(id);
             return expect(removeResult).to.eventually.deep.equal(removeExpected).then(() => {
                 // cannot remove the same dataset twice
@@ -327,7 +327,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
             InsightDatasetKind.Courses,
         );
         return expect(futureResult).to.eventually.deep.equal(expected).then(() => {
-            let removeExpected: string = "Remove Success";
+            let removeExpected: string = id;
             let removeResult: Promise<string> = insightFacade.removeDataset("   ");
             return expect(removeResult).to.be.rejectedWith(InsightError).then(() => {
                 // cannot remove the same dataset twice
@@ -385,7 +385,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
             InsightDatasetKind.Courses,
         );
         return expect(futureResult).to.eventually.deep.equal(expected).then(() => {
-            let removeExpected: string = "Remove Success";
+            let removeExpected: string = id;
             let removeResult: Promise<string> = insightFacade.removeDataset(id);
             return expect(removeResult).to.eventually.deep.equal(removeExpected).then(() => {
                 // can add it again after its removal
@@ -432,7 +432,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         let futureResult: Promise<string[]> = insightFacade.addDataset(id, datasets[id], InsightDatasetKind.Courses);
         // accepts courses as id and ADDS to dataset
         return expect(futureResult).to.eventually.deep.equal(expectedAdd).then(() => {
-            const expectedRemove: string = "Remove Success";
+            const expectedRemove: string = id;
             let futureResultRemove: Promise<string> = insightFacade.removeDataset(id);
             // successfully REMOVES dataset
             return expect(futureResultRemove).to.eventually.deep.equal(expectedRemove).then(() => {
@@ -497,7 +497,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
                 InsightDatasetKind.Courses,
             );
             return expect(futureResult).to.be.rejectedWith(InsightError).then(() => {
-                let removeExpected: string = "Remove Success";
+                let removeExpected: string = id;
                 let removeResult: Promise<string> = insightFacade.removeDataset(id);
                 return expect(removeResult).to.eventually.deep.equal(removeExpected).then(() => {
                     // can add it again after its removal
@@ -517,7 +517,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
     });
     it("remove fail, add success, remove success", function () {
         let id: string = "courses";
-        let removeExpected: string = "Remove Success";
+        let removeExpected: string = id;
         let removeResult: Promise<string> = insightFacade.removeDataset(id);
         return expect(removeResult).to.be.rejectedWith(NotFoundError).then(() => {
             let expected: string[] = [id];
@@ -750,7 +750,7 @@ describe("InsightFacade PerformQuery", () => {
     // Load all the test queries, and call addDataset on the insightFacade instance for all the datasets
     before(function () {
         Log.test(`Before: ${this.test.parent.title}`);
-
+        this.timeout(100000);
         // Load the query JSON files under test/queries.
         // Fail if there is a problem reading ANY query.
         try {
@@ -792,16 +792,16 @@ describe("InsightFacade PerformQuery", () => {
 
     // Dynamically create and run a test for each query in testQueries
     // Creates an extra "test" called "Should run test queries" as a byproduct. Don't worry about it
-    it("Should run test queries", function () {
-        describe("Dynamic InsightFacade PerformQuery tests", function () {
-            for (const test of testQueries) {
-                it(`[${test.filename}] ${test.title}`, function () {
-                    const futureResult: Promise<any[]> = insightFacade.performQuery(test.query);
-                    return TestUtil.verifyQueryResult(futureResult, test);
-                });
-            }
-        });
-    });
+    // it("Should run test queries", function () {
+    //     describe("Dynamic InsightFacade PerformQuery tests", function () {
+    //         for (const test of testQueries) {
+    //             it(`[${test.filename}] ${test.title}`, function () {
+    //                 const futureResult: Promise<any[]> = insightFacade.performQuery(test.query);
+    //                 return TestUtil.verifyQueryResult(futureResult, test);
+    //             });
+    //         }
+    //     });
+    // });
 
     // Dynamically create and run a test for each query in testQueries
     // Tests that the query syntax and semantic checks are working properly
@@ -849,7 +849,7 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/sCompAsterikFront.json") {
+            if (test.filename === "test/queries/wildcardOperator.json") {
                 testQuery = test;
                 break;
             }

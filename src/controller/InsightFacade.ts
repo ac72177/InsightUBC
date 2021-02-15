@@ -1,7 +1,8 @@
 import Log from "../Util";
-import {IInsightFacade, InsightDataset, InsightDatasetKind, InsightError, NotFoundError} from "./IInsightFacade";
+import { IInsightFacade, InsightDataset, InsightDatasetKind, InsightError, NotFoundError, ResultTooLargeError
+} from "./IInsightFacade";
 import * as JSZip from "jszip";
-import {QueryObject, syntaxCheck} from "./QueryObject";
+import {QueryObject} from "./QueryObject";
 import * as fs from "fs-extra";
 
 
@@ -16,13 +17,13 @@ export default class InsightFacade implements IInsightFacade {
     private insightDatasetList: InsightDataset[];
 
     constructor() {
-        if (fs.existsSync("./data/mySavedData")) {
-            this.loadFromDisk("./data/mySavedData");
-        } else {
-            this.myMap = new Map();
-            this.currentDatasets = [];
-            this.insightDatasetList = [];
-        }
+        // if (fs.existsSync("./data/mySavedData")) {
+        //     this.loadFromDisk("./data/mySavedData");
+        // } else {
+        this.myMap = new Map();
+        this.currentDatasets = [];
+        this.insightDatasetList = [];
+        // }
         Log.trace("InsightFacadeImpl::init()");
     }
 
@@ -111,10 +112,13 @@ export default class InsightFacade implements IInsightFacade {
                                         numRows: nestedMap.size,
                                     };
                                     this.insightDatasetList.push(myDataset);
-                                    return this.writeToDisk(this.myMap, this.currentDatasets, this.insightDatasetList)
-                                        .then (() => {
-                                            return resolve(this.currentDatasets);
-                                        });
+                                    return resolve(this.currentDatasets);
+                                     // for testing purposes
+                                    // return this.writeToDisk(this.myMap,
+                                    // this.currentDatasets, this.insightDatasetList)
+                                    //     .then (() => {
+                                    //         return resolve(this.currentDatasets);
+                                    //     });
                                 });
                         });
                 }).catch((error) => {
@@ -159,9 +163,7 @@ export default class InsightFacade implements IInsightFacade {
 
         });
     }
-    /**
-     * Given a valid section, returns a new JSON String with the desired data
-     */
+
     private static createNewJSONCourseStringData(JSONObjectSection: any): any {
         let year: string;
         if (JSONObjectSection.hasOwnProperty("Section") && JSONObjectSection.Section === "overall") {
@@ -170,22 +172,19 @@ export default class InsightFacade implements IInsightFacade {
             year = JSONObjectSection.Year;
         }
         return JSON.stringify({
-                Dept: JSONObjectSection.Subject,
-                Avg: JSONObjectSection.Avg,
-                Uuid: JSONObjectSection.id.toString(),
-                Title: JSONObjectSection.Title,
-                Id: JSONObjectSection.Course,
-                Instructor: JSONObjectSection.Professor,
-                Pass: JSONObjectSection.Pass,
-                Fail: JSONObjectSection.Fail,
-                Audit: JSONObjectSection.Audit,
-                Year: year
+            Dept: JSONObjectSection.Subject,
+            Avg: JSONObjectSection.Avg,
+            Uuid: JSONObjectSection.id.toString(),
+            Title: JSONObjectSection.Title,
+            Id: JSONObjectSection.Course,
+            Instructor: JSONObjectSection.Professor,
+            Pass: JSONObjectSection.Pass,
+            Fail: JSONObjectSection.Fail,
+            Audit: JSONObjectSection.Audit,
+            Year: year
         });
     }
 
-    /**
-     * Verifies if the parsed object has the correct properties and each property has the correct value
-     */
     private static verifyHasCorrectProperties(JSONObject: any): boolean {
         return JSONObject.hasOwnProperty("Subject")
             && JSONObject.hasOwnProperty("Avg")
@@ -211,6 +210,7 @@ export default class InsightFacade implements IInsightFacade {
     }
 
     public removeDataset(id: string): Promise<string> {
+        // return Promise.reject(new InsightError()); // stub to test
         if (id === null || id === undefined) {
             return Promise.reject(new InsightError());
         }
@@ -224,24 +224,19 @@ export default class InsightFacade implements IInsightFacade {
                 let removedIndex = this.currentDatasets.indexOf(id);
                 this.currentDatasets.splice(removedIndex, 1);
                 this.insightDatasetList.splice(removedIndex, 1);
-                return this.writeToDisk(this.myMap, this.currentDatasets, this.insightDatasetList)
-                    .then(() => {
-                        return Promise.resolve("Remove Success");
-                    });
+                // return this.writeToDisk(this.myMap, this.currentDatasets, this.insightDatasetList)
+                //     .then(() => {
+                //         return Promise.resolve(id);
+                //     });
+                return Promise.resolve(id);
             });
     }
 
-    /**
-     * Write the current global variables to the disk
-     */
     private writeToDisk(map: Map<string, Map<string, string>>, datasets: string[], insightDatasets: InsightDataset[]) {
         const diskData = InsightFacade.createNewJSONDiskData(map, datasets, insightDatasets);
         return fs.writeFile("./data/mySavedData", diskData);
     }
 
-    /**
-     * Given the current map, datasets, and insightDataset List, converts to a json string
-     */
     private static createNewJSONDiskData(map: Map<string, Map<string, string>>, datasets: string[],
                                          insightDatasets: InsightDataset[]): string {
         let JSONMap: { [x: string]: any; } = {};
@@ -261,22 +256,34 @@ export default class InsightFacade implements IInsightFacade {
     public performQuery(query: any): Promise<any[]> {
 
         try {
-            syntaxCheck(query, this.currentDatasets);
-            let queryObject: QueryObject = new QueryObject(query);
-            let res: JSON[];
+            let queryObject: QueryObject = new QueryObject(query, this.currentDatasets, this.myMap);
+            queryObject.syntaxCheck();
+            let res: object[];
             res = queryObject.getQueryResults();
             return Promise.resolve(res);
         } catch (e) {
             // if (e === SyntaxError) { return Promise.reject("Invalid JSON Syntax"); }
-            return Promise.reject(e); // can be either syntax error or Insight Error
+            switch (e.message) {
+                case "InsightError":
+                    return Promise.reject(new InsightError());
+                    break;
+                case "NotFoundError":
+                    return Promise.reject(new NotFoundError());
+                    break;
+                case "ResultTooLargeError":
+                    return Promise.reject(new ResultTooLargeError());
+                    break;
+                default:
+                    throw e;
+            }
         }
     }
 
     public testIsQueryValid(query: any): Promise<boolean> {
         try {
-            syntaxCheck(query, this.currentDatasets);
-            let queryObject: QueryObject = new QueryObject(query);
-            queryObject.getQueryResults();
+            let queryObject: QueryObject = new QueryObject(query, this.currentDatasets, this.myMap);
+            queryObject.syntaxCheck();
+            // queryObject.getQueryResults();
             return Promise.resolve(true);
         } catch (e) {
             return Promise.resolve(false);
