@@ -17,13 +17,13 @@ export default class InsightFacade implements IInsightFacade {
     private insightDatasetList: InsightDataset[];
 
     constructor() {
-        // if (fs.existsSync("./data/mySavedData")) {
-        //     this.loadFromDisk("./data/mySavedData");
-        // } else {
-        this.myMap = new Map();
-        this.currentDatasets = [];
-        this.insightDatasetList = [];
-        // }
+        if (fs.existsSync("./data/mySavedData")) {
+            this.loadFromDisk("./data/mySavedData");
+        } else {
+            this.myMap = new Map();
+            this.currentDatasets = [];
+            this.insightDatasetList = [];
+        }
         Log.trace("InsightFacadeImpl::init()");
     }
 
@@ -112,13 +112,10 @@ export default class InsightFacade implements IInsightFacade {
                                         numRows: nestedMap.size,
                                     };
                                     this.insightDatasetList.push(myDataset);
-                                    return resolve(this.currentDatasets);
-                                     // for testing purposes
-                                    // return this.writeToDisk(this.myMap,
-                                    // this.currentDatasets, this.insightDatasetList)
-                                    //     .then (() => {
-                                    //         return resolve(this.currentDatasets);
-                                    //     });
+                                    return this.writeToDisk(this.myMap, this.currentDatasets, this.insightDatasetList)
+                                        .then (() => {
+                                            return resolve(this.currentDatasets);
+                                        });
                                 });
                         });
                 }).catch((error) => {
@@ -210,7 +207,6 @@ export default class InsightFacade implements IInsightFacade {
     }
 
     public removeDataset(id: string): Promise<string> {
-        // return Promise.reject(new InsightError()); // stub to test
         if (id === null || id === undefined) {
             return Promise.reject(new InsightError());
         }
@@ -224,10 +220,10 @@ export default class InsightFacade implements IInsightFacade {
                 let removedIndex = this.currentDatasets.indexOf(id);
                 this.currentDatasets.splice(removedIndex, 1);
                 this.insightDatasetList.splice(removedIndex, 1);
-                // return this.writeToDisk(this.myMap, this.currentDatasets, this.insightDatasetList)
-                //     .then(() => {
-                //         return Promise.resolve(id);
-                //     });
+                return this.writeToDisk(this.myMap, this.currentDatasets, this.insightDatasetList)
+                    .then(() => {
+                        return Promise.resolve(id);
+                    });
                 return Promise.resolve(id);
             });
     }
