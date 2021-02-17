@@ -18,6 +18,7 @@ export interface InsightDataset {
 export class InsightError extends Error {
     constructor(...args: any[]) {
         super(...args);
+        this.message = "InsightError";
         Error.captureStackTrace(this, InsightError);
     }
 }
@@ -25,6 +26,7 @@ export class InsightError extends Error {
 export class NotFoundError extends Error {
     constructor(...args: any[]) {
         super(...args);
+        this.message = "NotFoundError";
         Error.captureStackTrace(this, NotFoundError);
     }
 }
@@ -32,6 +34,7 @@ export class NotFoundError extends Error {
 export class ResultTooLargeError extends Error {
     constructor(...args: any[]) {
         super(...args);
+        this.message = "ResultTooLargeError";
         Error.captureStackTrace(this, ResultTooLargeError);
     }
 }

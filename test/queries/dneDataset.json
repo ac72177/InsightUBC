@@ -16,5 +16,5 @@
         }
     },
     "isQueryValid": false,
-    "result": "InsightError"
+    "result": "NotFoundError"
 }
