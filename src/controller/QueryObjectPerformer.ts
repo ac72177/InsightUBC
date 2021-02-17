@@ -62,8 +62,22 @@ export class QueryObjectPerformer {
         // maps this.uuidRes to this.res according to this.query.OPTIONS
         // sorts elements of this.res according to this.query.OPTIONS.ORDER if it exists
         this.res = this.uuidRes.map((uuid) => {
-            return JSON.parse(this.map.get(uuid));
+            let obj = JSON.parse(this.map.get(uuid));
+            let ret: any = {};
+            for (const key of this.query.OPTIONS.COLUMNS) {
+                let field = key.split("_")[1];
+                ret[key] = obj[field];
+            }
+            return ret;
         });
+
+        if (this.query.OPTIONS.hasOwnProperty("ORDER")) {
+            let key = this.query.OPTIONS.ORDER;
+            this.res.sort((obj1: any, obj2: any) => {
+                return obj2[key] - obj1[key];
+            });
+            this.res.reverse();
+        }
         return;
     }
 
