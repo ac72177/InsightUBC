@@ -55,6 +55,9 @@ export class QueryObjectPerformer {
         return res;
     }
 
+    // TODO: Adrea implement this method if you have time
+    // this.uuidRes is a string[] containing the uuid of the results.
+    // we want to get the actual objects of those uuid and store them in this.res ^^
     private convertToRes() {
         // maps this.uuidRes to this.res according to this.query.OPTIONS
         // sorts elements of this.res according to this.query.OPTIONS.ORDER if it exists
