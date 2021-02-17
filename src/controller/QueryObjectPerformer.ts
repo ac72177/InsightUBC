@@ -166,7 +166,22 @@ export class QueryObjectPerformer {
     }
 
     private performSComparator(query: any, key: string, neg: boolean): string[] {
-        return [];
+        let uuidRes: string[] = [];
+        let skey: string = Object.keys(query)[0];
+        let sfield: string = skey.split("_")[1];
+        let str: string = query[skey];
+        // escaping the string as necessary. line of code from
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+        str = str.replace(/[.+?^${}()|[\]\\]/g, "\\$&");
+
+        // regex expression from
+        // https://stackoverflow.com/questions/52143451/javascript-filter-with-wildcard
+        let regex = new RegExp("^" + str.replace(/\*/g, ".*") + "$");
+
+        this.map.forEach((obj: any, uuid: string) => {
+            if (regex.test(obj[sfield]) !== neg) { uuidRes.push(uuid); }
+        });
+        return uuidRes;
     }
 
     private performNeg(query: any, neg: boolean): string[] {
