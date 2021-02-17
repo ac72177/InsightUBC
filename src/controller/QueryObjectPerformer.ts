@@ -59,7 +59,7 @@ export class QueryObjectPerformer {
         // maps this.uuidRes to this.res according to this.query.OPTIONS
         // sorts elements of this.res according to this.query.OPTIONS.ORDER if it exists
         this.res = this.uuidRes.map((uuid) => {
-            return this.map.get(uuid);
+            return JSON.parse(this.map.get(uuid));
         });
         return;
     }
@@ -112,7 +112,54 @@ export class QueryObjectPerformer {
     }
 
     private performMComparator(query: any, key: string, neg: boolean): string[] {
-        return [];
+        let uuidRes: string[] = [];
+        let mkey: string = Object.keys(query)[0];
+        let mfield: string = mkey.split("_")[1];
+        let val: number = query[mkey];
+        switch (key) {
+            case "GT":
+                if (neg) {
+                    this.map.forEach((obj: any, uuid: string) => {
+                        obj = JSON.parse(obj);
+                        if (obj[mfield] <= val) { uuidRes.push(uuid); }
+                    });
+                } else {
+                    this.map.forEach((obj: any, uuid: string) => {
+                        obj = JSON.parse(obj);
+                        if (obj[mfield] > val) { uuidRes.push(uuid); }
+                    });
+                }
+                break;
+            case "EQ":
+                if (neg) {
+                    this.map.forEach((obj: any, uuid: string) => {
+                        obj = JSON.parse(obj);
+                        if (obj[mfield] !== val) { uuidRes.push(uuid); }
+                    });
+                } else {
+                    this.map.forEach((obj: any, uuid: string) => {
+                        obj = JSON.parse(obj);
+                        if (obj[mfield] === val) { uuidRes.push(uuid); }
+                    });
+                }
+                break;
+            case "LT":
+                if (neg) {
+                    this.map.forEach((obj: any, uuid: string) => {
+                        obj = JSON.parse(obj);
+                        if (obj[mfield] >= val) { uuidRes.push(uuid); }
+                    });
+                } else {
+                    this.map.forEach((obj: any, uuid: string) => {
+                        obj = JSON.parse(obj);
+                        if (obj[mfield] < val) { uuidRes.push(uuid); }
+                    });
+                }
+                break;
+            default:
+                break;
+        }
+        return uuidRes;
     }
 
     private performSComparator(query: any, key: string, neg: boolean): string[] {

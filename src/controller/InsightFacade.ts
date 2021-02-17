@@ -172,16 +172,16 @@ export default class InsightFacade implements IInsightFacade {
             year = JSONObjectSection.Year;
         }
         return JSON.stringify({
-            Dept: JSONObjectSection.Subject,
-            Avg: JSONObjectSection.Avg,
-            Uuid: JSONObjectSection.id.toString(),
-            Title: JSONObjectSection.Title,
-            Id: JSONObjectSection.Course,
-            Instructor: JSONObjectSection.Professor,
-            Pass: JSONObjectSection.Pass,
-            Fail: JSONObjectSection.Fail,
-            Audit: JSONObjectSection.Audit,
-            Year: year
+            dept: JSONObjectSection.Subject,
+            avg: JSONObjectSection.Avg,
+            uuid: JSONObjectSection.id.toString(),
+            title: JSONObjectSection.Title,
+            id: JSONObjectSection.Course,
+            instructor: JSONObjectSection.Professor,
+            pass: JSONObjectSection.Pass,
+            fail: JSONObjectSection.Fail,
+            audit: JSONObjectSection.Audit,
+            year: year
         });
     }
 
