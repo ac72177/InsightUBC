@@ -268,7 +268,7 @@ export default class InsightFacade implements IInsightFacade {
                     return Promise.reject(new InsightError());
                     break;
                 case "NotFoundError":
-                    return Promise.reject(new NotFoundError());
+                    return Promise.reject(new InsightError()); // TODO: Should be NotFoundError()?
                     break;
                 case "ResultTooLargeError":
                     return Promise.reject(new ResultTooLargeError());

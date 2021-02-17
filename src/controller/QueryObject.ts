@@ -1,4 +1,5 @@
 import {InsightError, NotFoundError, ResultTooLargeError} from "./IInsightFacade";
+import {QueryObjectPerformer} from "./QueryObjectPerformer";
 
 const LOGIC: string[] = ["AND", "OR"];
 const MCOMPARATOR: string[] = ["GT", "EQ", "LT"];
@@ -10,16 +11,13 @@ const NEG: string[] = ["NOT"];
 // jsonConstructor check from https://stackoverflow.com/questions/11182924/how-to-check-if-javascript-object-is-json
 const jsonConstructor = ({}).constructor;
 
-// !!! TODO: Implement this class. Look into AST
 // dataset referenced must already be added.
 // throws resultsTooLarge exception if result length > 5000
 export class QueryObject {
-    private MAX_RES_SIZE: number = 5000;
-    private query: any;
+    private readonly query: any;
     private currentID: string;
     private currentDatasets: string[];
     private map: any;
-    private res: object[]; // array of json objects
 
 
     constructor(query: any, datasets: string[], map: any) {
@@ -27,17 +25,13 @@ export class QueryObject {
         this.currentDatasets = datasets;
         this.query = query;
         this.map = map;
-        // this.syntaxCheck();
         return;
     }
 
     public getQueryResults(): object[] {
-        this.map = this.map.get(this.currentID);
-        this.res = this.performFilter(this.query.WHERE);
-        if (this.res.length > this.MAX_RES_SIZE) {
-            throw new ResultTooLargeError();
-        }
-        return this.res;
+        this.map = this.map.get(this.currentID); // this.map is now the courses map
+        let queryPerformer: QueryObjectPerformer = new QueryObjectPerformer(this.query, this.map);
+        return queryPerformer.getQueryResults();
     }
 
     // query contains WHERE and OPTIONS
@@ -45,47 +39,13 @@ export class QueryObject {
         if (this.query.constructor !== jsonConstructor) { throw new InsightError(); }
         if (!(this.query.hasOwnProperty("WHERE") && this.query.hasOwnProperty("OPTIONS"))) { throw new InsightError(); }
         if (Object.keys(this.query).length !== 2) { throw new InsightError(); }
-        this.syntaxCheckFilters(this.query.WHERE);
+        this.syntaxCheckFilter(this.query.WHERE);
         this.syntaxCheckOPTIONS(this.query.OPTIONS);
         return;
     }
 
-    private performFilter(query: any): object[] {
-        let res: object[];
-        const key = Object.keys(query)[0];
-        if (LOGIC.includes(key)) {
-            res = this.performLogic(query[key], key);
-        } else if (MCOMPARATOR.includes(key)) {
-            res = this.performMComparator(query[key]);
-        } else if (SCOMPARATOR.includes(key)) {
-            res = this.performSComparator(query[key]);
-        } else if (NEG.includes(key)) {
-            res = this.performNeg(query[key]);
-        } else { // error
-            throw new InsightError();
-        }
-        return res;
-    }
-
-
-    private performLogic(queryArr: any, key: string): object[] {
-        return;
-    }
-
-    private performMComparator(query: any): object[] {
-        return;
-    }
-
-    private performSComparator(query: any): object[] {
-        return;
-    }
-
-    private performNeg(query: any): object[] {
-        return;
-    }
-
 // WHERE contains only one FILTER object
-    private syntaxCheckFilters(query: any) {
+    private syntaxCheckFilter(query: any) {
         if (!(query.constructor === jsonConstructor)) { throw new InsightError(); }
         if (Object.keys(query).length > 1) {throw new InsightError(); }
 
@@ -126,7 +86,7 @@ export class QueryObject {
         for (const i in queryArr) {
             if (queryArr[i].constructor !== jsonConstructor) {throw new InsightError(); }
             if (Object.keys(queryArr[i]).length === 0) { throw new InsightError(); }
-            this.syntaxCheckFilters(queryArr[i]);
+            this.syntaxCheckFilter(queryArr[i]);
         }
         return;
     }
@@ -198,7 +158,7 @@ export class QueryObject {
 // NEGATION value must be one JSON obj containing a FILTER
     private syntaxCheckNegation(query: any) { // query must be an object
         if (!(query.constructor === jsonConstructor)) { throw new InsightError(); }
-        this.syntaxCheckFilters(query);
+        this.syntaxCheckFilter(query);
         return;
     }
 
