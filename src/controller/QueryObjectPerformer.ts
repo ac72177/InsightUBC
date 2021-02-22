@@ -55,12 +55,29 @@ export class QueryObjectPerformer {
         return res;
     }
 
+    // TODO: Adrea implement this method if you have time
+    // this.uuidRes is a string[] containing the uuid of the results.
+    // we want to get the actual objects of those uuid and store them in this.res ^^
     private convertToRes() {
         // maps this.uuidRes to this.res according to this.query.OPTIONS
         // sorts elements of this.res according to this.query.OPTIONS.ORDER if it exists
         this.res = this.uuidRes.map((uuid) => {
-            return JSON.parse(this.map.get(uuid));
+            let obj = JSON.parse(this.map.get(uuid));
+            let ret: any = {};
+            for (const key of this.query.OPTIONS.COLUMNS) {
+                let field = key.split("_")[1];
+                ret[key] = obj[field];
+            }
+            return ret;
         });
+
+        if (this.query.OPTIONS.hasOwnProperty("ORDER")) {
+            let key = this.query.OPTIONS.ORDER;
+            this.res.sort((obj1: any, obj2: any) => {
+                return obj2[key] - obj1[key];
+            });
+            this.res.reverse();
+        }
         return;
     }
 
@@ -81,11 +98,14 @@ export class QueryObjectPerformer {
         switch (key) { // filterRes.length >= 2
             case "AND":
                 for (const uuid0 of filterRes[0]) {
-                    for (const uuid1 of filterRes[1]) {
-                        if (uuid0 === uuid1) {
-                            uuidRes.push(uuid0);
-                        }
+                    if (filterRes[1].includes(uuid0)) {
+                        uuidRes.push(uuid0);
                     }
+                    // for (const uuid1 of filterRes[1]) {
+                    //     if (uuid0 === uuid1) {
+                    //         uuidRes.push(uuid0);
+                    //     }
+                    // }
                 }
 
                 for (const i in filterRes) {
@@ -163,7 +183,22 @@ export class QueryObjectPerformer {
     }
 
     private performSComparator(query: any, key: string, neg: boolean): string[] {
-        return [];
+        let uuidRes: string[] = [];
+        let skey: string = Object.keys(query)[0];
+        let sfield: string = skey.split("_")[1];
+        let str: string = query[skey];
+        // escaping the string as necessary. line of code from
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+        str = str.replace(/[.+?^${}()|[\]\\]/g, "\\$&");
+
+        // regex expression from
+        // https://stackoverflow.com/questions/52143451/javascript-filter-with-wildcard
+        let regex = new RegExp("^" + str.replace(/\*/g, ".*") + "$");
+
+        this.map.forEach((obj: any, uuid: string) => {
+            if (regex.test( JSON.parse(obj)[sfield]) !== neg) { uuidRes.push(uuid); }
+        });
+        return uuidRes;
     }
 
     private performNeg(query: any, neg: boolean): string[] {

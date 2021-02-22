@@ -856,7 +856,7 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/simple.json") {
+            if (test.filename === "test/queries/notOperator.json") {
                 testQuery = test;
                 break;
             }
