@@ -98,11 +98,14 @@ export class QueryObjectPerformer {
         switch (key) { // filterRes.length >= 2
             case "AND":
                 for (const uuid0 of filterRes[0]) {
-                    for (const uuid1 of filterRes[1]) {
-                        if (uuid0 === uuid1) {
-                            uuidRes.push(uuid0);
-                        }
+                    if (filterRes[1].includes(uuid0)) {
+                        uuidRes.push(uuid0);
                     }
+                    // for (const uuid1 of filterRes[1]) {
+                    //     if (uuid0 === uuid1) {
+                    //         uuidRes.push(uuid0);
+                    //     }
+                    // }
                 }
 
                 for (const i in filterRes) {
@@ -193,7 +196,7 @@ export class QueryObjectPerformer {
         let regex = new RegExp("^" + str.replace(/\*/g, ".*") + "$");
 
         this.map.forEach((obj: any, uuid: string) => {
-            if (regex.test(obj[sfield]) !== neg) { uuidRes.push(uuid); }
+            if (regex.test( JSON.parse(obj)[sfield]) !== neg) { uuidRes.push(uuid); }
         });
         return uuidRes;
     }
