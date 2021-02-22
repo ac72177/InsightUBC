@@ -178,7 +178,7 @@ export default class InsightFacade implements IInsightFacade {
             pass: JSONObjectSection.Pass,
             fail: JSONObjectSection.Fail,
             audit: JSONObjectSection.Audit,
-            year: year
+            year: Number(year)
         });
     }
 
@@ -275,14 +275,14 @@ export default class InsightFacade implements IInsightFacade {
         }
     }
 
-    public testIsQueryValid(query: any): Promise<boolean> {
+    public testQueryResLength(query: any): Promise<number> {
         try {
             let queryObject: QueryObject = new QueryObject(query, this.currentDatasets, this.myMap);
             queryObject.syntaxCheck();
             // queryObject.getQueryResults();
-            return Promise.resolve(true);
+            return Promise.resolve(queryObject.testGetResLength());
         } catch (e) {
-            return Promise.resolve(false);
+            return Promise.resolve(-1);
         }
     }
 
