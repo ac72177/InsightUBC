@@ -38,6 +38,15 @@ export class QueryObjectPerformer {
         return this.res;
     }
 
+    // TODO: comment out this test method after finish testing
+    public testGetResLength(): number {
+        this.uuidRes = this.performFilter(this.query.WHERE, false);
+        if (this.uuidRes.length > this.MAX_RES_SIZE) {
+            throw new ResultTooLargeError();
+        }
+        return this.uuidRes.length;
+    }
+
     private performFilter(query: any, neg: boolean): string[] {
         let res: string[];
         const key = Object.keys(query)[0];
@@ -55,7 +64,7 @@ export class QueryObjectPerformer {
         return res;
     }
 
-    // TODO: Adrea implement this method if you have time
+
     // this.uuidRes is a string[] containing the uuid of the results.
     // we want to get the actual objects of those uuid and store them in this.res ^^
     private convertToRes() {

@@ -28,6 +28,13 @@ export class QueryObject {
         return;
     }
 
+    // TODO: comment out this method once finished testing
+    public testGetResLength(): number {
+        this.map = this.map.get(this.currentID); // this.map is now the courses map
+        let queryPerformer: QueryObjectPerformer = new QueryObjectPerformer(this.query, this.map);
+        return queryPerformer.testGetResLength();
+    }
+
     public getQueryResults(): object[] {
         this.map = this.map.get(this.currentID); // this.map is now the courses map
         let queryPerformer: QueryObjectPerformer = new QueryObjectPerformer(this.query, this.map);
