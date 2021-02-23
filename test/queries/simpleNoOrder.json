@@ -29,7 +29,12 @@
             "COLUMNS": [
                 "courses_id",
                 "courses_title",
-                "courses_instructor"
+                "courses_instructor",
+                "courses_dept",
+                "courses_year",
+                "courses_pass",
+                "courses_fail",
+                "courses_uuid"
             ]
         }
     },
