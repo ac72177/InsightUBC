@@ -870,16 +870,16 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/simpleNoOrder.json") {
+            if (test.filename === "test/queries/filters.json") {
                 testQuery = test;
                 break;
             }
         }
         // const queryValidity: Promise<boolean> = insightFacade.testIsQueryValid(testQuery.query);
         // return expect(queryValidity).to.eventually.deep.equal(testQuery.isQueryValid);
-        const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
-        return TestUtil.verifyQueryResult(futureResult, testQuery);
-        // const lenRes: Promise<number> = insightFacade.testQueryResLength(testQuery.query);
-        // return expect(lenRes).to.eventually.deep.equal(testQuery.result.length);
+        // const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
+        // return TestUtil.verifyQueryResult(futureResult, testQuery);
+        const lenRes: Promise<number> = insightFacade.testQueryResLength(testQuery.query);
+        return expect(lenRes).to.eventually.deep.equal(testQuery.result.length);
     });
 });

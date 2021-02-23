@@ -120,10 +120,13 @@ export class QueryObjectPerformer {
                 for (const i in filterRes) {
                     if (uuidRes.length === 0) { break; }
                     if (Number(i) < 2) { continue; }
-                    for (const j in uuidRes) {
+                    let j = 0;
+                    while (j < uuidRes.length) {
                         if (!filterRes[i].includes(uuidRes[j])) {
                             uuidRes.splice(Number(j), 1);
+                            j--;
                         }
+                        j++;
                     }
                 }
                 break;
