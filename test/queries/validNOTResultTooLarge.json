@@ -1,0 +1,33 @@
+{
+    "title": "Not Succeeds for MComp",
+    "query": {
+  "WHERE": {
+    "NOT": {
+      "AND": [
+        {
+          "GT": {
+            "courses_avg": 20
+          }
+        },
+        {
+          "EQ": {
+            "courses_year": 1900
+          }
+        }
+      ]
+    }
+  },
+  "OPTIONS": {
+    "COLUMNS": [
+      "courses_dept",
+      "courses_pass",
+      "courses_fail",
+      "courses_audit",
+      "courses_year"
+    ],
+    "ORDER": "courses_year"
+  }
+},
+    "isQueryValid": false,
+    "result": "ResultTooLargeError"
+}
