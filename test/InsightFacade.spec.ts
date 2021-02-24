@@ -870,7 +870,7 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/filters.json") {
+            if (test.filename === "test/queries/validNOTResultTooLarge.json") {
                 testQuery = test;
                 break;
             }
