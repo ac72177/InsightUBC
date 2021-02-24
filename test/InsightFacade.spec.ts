@@ -799,30 +799,30 @@ describe("InsightFacade PerformQuery", () => {
 
     // Dynamically create and run a test for each query in testQueries
     // Creates an extra "test" called "Should run test queries" as a byproduct. Don't worry about it
-    // it("Should run test queries", function () {
-    //     describe("Dynamic InsightFacade PerformQuery tests", function () {
-    //         for (const test of testQueries) {
-    //             it(`[${test.filename}] ${test.title}`, function () {
-    //                 const futureResult: Promise<any[]> = insightFacade.performQuery(test.query);
-    //                 return TestUtil.verifyQueryResult(futureResult, test);
-    //             });
-    //         }
-    //     });
-    // });
-
-    it("Should check length of results are the same", function () {
+    it("Should run test queries", function () {
         describe("Dynamic InsightFacade PerformQuery tests", function () {
             for (const test of testQueries) {
-                if (test.isQueryValid) {
-                    it(`[${test.filename}] ${test.title}`, function () {
-                        const futureResult: Promise<number> = insightFacade.testQueryResLength(test.query);
-                        // return TestUtil.verifyQueryResult(futureResult, test);
-                        return expect(futureResult).to.eventually.deep.equal(test.result.length);
-                    });
-                }
+                it(`[${test.filename}] ${test.title}`, function () {
+                    const futureResult: Promise<any[]> = insightFacade.performQuery(test.query);
+                    return TestUtil.verifyQueryResult(futureResult, test);
+                });
             }
         });
     });
+
+    // it("Should check length of results are the same", function () {
+    //     describe("Dynamic InsightFacade PerformQuery tests", function () {
+    //         for (const test of testQueries) {
+    //             if (test.isQueryValid) {
+    //                 it(`[${test.filename}] ${test.title}`, function () {
+    //                     const futureResult: Promise<number> = insightFacade.testQueryResLength(test.query);
+    //                     // return TestUtil.verifyQueryResult(futureResult, test);
+    //                     return expect(futureResult).to.eventually.deep.equal(test.result.length);
+    //                 });
+    //             }
+    //         }
+    //     });
+    // });
 
     // Dynamically create and run a test for each query in testQueries
     // Tests that the query syntax and semantic checks are working properly
@@ -870,16 +870,16 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/filters.json") {
+            if (test.filename === "test/queries/validNOTResultTooLarge.json") {
                 testQuery = test;
                 break;
             }
         }
         // const queryValidity: Promise<boolean> = insightFacade.testIsQueryValid(testQuery.query);
         // return expect(queryValidity).to.eventually.deep.equal(testQuery.isQueryValid);
-        // const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
-        // return TestUtil.verifyQueryResult(futureResult, testQuery);
-        const lenRes: Promise<number> = insightFacade.testQueryResLength(testQuery.query);
-        return expect(lenRes).to.eventually.deep.equal(testQuery.result.length);
+        const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
+        return TestUtil.verifyQueryResult(futureResult, testQuery);
+        // const lenRes: Promise<number> = insightFacade.testQueryResLength(testQuery.query);
+        // return expect(lenRes).to.eventually.deep.equal(testQuery.result.length);
     });
 });
