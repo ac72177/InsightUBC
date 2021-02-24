@@ -83,19 +83,19 @@ export class QueryObjectPerformer {
         if (this.query.OPTIONS.hasOwnProperty("ORDER")) {
             let key = this.query.OPTIONS.ORDER;
             let field = key.split("_")[1];
-            // if (Mfield.includes(field) || field === "id" || field === "uuid") {
-            //     this.res.sort((obj1: any, obj2: any) => {
-            //         return obj1[key] - obj2[key];
-            //     });
-            // } else {
-            //     this.res.sort((obj1: any, obj2: any) => {
-            //         return obj1[key] > obj2[key] ? 1 : -1;
-            //     });
-            // }
+            if (Mfield.includes(field) || field === "id" || field === "uuid") {
+                this.res.sort((obj1: any, obj2: any) => {
+                    return obj1[key] - obj2[key];
+                });
+            } else {
+                this.res.sort((obj1: any, obj2: any) => {
+                    return obj1[key] > obj2[key] ? 1 : -1;
+                });
+            }
 
-            this.res.sort((obj1: any, obj2: any) => {
-                return obj1[key] - obj2[key];
-            });
+            // this.res.sort((obj1: any, obj2: any) => {
+            //     return obj1[key] - obj2[key];
+            // });
         }
         return;
     }
