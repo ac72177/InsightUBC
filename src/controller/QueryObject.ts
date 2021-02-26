@@ -171,7 +171,7 @@ export class QueryObject {
 
 // COLUMNS must be array of strings
     private syntaxCheckCols(queryArr: any) { // must be array
-        if (!Array.isArray(queryArr)) { throw new InsightError(); }
+        if (!Array.isArray(queryArr) || queryArr.length <= 0) { throw new InsightError(); }
         for (const str of queryArr) {
             if (typeof str !== "string") { throw new InsightError(); }
             let parsed = str.split("_");
