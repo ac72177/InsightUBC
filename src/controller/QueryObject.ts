@@ -102,7 +102,7 @@ export class QueryObject {
     private syntaxCheckValidId(id: string) {
         if (id.includes("_") || id.length < 1) { throw new InsightError(); }
         if (id.split(" ").length > 1) { throw new InsightError(); }
-        if (!this.currentDatasets.includes(id)) { throw new InsightError(); } // !!!TODO: NotFoundError()?
+        if (!this.currentDatasets.includes(id)) { throw new NotFoundError(); } // !!!TODO: NotFoundError()?
         if (this.currentID !== "" && id !== this.currentID) {
             throw new InsightError();
         } else {
