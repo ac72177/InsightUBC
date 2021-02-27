@@ -1,4 +1,5 @@
 import {InsightError, NotFoundError, ResultTooLargeError} from "./IInsightFacade";
+import {stringify} from "querystring";
 
 const LOGIC: string[] = ["AND", "OR"];
 const MCOMPARATOR: string[] = ["GT", "EQ", "LT"];
@@ -30,7 +31,13 @@ export class QueryObjectPerformer {
     the order of the objects according to this.query.OPTIONS.ORDER.
     */
     public getQueryResults(): object[] {
-        this.uuidRes = this.performFilter(this.query.WHERE, false);
+        if (Object.keys(this.query.WHERE).length === 0) {
+            this.map.forEach((obj: any, uuid: string) => {
+                this.uuidRes.push(uuid.toString());
+            });
+        } else {
+            this.uuidRes = this.performFilter(this.query.WHERE, false);
+        }
         if (this.uuidRes.length > this.MAX_RES_SIZE) {
             throw new ResultTooLargeError();
         }
