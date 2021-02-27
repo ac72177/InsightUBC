@@ -810,19 +810,19 @@ describe("InsightFacade PerformQuery", () => {
     //     });
     // });
 
-    it("Should check length of results are the same", function () {
-        describe("Dynamic InsightFacade PerformQuery tests", function () {
-            for (const test of testQueries) {
-                if (test.isQueryValid) {
-                    it(`[${test.filename}] ${test.title}`, function () {
-                        const futureResult: Promise<number> = insightFacade.testQueryResLength(test.query);
-                        // return TestUtil.verifyQueryResult(futureResult, test);
-                        return expect(futureResult).to.eventually.deep.equal(test.result.length);
-                    });
-                }
-            }
-        });
-    });
+    // it("Should check length of results are the same", function () {
+    //     describe("Dynamic InsightFacade PerformQuery tests", function () {
+    //         for (const test of testQueries) {
+    //             if (test.isQueryValid) {
+    //                 it(`[${test.filename}] ${test.title}`, function () {
+    //                     const futureResult: Promise<number> = insightFacade.testQueryResLength(test.query);
+    //                     // return TestUtil.verifyQueryResult(futureResult, test);
+    //                     return expect(futureResult).to.eventually.deep.equal(test.result.length);
+    //                 });
+    //             }
+    //         }
+    //     });
+    // });
 
     // Dynamically create and run a test for each query in testQueries
     // Tests that the query syntax and semantic checks are working properly
@@ -870,7 +870,7 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/validNOTResultTooLarge.json") {
+            if (test.filename === "test/queries/resultTooLarge.json") {
                 testQuery = test;
                 break;
             }
