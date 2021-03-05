@@ -43,9 +43,15 @@ export class QueryObject {
 
     // query contains WHERE and OPTIONS
     public syntaxCheck() {
-        if (this.query.constructor !== jsonConstructor) { throw new InsightError(); }
-        if (!(this.query.hasOwnProperty("WHERE") && this.query.hasOwnProperty("OPTIONS"))) { throw new InsightError(); }
-        if (Object.keys(this.query).length !== 2) { throw new InsightError(); }
+        if (this.query.constructor !== jsonConstructor) {
+            throw new InsightError();
+        }
+        if (!(this.query.hasOwnProperty("WHERE") && this.query.hasOwnProperty("OPTIONS"))) {
+            throw new InsightError();
+        }
+        if (Object.keys(this.query).length !== 2) {
+            throw new InsightError();
+        }
         this.syntaxCheckFilter(this.query.WHERE);
         this.syntaxCheckOPTIONS(this.query.OPTIONS);
         return;
@@ -53,8 +59,12 @@ export class QueryObject {
 
 // WHERE contains only one FILTER object
     private syntaxCheckFilter(query: any) {
-        if (!(query.constructor === jsonConstructor)) { throw new InsightError(); }
-        if (Object.keys(query).length > 1) {throw new InsightError(); }
+        if (!(query.constructor === jsonConstructor)) {
+            throw new InsightError();
+        }
+        if (Object.keys(query).length > 1) {
+            throw new InsightError();
+        }
 
         if (Object.keys(query).length === 1) {
 
@@ -76,23 +86,35 @@ export class QueryObject {
 
 // OPTIONS contains COLUMNS
     private syntaxCheckOPTIONS(query: any) {
-        if (!query.hasOwnProperty("COLUMNS") || Object.keys(query).length > 2) {throw new InsightError(); }
+        if (!query.hasOwnProperty("COLUMNS") || Object.keys(query).length > 2) {
+            throw new InsightError();
+        }
         this.syntaxCheckCols(query["COLUMNS"]);
 
         if (Object.keys(query).length === 2) {
-            if (!query.hasOwnProperty("ORDER")) { throw new InsightError(); }
+            if (!query.hasOwnProperty("ORDER")) {
+                throw new InsightError();
+            }
             this.syntaxCheckOrder(query["ORDER"]);
-            if (!query["COLUMNS"].includes(query["ORDER"])) { throw new InsightError(); }
+            if (!query["COLUMNS"].includes(query["ORDER"])) {
+                throw new InsightError();
+            }
         }
         return;
     }
 
 // LOGIC comparisons value must be array containing only FILTER JSON objs
     private syntaxCheckLogic(queryArr: any) { // query must be an array
-        if (!Array.isArray(queryArr) || queryArr.length <= 0) { throw new InsightError(); }
+        if (!Array.isArray(queryArr) || queryArr.length <= 0) {
+            throw new InsightError();
+        }
         for (const i in queryArr) {
-            if (queryArr[i].constructor !== jsonConstructor) {throw new InsightError(); }
-            if (Object.keys(queryArr[i]).length === 0) { throw new InsightError(); }
+            if (queryArr[i].constructor !== jsonConstructor) {
+                throw new InsightError();
+            }
+            if (Object.keys(queryArr[i]).length === 0) {
+                throw new InsightError();
+            }
             this.syntaxCheckFilter(queryArr[i]);
         }
         return;
@@ -100,9 +122,15 @@ export class QueryObject {
 
 //  id must be one or more of any character, except underscore.
     private syntaxCheckValidId(id: string) {
-        if (id.includes("_") || id.length < 1) { throw new InsightError(); }
-        if (id.split(" ").length > 1) { throw new InsightError(); }
-        if (!this.currentDatasets.includes(id)) { throw new NotFoundError(); } // !!!TODO: NotFoundError()?
+        if (id.includes("_") || id.length < 1) {
+            throw new InsightError();
+        }
+        if (id.split(" ").length > 1) {
+            throw new InsightError();
+        }
+        if (!this.currentDatasets.includes(id)) {
+            throw new NotFoundError();
+        }
         if (this.currentID !== "" && id !== this.currentID) {
             throw new InsightError();
         } else {
@@ -118,11 +146,15 @@ export class QueryObject {
             case 1:
                 break;
             case 2:
-                if (parsed[0].length !== 0 && parsed[1].length !== 0) {throw new InsightError(); }
+                if (parsed[0].length !== 0 && parsed[1].length !== 0) {
+                    throw new InsightError();
+                }
                 break;
 
             case 3:
-                if (parsed[0].length !== 0 || parsed[2].length !== 0) {throw new InsightError(); }
+                if (parsed[0].length !== 0 || parsed[2].length !== 0) {
+                    throw new InsightError();
+                }
                 break;
 
             default:
@@ -135,14 +167,24 @@ export class QueryObject {
 //      obj key must be Mkey and value must be number
 // Mkey and Skey check that idstring is valid.
     private syntaxCheckMComparator(query: any) { // must be one json obj
-        if (!(query.constructor === jsonConstructor)) { throw new InsightError(); }
-        if (Object.keys(query).length !== 1) {throw new InsightError(); }
+        if (!(query.constructor === jsonConstructor)) {
+            throw new InsightError();
+        }
+        if (Object.keys(query).length !== 1) {
+            throw new InsightError();
+        }
         let mkey = Object.keys(query)[0];
         let parsed = mkey.split("_");
-        if (parsed.length !== 2) { throw new InsightError(); }
+        if (parsed.length !== 2) {
+            throw new InsightError();
+        }
         this.syntaxCheckValidId(parsed[0]);
-        if (!Mfield.includes(parsed[1])) { throw new InsightError(); }
-        if (typeof(query[mkey]) !== "number") { throw new InsightError(); }
+        if (!Mfield.includes(parsed[1])) {
+            throw new InsightError();
+        }
+        if (typeof(query[mkey]) !== "number") {
+            throw new InsightError();
+        }
         return;
     }
 
@@ -150,41 +192,63 @@ export class QueryObject {
 //      obj key must be Skey, value must be (valid)inputString. Check *
 // Mkey and Skey check that idstring is valid.
     private syntaxCheckSComparator(query: any) {
-        if (!(query.constructor === jsonConstructor)) { throw new InsightError(); }
-        if (Object.keys(query).length !== 1) {throw new InsightError(); }
+        if (!(query.constructor === jsonConstructor)) {
+            throw new InsightError();
+        }
+        if (Object.keys(query).length !== 1) {
+            throw new InsightError();
+        }
         let skey = Object.keys(query)[0];
         let parsed = skey.split("_");
-        if (parsed.length !== 2) { throw new InsightError(); }
+        if (parsed.length !== 2) {
+            throw new InsightError();
+        }
         this.syntaxCheckValidId(parsed[0]);
-        if (!Sfield.includes(parsed[1])) { throw new InsightError(); }
-        if (typeof query[skey] !== "string") { throw new InsightError(); }
+        if (!Sfield.includes(parsed[1])) {
+            throw new InsightError();
+        }
+        if (typeof query[skey] !== "string") {
+            throw new InsightError();
+        }
         this.syntaxCheckValidInputString(query[skey]);
         return;
     }
 
 // NEGATION value must be one JSON obj containing a FILTER
     private syntaxCheckNegation(query: any) { // query must be an object
-        if (!(query.constructor === jsonConstructor)) { throw new InsightError(); }
+        if (!(query.constructor === jsonConstructor)) {
+            throw new InsightError();
+        }
         this.syntaxCheckFilter(query);
         return;
     }
 
 // COLUMNS must be array of strings
     private syntaxCheckCols(queryArr: any) { // must be array
-        if (!Array.isArray(queryArr) || queryArr.length <= 0) { throw new InsightError(); }
+        if (!Array.isArray(queryArr) || queryArr.length <= 0) {
+            throw new InsightError();
+        }
         for (const str of queryArr) {
-            if (typeof str !== "string") { throw new InsightError(); }
+            if (typeof str !== "string") {
+                throw new InsightError();
+            }
             let parsed = str.split("_");
-            if (parsed.length !== 2) { throw new InsightError(); }
+            if (parsed.length !== 2) {
+                throw new InsightError();
+            }
             this.syntaxCheckValidId(parsed[0]);
-            if (!Mfield.includes(parsed[1]) && !Sfield.includes(parsed[1])) { throw new InsightError(); }
+            if (!Mfield.includes(parsed[1]) && !Sfield.includes(parsed[1])) {
+                throw new InsightError();
+            }
         }
         return;
     }
 
 // if ORDER, value must be a string
     private syntaxCheckOrder(query: any) {
-        if (typeof query !== "string") { throw new InsightError(); }
+        if (typeof query !== "string") {
+            throw new InsightError();
+        }
         return;
     }
 }

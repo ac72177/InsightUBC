@@ -103,6 +103,7 @@ export default class InsightFacade implements IInsightFacade {
                     return Promise.all(futureFiles)
                         .then((currentFiles) => {
                             return this.addToDataStructureIfValid(currentFiles)
+                                // eslint-disable-next-line max-nested-callbacks
                                 .then((nestedMap) => {
                                     this.myMap.set(id, nestedMap);
                                     this.currentDatasets.push(id);
@@ -113,6 +114,7 @@ export default class InsightFacade implements IInsightFacade {
                                     };
                                     this.insightDatasetList.push(myDataset);
                                     return this.writeToDisk(this.myMap, this.currentDatasets, this.insightDatasetList)
+                                        // eslint-disable-next-line max-nested-callbacks
                                         .then (() => {
                                             return resolve(this.currentDatasets);
                                         });
@@ -249,8 +251,8 @@ export default class InsightFacade implements IInsightFacade {
             InsightDatasetList: insightDatasets,
         });
     }
-    public performQuery(query: any): Promise<any[]> {
 
+    public performQuery(query: any): Promise<any[]> {
         try {
             let queryObject: QueryObject = new QueryObject(query, this.currentDatasets, this.myMap);
             queryObject.syntaxCheck();
