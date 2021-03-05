@@ -120,23 +120,24 @@ export class QueryObjectPerformer {
             key = (key === "AND") ? "OR" : "AND";
         }
 
-        if (filterRes.length === 1) { return filterRes[0]; }
+        if (filterRes.length === 1) {
+            return filterRes[0];
+        }
         switch (key) { // filterRes.length >= 2
             case "AND":
                 for (const uuid0 of filterRes[0]) {
                     if (filterRes[1].includes(uuid0)) {
                         uuidRes.push(uuid0);
                     }
-                    // for (const uuid1 of filterRes[1]) {
-                    //     if (uuid0 === uuid1) {
-                    //         uuidRes.push(uuid0);
-                    //     }
-                    // }
                 }
 
                 for (const i in filterRes) {
-                    if (uuidRes.length === 0) { break; }
-                    if (Number(i) < 2) { continue; }
+                    if (uuidRes.length === 0) {
+                        break;
+                    }
+                    // if (Number(i) < 2) {
+                    //     continue;
+                    // }
                     let j = 0;
                     while (j < uuidRes.length) {
                         if (!filterRes[i].includes(uuidRes[j])) {
@@ -167,28 +168,22 @@ export class QueryObjectPerformer {
         let val: number = query[mkey];
         switch (key) {
             case "GT":
-                if (neg) {
-                    this.map.forEach((obj: any, uuid: string) => {
-                        obj = JSON.parse(obj);
-                        if (obj[mfield] <= val) { uuidRes.push(uuid); }
-                    });
-                } else {
-                    this.map.forEach((obj: any, uuid: string) => {
-                        obj = JSON.parse(obj);
-                        if (obj[mfield] > val) { uuidRes.push(uuid); }
-                    });
-                }
+                this.performMComparatorGT(mfield, uuidRes, neg, val);
                 break;
             case "EQ":
                 if (neg) {
                     this.map.forEach((obj: any, uuid: string) => {
                         obj = JSON.parse(obj);
-                        if (obj[mfield] !== val) { uuidRes.push(uuid); }
+                        if (obj[mfield] !== val) {
+                            uuidRes.push(uuid);
+                        }
                     });
                 } else {
                     this.map.forEach((obj: any, uuid: string) => {
                         obj = JSON.parse(obj);
-                        if (obj[mfield] === val) { uuidRes.push(uuid); }
+                        if (obj[mfield] === val) {
+                            uuidRes.push(uuid);
+                        }
                     });
                 }
                 break;
@@ -196,12 +191,16 @@ export class QueryObjectPerformer {
                 if (neg) {
                     this.map.forEach((obj: any, uuid: string) => {
                         obj = JSON.parse(obj);
-                        if (obj[mfield] >= val) { uuidRes.push(uuid); }
+                        if (obj[mfield] >= val) {
+                            uuidRes.push(uuid);
+                        }
                     });
                 } else {
                     this.map.forEach((obj: any, uuid: string) => {
                         obj = JSON.parse(obj);
-                        if (obj[mfield] < val) { uuidRes.push(uuid); }
+                        if (obj[mfield] < val) {
+                            uuidRes.push(uuid);
+                        }
                     });
                 }
                 break;
@@ -209,6 +208,26 @@ export class QueryObjectPerformer {
                 break;
         }
         return uuidRes;
+    }
+
+    // The only purpose of this method is so that Lint stops complaining. Originally, it was just
+    // the GT case of this.performMComparator. =_=
+    private performMComparatorGT(mfield: string, uuidRes: any, neg: boolean, val: number) {
+        if (neg) {
+            this.map.forEach((obj: any, uuid: string) => {
+                obj = JSON.parse(obj);
+                if (obj[mfield] <= val) {
+                    uuidRes.push(uuid);
+                }
+            });
+        } else {
+            this.map.forEach((obj: any, uuid: string) => {
+                obj = JSON.parse(obj);
+                if (obj[mfield] > val) {
+                    uuidRes.push(uuid);
+                }
+            });
+        }
     }
 
     private performSComparator(query: any, key: string, neg: boolean): string[] {
@@ -225,7 +244,9 @@ export class QueryObjectPerformer {
         let regex = new RegExp("^" + str.replace(/\*/g, ".*") + "$");
 
         this.map.forEach((obj: any, uuid: string) => {
-            if (regex.test( JSON.parse(obj)[sfield]) !== neg) { uuidRes.push(uuid); }
+            if (regex.test( JSON.parse(obj)[sfield]) !== neg) {
+                uuidRes.push(uuid);
+            }
         });
         return uuidRes;
     }
