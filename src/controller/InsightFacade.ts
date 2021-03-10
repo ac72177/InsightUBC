@@ -102,28 +102,32 @@ export default class InsightFacade implements IInsightFacade {
                     });
                     return Promise.all(futureFiles)
                         .then((currentFiles) => {
-                            return this.addToDataStructureIfValid(currentFiles)
-                                // eslint-disable-next-line max-nested-callbacks
-                                .then((nestedMap) => {
-                                    this.myMap.set(id, nestedMap);
-                                    this.currentDatasets.push(id);
-                                    const myDataset: InsightDataset = {
-                                        id: id,
-                                        kind: InsightDatasetKind.Courses,
-                                        numRows: nestedMap.size,
-                                    };
-                                    this.insightDatasetList.push(myDataset);
-                                    return this.writeToDisk(this.myMap, this.currentDatasets, this.insightDatasetList)
-                                        // eslint-disable-next-line max-nested-callbacks
-                                        .then (() => {
-                                            return resolve(this.currentDatasets);
-                                        });
-                                });
+                            return this.updateDataStructure(currentFiles, id, resolve);
                         });
                 }).catch((error) => {
                     return reject(new InsightError());
                 });
         });
+    }
+
+    private updateDataStructure(currentFiles: string[],
+                                id: string,
+                                resolve: (value?: (PromiseLike<string[]> | string[])) => void) {
+        return this.addToDataStructureIfValid(currentFiles)
+            .then((nestedMap) => {
+                this.myMap.set(id, nestedMap);
+                this.currentDatasets.push(id);
+                const myDataset: InsightDataset = {
+                    id: id,
+                    kind: InsightDatasetKind.Courses,
+                    numRows: nestedMap.size,
+                };
+                this.insightDatasetList.push(myDataset);
+                return this.writeToDisk(this.myMap, this.currentDatasets, this.insightDatasetList)
+                    .then(() => {
+                        return resolve(this.currentDatasets);
+                    });
+            });
     }
 
     /**
