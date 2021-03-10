@@ -1,24 +1,26 @@
 import {InsightError, NotFoundError, ResultTooLargeError} from "./IInsightFacade";
 import {QueryObjectPerformer} from "./QueryObjectPerformer";
+import {QueryObjectTransfChecker} from "./QueryObjectTransfChecker";
 
 const LOGIC: string[] = ["AND", "OR"];
 const MCOMPARATOR: string[] = ["GT", "EQ", "LT"];
-const Mfield: string[] = ["avg", "pass", "fail", "audit", "year"];
+const Mfield: string[] = ["avg", "pass", "fail", "audit", "year", "lat", "lon", "seats"];
 const SCOMPARATOR: string[] = ["IS"];
-const Sfield: string[] = ["dept", "id", "instructor", "title", "uuid"];
+const Sfield: string[] = ["dept", "id", "instructor", "title", "uuid",
+    "fullname", "shortname", "number", "name", "address", "type", "furniture", "href"];
 const NEG: string[] = ["NOT"];
+const DIRECTION: string[] = ["UP", "DOWN"];
 
 // jsonConstructor check from https://stackoverflow.com/questions/11182924/how-to-check-if-javascript-object-is-json
 const jsonConstructor = ({}).constructor;
 
-// dataset referenced must already be added.
-// throws resultsTooLarge exception if result length > 5000
+// TODO: EDIT CODE TO ACCEPT "ANYKEY" FROM EBNF AS VALID (DONT SPLIT STRING BY "_")
+// TODO: INCORPORATE RUDEMENTARY CHECKS FOR OPTIONS.HASOWNPROPERTY
 export class QueryObject {
     private readonly query: any;
     private currentID: string;
     private currentDatasets: string[];
     private map: any;
-
 
     constructor(query: any, datasets: string[], map: any) {
         this.currentID = "";
@@ -41,7 +43,7 @@ export class QueryObject {
         return queryPerformer.getQueryResults();
     }
 
-    // query contains WHERE and OPTIONS
+    // query contains WHERE and OPTIONS, optionally contains TRANSFORMATIONS
     public syntaxCheck() {
         if (this.query.constructor !== jsonConstructor) {
             throw new InsightError();
@@ -49,11 +51,19 @@ export class QueryObject {
         if (!(this.query.hasOwnProperty("WHERE") && this.query.hasOwnProperty("OPTIONS"))) {
             throw new InsightError();
         }
-        if (Object.keys(this.query).length !== 2) {
+        if (Object.keys(this.query).length > 3) { // max 3 items, min is 2
             throw new InsightError();
         }
         this.syntaxCheckFilter(this.query.WHERE);
         this.syntaxCheckOPTIONS(this.query.OPTIONS);
+        if (Object.keys(this.query).length === 3) {
+            if (!(this.query.hasOwnProperty("TRANSFORMATIONS"))) {
+                throw new InsightError();
+            }
+            let transfChecker =
+                new QueryObjectTransfChecker(this.query["TRANSFORMATIONS"], this.query.OPTIONS.COLUMNS, this.currentID);
+            transfChecker.syntaxCheckTRANSFORMATIONS();
+        }
         return;
     }
 
@@ -96,9 +106,6 @@ export class QueryObject {
                 throw new InsightError();
             }
             this.syntaxCheckOrder(query["ORDER"]);
-            if (!query["COLUMNS"].includes(query["ORDER"])) {
-                throw new InsightError();
-            }
         }
         return;
     }
@@ -233,21 +240,46 @@ export class QueryObject {
                 throw new InsightError();
             }
             let parsed = str.split("_");
-            if (parsed.length !== 2) {
-                throw new InsightError();
-            }
-            this.syntaxCheckValidId(parsed[0]);
-            if (!Mfield.includes(parsed[1]) && !Sfield.includes(parsed[1])) {
-                throw new InsightError();
+            switch (parsed.length) {
+                case 1: // it is an APPLYKEY. will check its validity in TRANSFORMATIONS
+                    if (!this.query.hasOwnProperty("TRANSFORMATIONS")) {// must have TRANSFORMATIONS to have applykey
+                        throw new InsightError();
+                    }
+                    break;
+                case 2:
+                    this.syntaxCheckValidId(parsed[0]);
+                    if (!Mfield.includes(parsed[1]) && !Sfield.includes(parsed[1])) {
+                        throw new InsightError();
+                    }
+                    break;
+                default:
+                    throw new InsightError();
             }
         }
         return;
     }
 
-// if ORDER, value must be a string
     private syntaxCheckOrder(query: any) {
-        if (typeof query !== "string") {
+        if (typeof query !== "string" && query.constructor !== jsonConstructor) {
             throw new InsightError();
+        }
+        // if ORDER is just a string, it must be in columns
+        if (typeof query === "string" && !this.query.OPTIONS["COLUMNS"].includes(query)) {
+            throw new InsightError();
+        } else { // else order is a json
+            let queryKeys = Object.keys(query);
+            if (!(queryKeys.length === 2 && queryKeys.includes("dir") && queryKeys.includes("keys"))) {
+                throw new InsightError();
+            }
+            if (typeof query["dir"] !== "string" || !DIRECTION.includes(query["dir"]) ||
+                !Array.isArray(query["keys"])) {
+                throw new InsightError();
+            }
+            for (const val of query["keys"]) {
+                if (typeof val !== "string" || !this.query.OPTIONS.COLUMNS.includes(val)) {
+                    throw new InsightError();
+                }
+            }
         }
         return;
     }
