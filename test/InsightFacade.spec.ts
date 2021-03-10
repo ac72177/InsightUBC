@@ -826,16 +826,16 @@ describe("InsightFacade PerformQuery", () => {
 
     // Dynamically create and run a test for each query in testQueries
     // Tests that the query syntax and semantic checks are working properly
-    // it("Should validate query properly", function () {
-    //     describe("Dynamic InsightFacade PerformQuery tests", function () {
-    //         for (const test of testQueries) {
-    //             it(`[${test.filename}] ${test.title}`, function () {
-    //                 const queryValidity: Promise<boolean> = insightFacade.testIsQueryValid(test.query);
-    //                 return expect(queryValidity).to.eventually.deep.equal(test.isQueryValid);
-    //             });
-    //         }
-    //     });
-    // });
+    it("Should validate query properly", function () {
+        describe("Dynamic InsightFacade PerformQuery tests", function () {
+            for (const test of testQueries) {
+                it(`[${test.filename}] ${test.title}`, function () {
+                    const queryValidity: Promise<boolean> = insightFacade.testQueryResLength(test.query);
+                    return expect(queryValidity).to.eventually.deep.equal(test.isQueryValid);
+                });
+            }
+        });
+    });
 
 
     // it("Should query simple query", function () {
@@ -870,15 +870,15 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/resultTooLarge.json") {
+            if (test.filename === "test/queries/tComplex.json") {
                 testQuery = test;
                 break;
             }
         }
-        // const queryValidity: Promise<boolean> = insightFacade.testIsQueryValid(testQuery.query);
-        // return expect(queryValidity).to.eventually.deep.equal(testQuery.isQueryValid);
-        const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
-        return TestUtil.verifyQueryResult(futureResult, testQuery);
+        const queryValidity: Promise<boolean> = insightFacade.testQueryResLength(testQuery.query);
+        return expect(queryValidity).to.eventually.deep.equal(testQuery.isQueryValid);
+        // const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
+        // return TestUtil.verifyQueryResult(futureResult, testQuery);
         // const lenRes: Promise<number> = insightFacade.testQueryResLength(testQuery.query);
         // return expect(lenRes).to.eventually.deep.equal(testQuery.result.length);
     });

@@ -264,8 +264,10 @@ export class QueryObject {
             throw new InsightError();
         }
         // if ORDER is just a string, it must be in columns
-        if (typeof query === "string" && !this.query.OPTIONS["COLUMNS"].includes(query)) {
-            throw new InsightError();
+        if (typeof query === "string") {
+            if (!this.query.OPTIONS["COLUMNS"].includes(query)) {
+                throw new InsightError();
+            }
         } else { // else order is a json
             let queryKeys = Object.keys(query);
             if (!(queryKeys.length === 2 && queryKeys.includes("dir") && queryKeys.includes("keys"))) {

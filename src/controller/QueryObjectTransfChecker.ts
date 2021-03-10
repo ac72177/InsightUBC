@@ -50,8 +50,8 @@ export class QueryObjectTransfChecker {
             if (!Mfield.includes(parsed[1]) && !Sfield.includes(parsed[1])) {
                 throw new InsightError();
             }
-            this.groupKeys.push(str);
         }
+        this.groupKeys = queryArr;
         return;
     }
 
