@@ -25,6 +25,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
     // automatically be loaded in the 'before' hook.
     const datasetsToLoad: { [id: string]: string } = {
         courses: "./test/data/courses.zip",
+        rooms: "./test/data/rooms.zip",
         courses0: "./test/data/courses.zip",
         empty: "./test/data/empty.zip",
         noValidJSON: "./test/data/noValidJSON.zip",
@@ -36,6 +37,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         shouldAddWithInvalid: "./test/data/shouldAddWithInvalid.zip",
         shouldAddWithInvalid2: "./test/data/shouldAddWithInvalid2.zip",
         noCoursesDirectory: "./test/data/noCoursesDirectory.zip",
+        noRoomsDirectory: "./test/data/noRoomsDirectory.zip",
     };
     let datasets: { [id: string]: string } = {};
     let insightFacade: InsightFacade;
@@ -80,7 +82,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
     });
 
     // This is a unit test. You should create more like this!
-    it("Should add a valid dataset", function () {
+    it("Should add a valid  courses", function () {
         const id: string = "courses";
         const expected: string[] = [id];
         const futureResult: Promise<string[]> = insightFacade.addDataset(
@@ -90,10 +92,27 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
 
+    it("Should add a valid dataset rooms", function () {
+        const id: string = "rooms";
+        const expected: string[] = [id];
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.eventually.deep.equal(expected);
+    });
+
     it("Should not add no courses directory", function () {
         const id: string = "noCoursesDirectory";
         const futureResult: Promise<string[]> = insightFacade.addDataset(id,
         datasets[id], InsightDatasetKind.Courses);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
+    it("Should not add no Room directory", function () {
+        const id: string = "noRoomsDirectory";
+        const futureResult: Promise<string[]> = insightFacade.addDataset(id,
+            datasets[id], InsightDatasetKind.Rooms);
         return expect(futureResult).to.be.rejectedWith(InsightError);
     });
 
@@ -200,16 +219,6 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
                 return expect(futureResult).to.be.rejectedWith(InsightError);
             });
         });
-    });
-
-    it("Should not add rooms yet", function () {
-        const id: string = "invalidJSON";
-        const futureResult: Promise<string[]> = insightFacade.addDataset(
-            id,
-            datasets[id],
-            InsightDatasetKind.Rooms,
-        );
-        return expect(futureResult).to.be.rejectedWith(InsightError);
     });
 
     it("Should not add invalid ID only whitespace", function () {
@@ -669,13 +678,6 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
     it("Should reject removing dataset with underscore in id", function () {
         const id: string = "courses_";
         const futureResult: Promise<string> = insightFacade.removeDataset(id);
-        return expect(futureResult).to.be.rejectedWith(InsightError);
-    });
-
-    // rejects ADDING type doesnt match path
-    it( "Should not add Dataset kind of type rooms does not match type courses", function () {
-        const id: string = "courses";
-        let futureResult: Promise<string[]> = insightFacade.addDataset(id, datasets[id], InsightDatasetKind.Rooms);
         return expect(futureResult).to.be.rejectedWith(InsightError);
     });
 

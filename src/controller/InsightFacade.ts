@@ -1,7 +1,12 @@
 import Log from "../Util";
-import { IInsightFacade, InsightDataset, InsightDatasetKind, InsightError, NotFoundError, ResultTooLargeError
+import {
+    IInsightFacade,
+    InsightDataset,
+    InsightDatasetKind,
+    InsightError,
+    NotFoundError,
+    ResultTooLargeError
 } from "./IInsightFacade";
-import * as JSZip from "jszip";
 import {QueryObject} from "./QueryObject";
 import * as fs from "fs-extra";
 import {CoursesDataset} from "./CoursesDataset";
@@ -51,7 +56,7 @@ export default class InsightFacade implements IInsightFacade {
 
     public addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
         if (id === null || id === undefined || content === null || content === undefined || kind === null
-            || kind === undefined || kind !== InsightDatasetKind.Courses) {
+            || kind === undefined || (kind !== InsightDatasetKind.Courses && kind !== InsightDatasetKind.Rooms)) {
             return Promise.reject(new InsightError());
         }
 
@@ -60,8 +65,14 @@ export default class InsightFacade implements IInsightFacade {
                 if (this.myMap.has(id)) {
                     return Promise.reject(new InsightError());
                 }
-                let coursesDataset = new CoursesDataset(this);
-                return coursesDataset.promiseToAddVerifiedDataset(id, content);
+                switch (kind) {
+                    case InsightDatasetKind.Courses:
+                        let coursesDataset = new CoursesDataset(this);
+                        return coursesDataset.promiseToAddVerifiedDataset(id, content);
+
+                    case InsightDatasetKind.Rooms:
+                        return Promise.reject("not implemented");
+                }
             });
     }
 
@@ -88,30 +99,6 @@ export default class InsightFacade implements IInsightFacade {
         });
     }
 
-    // /**
-    //  * Turns adding a verified dataset into a promise, helper function for addDataset
-    //  * Rejects with Insight Error
-    //  */
-    // private promiseToAddVerifiedDataset(id: string, content: string): Promise<string[]> {
-    //     let currentZip = new JSZip();
-    //     return new Promise<string[]>((resolve, reject) => {
-    //         return currentZip.loadAsync(content, {base64: true})
-    //             .then((jsZip) => {
-    //                 let coursesUnzippedArray = jsZip.folder("courses");
-    //                 let futureFiles: Array<Promise<string>> = [];
-    //                 coursesUnzippedArray.forEach((relativePath, file) => {
-    //                     futureFiles.push(file.async("string"));
-    //                 });
-    //                 return Promise.all(futureFiles)
-    //                     .then((currentFiles) => {
-    //                         return this.updateDataStructure(currentFiles, id, resolve);
-    //                     });
-    //             }).catch((error) => {
-    //                 return reject(new InsightError());
-    //             });
-    //     });
-    // }
-    //
     public updateDataStructure(id: string, nestedMap: Map<string, string>,
                                resolve: (value?: (PromiseLike<string[]> | string[])) => void) {
                 this.myMap.set(id, nestedMap);
@@ -127,88 +114,6 @@ export default class InsightFacade implements IInsightFacade {
                         return resolve(this.currentDatasets);
                     });
     }
-    //
-    // /**
-    //  * Turns adding to the data structure into a Promise, helper function for addDataset
-    //  * If any errors, rejects with Insight Error
-    //  */
-    // private addToDataStructureIfValid(currentFiles: string[]): Promise<Map<string, string>> {
-    //     let nestedMap1 = new Map<string, string>();
-    //     let hasValidCourseSection: boolean = false;
-    //     return new Promise<Map<string, string>> ((resolve, reject) => {
-    //         for (let JSONString of currentFiles) {
-    //             try {
-    //                 let JSONObjectCourse = JSON.parse(JSONString);
-    //                 if (JSONObjectCourse.hasOwnProperty("result")) {
-    //                     let myJSONArray = JSONObjectCourse.result;
-    //                     for (let JSONObjectSection of myJSONArray) {
-    //                         let DesiredJSONString;
-    //                         if (InsightFacade.verifyHasCorrectProperties(JSONObjectSection)) {
-    //                             DesiredJSONString = InsightFacade.createNewJSONCourseStringData(JSONObjectSection);
-    //                             if (!nestedMap1.has(JSONObjectSection.id)) {
-    //                                 nestedMap1.set(JSONObjectSection.id, DesiredJSONString);
-    //                                 hasValidCourseSection = true;
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //             } catch (e) {
-    //                 continue;
-    //             }
-    //         }
-    //         if (hasValidCourseSection) {
-    //             return resolve(nestedMap1);
-    //         } else {
-    //             return reject(new InsightError());
-    //         }
-    //
-    //     });
-    // }
-    //
-    // private static createNewJSONCourseStringData(JSONObjectSection: any): any {
-    //     let year: string;
-    //     if (JSONObjectSection.hasOwnProperty("Section") && JSONObjectSection.Section === "overall") {
-    //         year = "1900";
-    //     } else {
-    //         year = JSONObjectSection.Year;
-    //     }
-    //     return JSON.stringify({
-    //         dept: JSONObjectSection.Subject,
-    //         avg: JSONObjectSection.Avg,
-    //         uuid: JSONObjectSection.id.toString(),
-    //         title: JSONObjectSection.Title,
-    //         id: JSONObjectSection.Course,
-    //         instructor: JSONObjectSection.Professor,
-    //         pass: JSONObjectSection.Pass,
-    //         fail: JSONObjectSection.Fail,
-    //         audit: JSONObjectSection.Audit,
-    //         year: Number(year)
-    //     });
-    // }
-    //
-    // private static verifyHasCorrectProperties(JSONObject: any): boolean {
-    //     return JSONObject.hasOwnProperty("Subject")
-    //         && JSONObject.hasOwnProperty("Avg")
-    //         && JSONObject.hasOwnProperty("id")
-    //         && JSONObject.hasOwnProperty("Title")
-    //         && JSONObject.hasOwnProperty("Course")
-    //         && JSONObject.hasOwnProperty("Professor")
-    //         && JSONObject.hasOwnProperty("Pass")
-    //         && JSONObject.hasOwnProperty("Fail")
-    //         && JSONObject.hasOwnProperty("Audit")
-    //         && JSONObject.hasOwnProperty("Year")
-    //         && (typeof(JSONObject.Subject) === "string")
-    //         && (typeof(JSONObject.Avg) === "number")
-    //         && (typeof(JSONObject.id) === "number") // becomes string
-    //         && (typeof(JSONObject.Title) === "string")
-    //         && (typeof(JSONObject.Course) === "string")
-    //         && (typeof(JSONObject.Professor) === "string")
-    //         && (typeof(JSONObject.Pass) === "number")
-    //         && (typeof(JSONObject.Fail) === "number")
-    //         && (typeof(JSONObject.Audit) === "number")
-    //         && (typeof(JSONObject.Year) === "string"); // becomes number
-    //
-    // }
 
     public removeDataset(id: string): Promise<string> {
         if (id === null || id === undefined) {
