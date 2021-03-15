@@ -10,6 +10,7 @@ import {
 import {QueryObject} from "./QueryObject";
 import * as fs from "fs-extra";
 import {CoursesDataset} from "./CoursesDataset";
+import {RoomsDataset} from "./RoomsDataset";
 
 
 /**
@@ -71,7 +72,8 @@ export default class InsightFacade implements IInsightFacade {
                         return coursesDataset.promiseToAddVerifiedDataset(id, content);
 
                     case InsightDatasetKind.Rooms:
-                        return Promise.reject("not implemented");
+                        let roomsDataset = new RoomsDataset(this);
+                        return roomsDataset.promiseToAddVerifiedDataset(id, content);
                 }
             });
     }
