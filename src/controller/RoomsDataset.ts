@@ -1,6 +1,7 @@
 import * as JSZip from "jszip";
 import {InsightDatasetKind, InsightError} from "./IInsightFacade";
 import InsightFacade from "./InsightFacade";
+import * as http from "http";
 
 export class RoomsDataset {
     private parse5 = require("parse5");
@@ -42,13 +43,19 @@ export class RoomsDataset {
         let buildingArray = this.findArray(parsedData);
         for (let row of buildingArray) {
             let element = this.findFullNameAndAddressLocation(row);
-            let fn: string = this.findFullName(element);
-            let sn: string = this.findShortName(row);
-            let addr: string = this.findAddress(row);
-            let path: string = this.findFileName(element);
+            let fn: string = this.findInChildNodes(element, "a", "#text");
+            let sn: string = this.findInChildFromAttrs(row, "td",
+                "views-field views-field-field-building-code");
+            let addr: string = this.findInChildFromAttrs(row, "td",
+                "views-field views-field-field-building-address");
+            let path: string = this.findInAttrs(element,  "a", "href");
             path = "rooms" + path.substring(1);
-            let lat = 0; // stub //  http://cs310.students.cs.ubc.ca:11316/api/v1/project_team<TEAM NUMBER>/<ADDRESS>
-            let lon = 0; //  6245 Agronomy Road V6T 1Z4 should be represented as 6245%20Agronomy%20Road%20V6T%201Z4)
+            let lat: number = 0;
+            let lon: number = 0;
+            // let res: Promise<any> = this.getGeolocation(
+            //    "http://cs310.students.cs.ubc.ca:11316/api/v1/project_team062/", addr);
+            // return Promise.resolve(res)
+            //  .then((geodata) => {});
             let futureFile = this.globalJSZip.file(path);
             let fileData = futureFile.async("string");
             try {
@@ -75,16 +82,37 @@ export class RoomsDataset {
                                         name: string, addr: string, latitude: number, longitude: number): string {
         return JSON.stringify({
             fullName: fn, shortName: sn, number: num, name: name, address: addr, lat: latitude, lon: longitude,
-            seats: this.findSeats(roomData), type: this.findType(roomData), furniture: this.findFurniture(roomData),
-            href: this.findLink(element),
+            seats: parseInt(this.findInChildFromAttrs(roomData, "td",
+                "views-field views-field-field-room-capacity"), 10),
+            type: this.findInChildFromAttrs(roomData, "td", "views-field views-field-field-room-type"),
+            furniture: this.findInChildFromAttrs(roomData, "td",
+                "views-field views-field-field-room-furniture"),
+            href: this.findInAttrs(element, "a", "href"),
         });
     }
+
+    // private getGeolocation(url: string, rawAddr: string): Promise<any> { // todo add return type
+    //     let link = url + encodeURIComponent(rawAddr);
+    //     http.get(link, (res) => {
+    //         res.setEncoding("utf8");
+    //         let rawData = "";
+    //         res.on("data", (chunk) => {
+    //             rawData += chunk;
+    //         });
+    //         res.on("end", () => {
+    //                 const parsedData = JSON.parse(rawData);
+    //                 return Promise.resolve(parsedData);
+    //         });
+    //     }).on("error", (e) => {
+    //         return Promise.reject(new InsightError());
+    //     });
+    // }
 
     private findArray(element: any): any[] {
         let array: any[] = [];
         if (element.nodeName === "div" &&
             element.attrs[0].value.startsWith("view view-buildings-and-classrooms view-id-buildings_and_classrooms")) {
-        for (let i in element.attrs) {
+            for (let i in element.attrs) {
                 try {
                     let table: any = this.findTable(element);
                     for (let child of table.childNodes) {
@@ -124,6 +152,51 @@ export class RoomsDataset {
         return null;
     }
 
+    private findInAttrs(element: any, nodeName: string, attrName: string): string {
+        if (element.nodeName === nodeName && element.attrs[0].name === attrName) {
+            return element.attrs[0].value;
+        }
+        if (element.childNodes && element.childNodes.length > 0) {
+            for (let child of element.childNodes) {
+                let possible = this.findInAttrs(child, nodeName, attrName);
+                if (possible !== "") {
+                    return possible;
+                }
+            }
+        }
+        return "";
+    }
+
+    private findInChildNodes(element: any, nodeName: string, childName: string): string {
+        if (element.nodeName === nodeName && element.childNodes[0].nodeName === childName) {
+            return element.childNodes[0].value;
+        }
+        if (element.childNodes && element.childNodes.length > 0) {
+            for (let child of element.childNodes) {
+                let possible = this.findInChildNodes(child, nodeName, childName);
+                if (possible !== "") {
+                    return possible.trim();
+                }
+            }
+        }
+        return "";
+    }
+
+    private findInChildFromAttrs(element: any, nodeName: string, attrsVal: string): string {
+        if (element.nodeName === nodeName && element.attrs[0].value === attrsVal) {
+            return element.childNodes[0].value;
+        }
+        if (element.childNodes && element.childNodes.length > 0) {
+            for (let child of element.childNodes) {
+                let possible = this.findInChildFromAttrs(child, nodeName, attrsVal);
+                if (possible !== "") {
+                    return possible.trim();
+                }
+            }
+        }
+        return "";
+    }
+
     private findFullNameAndAddressLocation(element: any): any {
         if (element.nodeName === "td" && element.attrs[0].value === "views-field views-field-title"
             && element.childNodes) {
@@ -140,66 +213,6 @@ export class RoomsDataset {
         return null;
     }
 
-    private findFileName(element: any): string {
-        if (element.nodeName === "a" && element.attrs[0].name === "href") {
-            return element.attrs[0].value;
-        }
-        if (element.childNodes && element.childNodes.length > 0) {
-            for (let child of element.childNodes) {
-                let possibleFileName = this.findFileName(child);
-                if (possibleFileName !== "") {
-                    return possibleFileName;
-                }
-            }
-        }
-        return "";
-    }
-
-    private findFullName(element: any): string {
-        if (element.nodeName === "a" && element.childNodes[0].nodeName === "#text") {
-            return element.childNodes[0].value;
-        }
-        if (element.childNodes && element.childNodes.length > 0) {
-            for (let child of element.childNodes) {
-                let possibleFullName = this.findFullName(child);
-                if (possibleFullName !== "") {
-                    return possibleFullName.trim();
-                }
-            }
-        }
-        return "";
-    }
-
-    private findShortName(element: any): string {
-        if (element.nodeName === "td" && element.attrs[0].value === "views-field views-field-field-building-code") {
-            return element.childNodes[0].value;
-        }
-        if (element.childNodes && element.childNodes.length > 0) {
-            for (let child of element.childNodes) {
-                let possibleShortName = this.findShortName(child);
-                if (possibleShortName !== "") {
-                    return possibleShortName.trim();
-                }
-            }
-        }
-        return "";
-    }
-
-    private findAddress(element: any): string {
-        if (element.nodeName === "td" && element.attrs[0].value === "views-field views-field-field-building-address") {
-            return element.childNodes[0].value;
-        }
-        if (element.childNodes && element.childNodes.length > 0) {
-            for (let child of element.childNodes) {
-                let possibleAddress = this.findAddress(child);
-                if (possibleAddress !== "") {
-                    return possibleAddress.trim();
-                }
-            }
-        }
-        return "";
-    }
-
     private findNumberAndHREFLocation(element: any): any {
         if (element.nodeName === "td" && element.attrs[0].value === "views-field views-field-field-room-number") {
             for (let child of element.childNodes) {
@@ -208,7 +221,6 @@ export class RoomsDataset {
                 }
             }
         }
-
         if (element.childNodes && element.childNodes.length > 0) {
             for (let child of element.childNodes) {
                 let possibleLocation = this.findNumberAndHREFLocation(child);
@@ -229,68 +241,6 @@ export class RoomsDataset {
                 let possibleNumber = this.findNumber(child);
                 if (possibleNumber !== "") {
                     return possibleNumber;
-                }
-            }
-        }
-        return "";
-    }
-
-    private findSeats(element: any): number {
-        if (element.nodeName === "td" &&
-            element.attrs[0].value === "views-field views-field-field-room-capacity") {
-            return parseInt(element.childNodes[0].value.trim(), 10);
-        }
-        if (element.childNodes && element.childNodes.length > 0) {
-            for (let child of element.childNodes) {
-                let possibleSeats = this.findSeats(child);
-                if (possibleSeats !== 0) {
-                    return possibleSeats;
-                }
-            }
-        }
-        return 0;
-    }
-
-    private findType(element: any): string {
-        if (element.nodeName === "td" && element.attrs[0].value === "views-field views-field-field-room-type") {
-            return element.childNodes[0].value;
-        }
-        if (element.childNodes && element.childNodes.length > 0) {
-            for (let child of element.childNodes) {
-                let possibleType = this.findType(child);
-                if (possibleType !== "") {
-                    return possibleType.trim();
-                }
-            }
-        }
-        return "";
-    }
-
-    private findFurniture(element: any): string {
-        if (element.nodeName === "td" &&
-            element.attrs[0].value === "views-field views-field-field-room-furniture") {
-            return element.childNodes[0].value;
-        }
-        if (element.childNodes && element.childNodes.length > 0) {
-            for (let child of element.childNodes) {
-                let possibleFurniture = this.findFurniture(child);
-                if (possibleFurniture !== "") {
-                    return possibleFurniture.trim();
-                }
-            }
-        }
-        return "";
-    }
-
-    private findLink(element: any): string {
-        if (element.nodeName === "a" && element.attrs[0].name === "href") {
-            return element.attrs[0].value;
-        }
-        if (element.childNodes && element.childNodes.length > 0) {
-            for (let child of element.childNodes) {
-                let possibleLink = this.findLink(child);
-                if (possibleLink !== "") {
-                    return possibleLink;
                 }
             }
         }
