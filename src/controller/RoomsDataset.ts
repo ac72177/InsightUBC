@@ -3,6 +3,7 @@ import {InsightError} from "./IInsightFacade";
 import InsightFacade from "./InsightFacade";
 
 export class RoomsDataset {
+    private parse5 = require("parse5");
     private globalJSZip: JSZip;
     private myInsightFacade: InsightFacade;
     constructor(param: InsightFacade) {
@@ -19,8 +20,7 @@ export class RoomsDataset {
                     let futureFile: Promise<string> = roomsIndex.async("string");
                     return Promise.resolve(futureFile)
                         .then((currentIndex) => {
-                            const parse5 = require("parse5");
-                            let parsedData: string = parse5.parse(currentIndex);
+                            let parsedData: string = this.parse5.parse(currentIndex);
                             return this.updateDataStructure(parsedData, id, resolve);
                         });
                 }).catch((error) => {
@@ -54,8 +54,7 @@ export class RoomsDataset {
             try {
                 Promise.resolve(fileData)
                     .then((myFile) => {
-                        const parse5 = require("parse5");
-                        let parsedBuildingData = parse5.parse(myFile);
+                        let parsedBuildingData = this.parse5.parse(myFile);
                         let roomArray = this.findArray(parsedBuildingData);
                         for (let room of roomArray) {
                             let elem = this.findNumberAndHREFLocation(room);
@@ -83,7 +82,8 @@ export class RoomsDataset {
 
     private findArray(element: any): any[] {
         let array: any[] = [];
-        if (element.nodeName === "div" && element.attrs[0].value.startsWith("view view-buildings-and-classrooms")) {
+        if (element.nodeName === "div" &&
+            element.attrs[0].value.startsWith("view view-buildings-and-classrooms view-id-buildings_and_classrooms")) {
         for (let i in element.attrs) {
                 try {
                     let table: any = this.findTable(element);
@@ -102,7 +102,7 @@ export class RoomsDataset {
             for (let child of element.childNodes) {
                 let possibleArray = this.findArray(child);
                 if (possibleArray.length > 0) {
-                    return array;
+                    return possibleArray;
                 }
             }
         }
@@ -163,7 +163,7 @@ export class RoomsDataset {
             for (let child of element.childNodes) {
                 let possibleFullName = this.findFullName(child);
                 if (possibleFullName !== "") {
-                    return possibleFullName;
+                    return possibleFullName.trim();
                 }
             }
         }
@@ -178,7 +178,7 @@ export class RoomsDataset {
             for (let child of element.childNodes) {
                 let possibleShortName = this.findShortName(child);
                 if (possibleShortName !== "") {
-                    return possibleShortName;
+                    return possibleShortName.trim();
                 }
             }
         }
@@ -193,7 +193,7 @@ export class RoomsDataset {
             for (let child of element.childNodes) {
                 let possibleAddress = this.findAddress(child);
                 if (possibleAddress !== "") {
-                    return possibleAddress;
+                    return possibleAddress.trim();
                 }
             }
         }
@@ -222,7 +222,7 @@ export class RoomsDataset {
 
     private findNumber(element: any): string {
         if (element.nodeName === "#text") {
-            return element.value;
+            return element.value.trim();
         }
         if (element.childNodes && element.childNodes.length > 0) {
             for (let child of element.childNodes) {
@@ -235,20 +235,20 @@ export class RoomsDataset {
         return "";
     }
 
-    private findSeats(element: any): string {
+    private findSeats(element: any): number {
         if (element.nodeName === "td" &&
             element.attrs[0].value === "views-field views-field-field-room-capacity") {
-            return element.childNodes[0].value;
+            return parseInt(element.childNodes[0].value.trim(), 10);
         }
         if (element.childNodes && element.childNodes.length > 0) {
             for (let child of element.childNodes) {
                 let possibleSeats = this.findSeats(child);
-                if (possibleSeats !== "") {
+                if (possibleSeats !== 0) {
                     return possibleSeats;
                 }
             }
         }
-        return "";
+        return 0;
     }
 
     private findType(element: any): string {
@@ -259,7 +259,7 @@ export class RoomsDataset {
             for (let child of element.childNodes) {
                 let possibleType = this.findType(child);
                 if (possibleType !== "") {
-                    return possibleType;
+                    return possibleType.trim();
                 }
             }
         }
@@ -275,7 +275,7 @@ export class RoomsDataset {
             for (let child of element.childNodes) {
                 let possibleFurniture = this.findFurniture(child);
                 if (possibleFurniture !== "") {
-                    return possibleFurniture;
+                    return possibleFurniture.trim();
                 }
             }
         }
