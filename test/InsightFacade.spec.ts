@@ -825,7 +825,7 @@ describe("InsightFacade PerformQuery", () => {
         describe("Dynamic InsightFacade PerformQuery tests", function () {
             for (const test of testQueries) {
                 it(`[${test.filename}] ${test.title}`, function () {
-                    const queryValidity: Promise<boolean> = insightFacade.testQueryResLength(test.query);
+                    const queryValidity: Promise<boolean> = insightFacade.testQueryValidity(test.query);
                     return expect(queryValidity).to.eventually.deep.equal(test.isQueryValid);
                 });
             }
@@ -870,7 +870,7 @@ describe("InsightFacade PerformQuery", () => {
                 break;
             }
         }
-        const queryValidity: Promise<boolean> = insightFacade.testQueryResLength(testQuery.query);
+        const queryValidity: Promise<boolean> = insightFacade.testQueryValidity(testQuery.query);
         return expect(queryValidity).to.eventually.deep.equal(testQuery.isQueryValid);
         // const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
         // return TestUtil.verifyQueryResult(futureResult, testQuery);

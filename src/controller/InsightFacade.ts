@@ -232,6 +232,19 @@ export default class InsightFacade implements IInsightFacade {
         }
     }
 
+    public testQueryValidity(query: any): Promise<boolean> {
+        try {
+            let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap); // TODO add rooms
+            queryObject.syntaxCheck();
+            // queryObject.getQueryResults();
+            // return Promise.resolve(queryObject.testGetResLength());
+            return Promise.resolve(true);
+        } catch (e) {
+            // return Promise.resolve(-1);
+            return Promise.resolve(false);
+        }
+    }
+
     public listDatasets(): Promise<InsightDataset[]> {
         let appendedList = this.roomIns.concat(this.courseIns);
         return Promise.resolve(appendedList);
