@@ -1,6 +1,7 @@
 // handles all syntax checks related to query.TRANSFORMATIONS
 // checks that everything in columns is in transformations and vice versa
 import {InsightError, NotFoundError} from "./IInsightFacade";
+import {CoursesFields, QueryFields, RoomsFields} from "./QueryFields";
 const jsonConstructor = ({}).constructor;
 const APPLYTOKEN: string[] = ["MAX", "MIN", "AVG", "COUNT", "SUM"];
 const Mfield: string[] = ["avg", "pass", "fail", "audit", "year", "lat", "lon", "seats"];
@@ -11,13 +12,21 @@ export class QueryObjectTransfChecker {
     private applykeys: string[] = [];
     private colsArr: string[];
     private groupKeys: string[];
+    private fieldChecker: QueryFields;
     private query: any; // the TRANSFORMATION section of query
-    private currentID: string; // purely for the checkValidID method
 
-    constructor(queryTransf: any, colsArr: string[], currentID: string) {
+    private currentID: string; // purely for the checkValidID method
+    private currentCourses: string[];
+    private currentRooms: string[];
+
+    constructor(queryTransf: any, colsArr: string[], currentID: string, fieldChecker: QueryFields,
+                currentCourses: string[], currentRooms: string[]) {
         this.colsArr = colsArr;
         this.query = queryTransf;
         this.currentID = currentID;
+        this.fieldChecker = fieldChecker;
+        this.currentCourses = currentCourses;
+        this.currentRooms = currentRooms;
     }
 
     public syntaxCheckTRANSFORMATIONS() {
@@ -94,6 +103,10 @@ export class QueryObjectTransfChecker {
         if (!Sfield.includes(parsed[1]) && !Mfield.includes(parsed[1])) {
             throw new InsightError();
         }
+        // TODO: finish this check
+        if (key !== "COUNT" && (!this.fieldChecker.includesMField(parsed[1]))) {
+            throw new InsightError();
+        }
     }
 
     // make sure all keys mentioned in columns are in GROUP
@@ -114,7 +127,7 @@ export class QueryObjectTransfChecker {
         return;
     }
 
-    // function from QueryObject, only slightly modified
+    // function from QueryObject
     private syntaxCheckValidId(id: string) {
         if (id.includes("_") || id.length < 1) {
             throw new InsightError();
@@ -122,7 +135,18 @@ export class QueryObjectTransfChecker {
         if (id.split(" ").length > 1) {
             throw new InsightError();
         }
-        if (id !== this.currentID) {
+        if (this.currentID === "") {
+            // ID is being read for the first time. Determine if rooms or courses here.
+            if (this.currentCourses.includes(id)) {
+                this.currentID = id;
+                this.fieldChecker = new CoursesFields();
+            } else if (this.currentRooms.includes(id)) {
+                this.currentID = id;
+                this.fieldChecker = new RoomsFields();
+            } else {
+                throw new NotFoundError();
+            }
+        } else if (id !== this.currentID) { // make sure same dataset
             throw new InsightError();
         }
         return;

@@ -1,45 +1,47 @@
 import {InsightError, NotFoundError, ResultTooLargeError} from "./IInsightFacade";
 import {QueryObjectPerformer} from "./QueryObjectPerformer";
 import {QueryObjectTransfChecker} from "./QueryObjectTransfChecker";
-
+import {QueryFields, CoursesFields, RoomsFields} from "./QueryFields";
 const LOGIC: string[] = ["AND", "OR"];
 const MCOMPARATOR: string[] = ["GT", "EQ", "LT"];
-const Mfield: string[] = ["avg", "pass", "fail", "audit", "year", "lat", "lon", "seats"];
 const SCOMPARATOR: string[] = ["IS"];
-const Sfield: string[] = ["dept", "id", "instructor", "title", "uuid",
-    "fullname", "shortname", "number", "name", "address", "type", "furniture", "href"];
 const NEG: string[] = ["NOT"];
 const DIRECTION: string[] = ["UP", "DOWN"];
 
 // jsonConstructor check from https://stackoverflow.com/questions/11182924/how-to-check-if-javascript-object-is-json
 const jsonConstructor = ({}).constructor;
 
-// TODO: EDIT CODE TO ACCEPT "ANYKEY" FROM EBNF AS VALID (DONT SPLIT STRING BY "_")
-// TODO: INCORPORATE RUDEMENTARY CHECKS FOR OPTIONS.HASOWNPROPERTY
+// TODO: change current iterations of this.coursesMap to roomsMap where necessary
 export class QueryObject {
     private readonly query: any;
     private currentID: string;
-    private currentDatasets: string[];
-    private map: any;
+    private currentCourses: string[];
+    private coursesMap: any;
+    private fieldChecker: QueryFields;
+    private currentRooms: string[] = [];
+    private roomsMap: any; // TODO: modify constructor to instantiate these 2 variables
 
-    constructor(query: any, datasets: string[], map: any) {
+    constructor(query: any, datasets: string[], coursesMap: any) {
         this.currentID = "";
-        this.currentDatasets = datasets;
+        this.currentCourses = datasets;
         this.query = query;
-        this.map = map;
+        this.coursesMap = coursesMap;
         return;
     }
 
     // TODO: comment out this method once finished testing
     public testGetResLength(): number {
-        this.map = this.map.get(this.currentID); // this.map is now the courses map
-        let queryPerformer: QueryObjectPerformer = new QueryObjectPerformer(this.query, this.map);
+        let map = this.currentCourses.includes(this.currentID) ?
+            this.coursesMap.get(this.currentID) : this.roomsMap.get(this.currentID);
+        let queryPerformer: QueryObjectPerformer = new QueryObjectPerformer(this.query, map, this.fieldChecker);
         return queryPerformer.testGetResLength();
     }
 
     public getQueryResults(): object[] {
-        this.map = this.map.get(this.currentID); // this.map is now the courses map
-        let queryPerformer: QueryObjectPerformer = new QueryObjectPerformer(this.query, this.map);
+        let map = this.currentCourses.includes(this.currentID) ?
+            this.coursesMap.get(this.currentID) : this.roomsMap.get(this.currentID);
+        // this.coursesMap = this.coursesMap.get(this.currentID); // this.coursesMap is now the courses coursesMap
+        let queryPerformer: QueryObjectPerformer = new QueryObjectPerformer(this.query, map, this.fieldChecker);
         return queryPerformer.getQueryResults();
     }
 
@@ -61,7 +63,8 @@ export class QueryObject {
                 throw new InsightError();
             }
             let transfChecker =
-                new QueryObjectTransfChecker(this.query["TRANSFORMATIONS"], this.query.OPTIONS.COLUMNS, this.currentID);
+                new QueryObjectTransfChecker(this.query["TRANSFORMATIONS"], this.query.OPTIONS.COLUMNS, this.currentID,
+                    this.fieldChecker, this.currentCourses, this.currentRooms);
             transfChecker.syntaxCheckTRANSFORMATIONS();
         }
         return;
@@ -135,13 +138,19 @@ export class QueryObject {
         if (id.split(" ").length > 1) {
             throw new InsightError();
         }
-        if (!this.currentDatasets.includes(id)) {
-            throw new NotFoundError();
-        }
-        if (this.currentID !== "" && id !== this.currentID) {
+        if (this.currentID === "") {
+            // ID is being read for the first time. Determine if rooms or courses here.
+            if (this.currentCourses.includes(id)) {
+                this.currentID = id;
+                this.fieldChecker = new CoursesFields();
+            } else if (this.currentRooms.includes(id)) {
+                this.currentID = id;
+                this.fieldChecker = new RoomsFields();
+            } else {
+                throw new NotFoundError();
+            }
+        } else if (id !== this.currentID) { // make sure same dataset
             throw new InsightError();
-        } else {
-            this.currentID = id;
         }
         return;
     }
@@ -170,9 +179,6 @@ export class QueryObject {
         return;
     }
 
-// MCOMPARATOR value must be one JSON obj
-//      obj key must be Mkey and value must be number
-// Mkey and Skey check that idstring is valid.
     private syntaxCheckMComparator(query: any) { // must be one json obj
         if (!(query.constructor === jsonConstructor)) {
             throw new InsightError();
@@ -186,7 +192,7 @@ export class QueryObject {
             throw new InsightError();
         }
         this.syntaxCheckValidId(parsed[0]);
-        if (!Mfield.includes(parsed[1])) {
+        if (!this.fieldChecker.includesMField(parsed[1])) {
             throw new InsightError();
         }
         if (typeof(query[mkey]) !== "number") {
@@ -195,9 +201,6 @@ export class QueryObject {
         return;
     }
 
-// SCOMPARATOR value must be one JSON obj
-//      obj key must be Skey, value must be (valid)inputString. Check *
-// Mkey and Skey check that idstring is valid.
     private syntaxCheckSComparator(query: any) {
         if (!(query.constructor === jsonConstructor)) {
             throw new InsightError();
@@ -211,7 +214,7 @@ export class QueryObject {
             throw new InsightError();
         }
         this.syntaxCheckValidId(parsed[0]);
-        if (!Sfield.includes(parsed[1])) {
+        if (!this.fieldChecker.includesSField(parsed[1])) {
             throw new InsightError();
         }
         if (typeof query[skey] !== "string") {
@@ -221,7 +224,6 @@ export class QueryObject {
         return;
     }
 
-// NEGATION value must be one JSON obj containing a FILTER
     private syntaxCheckNegation(query: any) { // query must be an object
         if (!(query.constructor === jsonConstructor)) {
             throw new InsightError();
@@ -230,8 +232,7 @@ export class QueryObject {
         return;
     }
 
-// COLUMNS must be array of strings
-    private syntaxCheckCols(queryArr: any) { // must be array
+    private syntaxCheckCols(queryArr: any) {
         if (!Array.isArray(queryArr) || queryArr.length <= 0) {
             throw new InsightError();
         }
@@ -248,7 +249,7 @@ export class QueryObject {
                     break;
                 case 2:
                     this.syntaxCheckValidId(parsed[0]);
-                    if (!Mfield.includes(parsed[1]) && !Sfield.includes(parsed[1])) {
+                    if (!this.fieldChecker.includesMField(parsed[1]) && !this.fieldChecker.includesSField(parsed[1])) {
                         throw new InsightError();
                     }
                     break;
