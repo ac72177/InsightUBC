@@ -744,144 +744,137 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
 
 });
 
-// /*
-//  * This test suite dynamically generates tests from the JSON files in test/queries.
-//  * You should not need to modify it; instead, add additional files to the queries directory.
-//  * You can still make tests the normal way, this is just a convenient tool for a majority of queries.
-//  */
-// describe("InsightFacade PerformQuery", () => {
-//     const datasetsToQuery: { [id: string]: {path: string, kind: InsightDatasetKind} } = {
-//         courses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
-//     };
-//     let insightFacade: InsightFacade;
-//     let testQueries: ITestQuery[] = [];
-//
-//     // Load all the test queries, and call addDataset on the insightFacade instance for all the datasets
-//     before(function () {
-//         Log.test(`Before: ${this.test.parent.title}`);
-//         this.timeout(100000);
-//         // Load the query JSON files under test/queries.
-//         // Fail if there is a problem reading ANY query.
-//         try {
-//             testQueries = TestUtil.readTestQueries();
-//         } catch (err) {
-//             expect.fail("", "", `Failed to read one or more test queries. ${err}`);
-//         }
-//
-//         // Load the datasets specified in datasetsToQuery and add them to InsightFacade.
-//         // Will fail* if there is a problem reading ANY dataset.
-//         const loadDatasetPromises: Array<Promise<string[]>> = [];
-//         insightFacade = new InsightFacade();
-//         for (const id of Object.keys(datasetsToQuery)) {
-//             const ds = datasetsToQuery[id];
-//             const data = fs.readFileSync(ds.path).toString("base64");
-//             loadDatasetPromises.push(insightFacade.addDataset(id, data, ds.kind));
-//         }
-//         return Promise.all(loadDatasetPromises);
-//         //     .catch((err) => {
-//         //     /* *IMPORTANT NOTE: This catch is to let this run even without the implemented addDataset,
-//         //      * for the purposes of seeing all your tests run.
-//         //      * TODO For C1, remove this catch block (but keep the Promise.all)
-//         //      */
-//         //     return Promise.resolve("HACK TO LET QUERIES RUN");
-//         // });
-//     });
-//
-//     beforeEach(function () {
-//         Log.test(`BeforeTest: ${this.currentTest.title}`);
-//     });
-//
-//     after(function () {
-//         Log.test(`After: ${this.test.parent.title}`);
-//     });
-//
-//     afterEach(function () {
-//         Log.test(`AfterTest: ${this.currentTest.title}`);
-//     });
-//
-//     // Dynamically create and run a test for each query in testQueries
-//     // Creates an extra "test" called "Should run test queries" as a byproduct. Don't worry about it
-//     // it("Should run test queries", function () {
-//     //     describe("Dynamic InsightFacade PerformQuery tests", function () {
-//     //         for (const test of testQueries) {
-//     //             it(`[${test.filename}] ${test.title}`, function () {
-//     //                 const futureResult: Promise<any[]> = insightFacade.performQuery(test.query);
-//     //                 return TestUtil.verifyQueryResult(futureResult, test);
-//     //             });
-//     //         }
-//     //     });
-//     // });
-//
-//     // it("Should check length of results are the same", function () {
-//     //     describe("Dynamic InsightFacade PerformQuery tests", function () {
-//     //         for (const test of testQueries) {
-//     //             if (test.isQueryValid) {
-//     //                 it(`[${test.filename}] ${test.title}`, function () {
-//     //                     const futureResult: Promise<number> = insightFacade.testQueryResLength(test.query);
-//     //                     // return TestUtil.verifyQueryResult(futureResult, test);
-//     //                     return expect(futureResult).to.eventually.deep.equal(test.result.length);
-//     //                 });
-//     //             }
-//     //         }
-//     //     });
-//     // });
-//
-//     // Dynamically create and run a test for each query in testQueries
-//     // Tests that the query syntax and semantic checks are working properly
-//     // it("Should validate query properly", function () {
-//     //     describe("Dynamic InsightFacade PerformQuery tests", function () {
-//     //         for (const test of testQueries) {
-//     //             it(`[${test.filename}] ${test.title}`, function () {
-//     //                 const queryValidity: Promise<boolean> = insightFacade.testIsQueryValid(test.query);
-//     //                 return expect(queryValidity).to.eventually.deep.equal(test.isQueryValid);
-//     //             });
-//     //         }
-//     //     });
-//     // });
-//
-//
-//     // it("Should query simple query", function () {
-//     //     let testQuery;
-//     //     for (const test of testQueries) {
-//     //         if (test.filename === "test/queries/simple.json") {
-//     //             testQuery = test;
-//     //             break;
-//     //         }
-//     //     }
-//     //     const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
-//     //     return TestUtil.verifyQueryResult(futureResult, testQuery);
-//     // });
-//     //
-//     // it("Should query complex query", function () {
-//     //     let testQuery;
-//     //     for (const test of testQueries) {
-//     //         if (test.filename === "test/queries/complex.json") {
-//     //             testQuery = test;
-//     //             break;
-//     //         }
-//     //     }
-//     //     const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
-//     //     return TestUtil.verifyQueryResult(futureResult, testQuery);
-//     // });
-//     //
-//     // it("Should not query null query", function () {
-//     //     const futureResult: Promise<any[]> = insightFacade.performQuery(null);
-//     //     return expect(futureResult).to.be.rejectedWith(InsightError);
-//     // });
-//
-//     it("Should validate test", function () {
-//         let testQuery;
-//         for (const test of testQueries) {
-//             if (test.filename === "test/queries/resultTooLarge.json") {
-//                 testQuery = test;
-//                 break;
-//             }
-//         }
-//         // const queryValidity: Promise<boolean> = insightFacade.testIsQueryValid(testQuery.query);
-//         // return expect(queryValidity).to.eventually.deep.equal(testQuery.isQueryValid);
-//         const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
-//         return TestUtil.verifyQueryResult(futureResult, testQuery);
-//         // const lenRes: Promise<number> = insightFacade.testQueryResLength(testQuery.query);
-//         // return expect(lenRes).to.eventually.deep.equal(testQuery.result.length);
-//     });
-// });
+/*
+ * This test suite dynamically generates tests from the JSON files in test/queries.
+ * You should not need to modify it; instead, add additional files to the queries directory.
+ * You can still make tests the normal way, this is just a convenient tool for a majority of queries.
+ */
+describe("InsightFacade PerformQuery", () => {
+    const datasetsToQuery: { [id: string]: {path: string, kind: InsightDatasetKind} } = {
+        courses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
+    };
+    let insightFacade: InsightFacade;
+    let testQueries: ITestQuery[] = [];
+
+    // Load all the test queries, and call addDataset on the insightFacade instance for all the datasets
+    before(function () {
+        Log.test(`Before: ${this.test.parent.title}`);
+        this.timeout(100000);
+        // Load the query JSON files under test/queries.
+        // Fail if there is a problem reading ANY query.
+        try {
+            testQueries = TestUtil.readTestQueries();
+        } catch (err) {
+            expect.fail("", "", `Failed to read one or more test queries. ${err}`);
+        }
+
+        // Load the datasets specified in datasetsToQuery and add them to InsightFacade.
+        // Will fail* if there is a problem reading ANY dataset.
+        const loadDatasetPromises: Array<Promise<string[]>> = [];
+        insightFacade = new InsightFacade();
+        for (const id of Object.keys(datasetsToQuery)) {
+            const ds = datasetsToQuery[id];
+            const data = fs.readFileSync(ds.path).toString("base64");
+            loadDatasetPromises.push(insightFacade.addDataset(id, data, ds.kind));
+        }
+        return Promise.all(loadDatasetPromises);
+    });
+
+    beforeEach(function () {
+        Log.test(`BeforeTest: ${this.currentTest.title}`);
+    });
+
+    after(function () {
+        Log.test(`After: ${this.test.parent.title}`);
+    });
+
+    afterEach(function () {
+        Log.test(`AfterTest: ${this.currentTest.title}`);
+    });
+
+    // Dynamically create and run a test for each query in testQueries
+    // Creates an extra "test" called "Should run test queries" as a byproduct. Don't worry about it
+    // it("Should run test queries", function () {
+    //     describe("Dynamic InsightFacade PerformQuery tests", function () {
+    //         for (const test of testQueries) {
+    //             it(`[${test.filename}] ${test.title}`, function () {
+    //                 const futureResult: Promise<any[]> = insightFacade.performQuery(test.query);
+    //                 return TestUtil.verifyQueryResult(futureResult, test);
+    //             });
+    //         }
+    //     });
+    // });
+
+    // it("Should check length of results are the same", function () {
+    //     describe("Dynamic InsightFacade PerformQuery tests", function () {
+    //         for (const test of testQueries) {
+    //             if (test.isQueryValid) {
+    //                 it(`[${test.filename}] ${test.title}`, function () {
+    //                     const futureResult: Promise<number> = insightFacade.testQueryResLength(test.query);
+    //                     // return TestUtil.verifyQueryResult(futureResult, test);
+    //                     return expect(futureResult).to.eventually.deep.equal(test.result.length);
+    //                 });
+    //             }
+    //         }
+    //     });
+    // });
+
+    // Dynamically create and run a test for each query in testQueries
+    // Tests that the query syntax and semantic checks are working properly
+    // it("Should validate query properly", function () {
+    //     describe("Dynamic InsightFacade PerformQuery tests", function () {
+    //         for (const test of testQueries) {
+    //             it(`[${test.filename}] ${test.title}`, function () {
+    //                 const queryValidity: Promise<boolean> = insightFacade.testIsQueryValid(test.query);
+    //                 return expect(queryValidity).to.eventually.deep.equal(test.isQueryValid);
+    //             });
+    //         }
+    //     });
+    // });
+
+
+    // it("Should query simple query", function () {
+    //     let testQuery;
+    //     for (const test of testQueries) {
+    //         if (test.filename === "test/queries/simple.json") {
+    //             testQuery = test;
+    //             break;
+    //         }
+    //     }
+    //     const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
+    //     return TestUtil.verifyQueryResult(futureResult, testQuery);
+    // });
+    //
+    // it("Should query complex query", function () {
+    //     let testQuery;
+    //     for (const test of testQueries) {
+    //         if (test.filename === "test/queries/complex.json") {
+    //             testQuery = test;
+    //             break;
+    //         }
+    //     }
+    //     const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
+    //     return TestUtil.verifyQueryResult(futureResult, testQuery);
+    // });
+    //
+    // it("Should not query null query", function () {
+    //     const futureResult: Promise<any[]> = insightFacade.performQuery(null);
+    //     return expect(futureResult).to.be.rejectedWith(InsightError);
+    // });
+
+    it("Should validate test", function () {
+        let testQuery;
+        for (const test of testQueries) {
+            if (test.filename === "test/queries/resultTooLarge.json") {
+                testQuery = test;
+                break;
+            }
+        }
+        // const queryValidity: Promise<boolean> = insightFacade.testIsQueryValid(testQuery.query);
+        // return expect(queryValidity).to.eventually.deep.equal(testQuery.isQueryValid);
+        const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
+        return TestUtil.verifyQueryResult(futureResult, testQuery);
+        // const lenRes: Promise<number> = insightFacade.testQueryResLength(testQuery.query);
+        // return expect(lenRes).to.eventually.deep.equal(testQuery.result.length);
+    });
+});

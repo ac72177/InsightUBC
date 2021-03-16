@@ -198,7 +198,7 @@ export default class InsightFacade implements IInsightFacade {
 
     public performQuery(query: any): Promise<any[]> {
         try {
-            let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap);
+            let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap); // TODO add rooms
             queryObject.syntaxCheck();
             let res: object[];
             res = queryObject.getQueryResults();
@@ -210,7 +210,7 @@ export default class InsightFacade implements IInsightFacade {
                     return Promise.reject(new InsightError());
                     break;
                 case "NotFoundError":
-                    return Promise.reject(new NotFoundError()); // TODO: Should be NotFoundError()?
+                    return Promise.reject(new NotFoundError());
                     break;
                 case "ResultTooLargeError":
                     return Promise.reject(new ResultTooLargeError());
@@ -223,7 +223,7 @@ export default class InsightFacade implements IInsightFacade {
 
     public testQueryResLength(query: any): Promise<number> {
         try {
-            let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap);
+            let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap); // TODO add rooms
             queryObject.syntaxCheck();
             // queryObject.getQueryResults();
             return Promise.resolve(queryObject.testGetResLength());
