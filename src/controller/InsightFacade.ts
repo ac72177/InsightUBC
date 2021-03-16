@@ -19,24 +19,19 @@ import {RoomsDataset} from "./RoomsDataset";
  *
  */
 export default class InsightFacade implements IInsightFacade {
-    private courseMap: Map<string, Map<string, string>>;
-    private roomMap: Map<string, Map<string, string>>;
-    private courseDS: string[];
-    private roomDS: string[];
-    private courseIns: InsightDataset[];
-    private roomIns: InsightDataset[];
+    private courseMap: Map<string, Map<string, string>> = new Map();
+    private roomMap: Map<string, Map<string, string>> = new Map();
+    private courseDS: string[] = [];
+    private roomDS: string[] = [];
+    private courseIns: InsightDataset[] = [];
+    private roomIns: InsightDataset[] = [];
 
     constructor() {
-        if (fs.existsSync("./data/myRoomData") && fs.existsSync("./data/myCourseData")) {
-            this.loadFromDisk(this.roomMap, this.roomDS, this.courseIns, "./data/myRoomData");
+        if (fs.existsSync("./data/myRoomData")) {
+            this.loadFromDisk(this.roomMap, this.roomDS, this.roomIns, "./data/myRoomData");
+        }
+        if (fs.existsSync("./data/myCourseData")) {
             this.loadFromDisk(this.courseMap, this. courseDS, this.courseIns, "./data/myCourseData");
-        } else {
-            this.courseMap = new Map();
-            this.courseIns = [];
-            this.courseDS = [];
-            this.roomMap = new Map();
-            this.roomDS = [];
-            this.roomIns = [];
         }
         Log.trace("InsightFacadeImpl::init()");
     }
@@ -44,7 +39,6 @@ export default class InsightFacade implements IInsightFacade {
     private loadFromDisk(map: Map<string, Map<string, string>>, ds: string[], ins: InsightDataset[], path: string) {
         let loadedData = fs.readFileSync(path).toString("utf8");
         try {
-            map = new Map();
             let JSONObjectData = JSON.parse(loadedData);
             let JSONMapData = JSONObjectData.Map;
             let nestedMap: Map<string, string> = new Map();
