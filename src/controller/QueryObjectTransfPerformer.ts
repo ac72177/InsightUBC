@@ -51,6 +51,7 @@ export class QueryObjectTransfPerformer {
     // TODO: complete this method
     // use this.groupArr to get the values specified in this.queryTransf.GROUP, add them to the right obj in finalRes
     private performGroupKeys() {
+        this.convertToRes();
         return;
     }
 
