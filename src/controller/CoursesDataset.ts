@@ -8,7 +8,7 @@ export class CoursesDataset {
         this.myInsightFacade = param;
     }
 
-    public promiseToAddVerifiedDataset(id: string, content: string): Promise<string[]> {
+    public promiseToAddVerifiedDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
         let currentZip = new JSZip();
         return new Promise<string[]>((resolve, reject) => {
             return currentZip.loadAsync(content, {base64: true})
@@ -20,7 +20,7 @@ export class CoursesDataset {
                     });
                     return Promise.all(futureFiles)
                         .then((currentFiles) => {
-                            return this.updateDataStructure(currentFiles, id, resolve);
+                            return this.updateDataStructure(currentFiles, id, kind, resolve);
                         });
                 }).catch((error) => {
                     return reject(new InsightError());
@@ -29,11 +29,11 @@ export class CoursesDataset {
     }
 
     private updateDataStructure(currentFiles: string[],
-                                id: string,
+                                id: string, kind: InsightDatasetKind,
                                 resolve: (value?: (PromiseLike<string[]> | string[])) => void) {
         return this.addToDataStructureIfValid(currentFiles)
             .then((nestedMap) => {
-                return this.myInsightFacade.updateDataStructure(id, nestedMap, resolve);
+                return this.myInsightFacade.updateDataStructure(id, kind, nestedMap, resolve);
             });
     }
 

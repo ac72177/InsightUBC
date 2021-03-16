@@ -1,5 +1,5 @@
 import * as JSZip from "jszip";
-import {InsightError} from "./IInsightFacade";
+import {InsightDatasetKind, InsightError} from "./IInsightFacade";
 import InsightFacade from "./InsightFacade";
 
 export class RoomsDataset {
@@ -10,7 +10,7 @@ export class RoomsDataset {
         this.myInsightFacade = param;
     }
 
-    public promiseToAddVerifiedDataset(id: string, content: string): Promise<string[]> {
+    public promiseToAddVerifiedDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
         let currentZip = new JSZip();
         return new Promise<string[]>((resolve, reject) => {
             return currentZip.loadAsync(content, {base64: true})
@@ -21,7 +21,7 @@ export class RoomsDataset {
                     return Promise.resolve(futureFile)
                         .then((currentIndex) => {
                             let parsedData: string = this.parse5.parse(currentIndex);
-                            return this.updateDataStructure(parsedData, id, resolve);
+                            return this.updateDataStructure(parsedData, id, kind, resolve);
                         });
                 }).catch((error) => {
                     return reject(new InsightError());
@@ -29,11 +29,11 @@ export class RoomsDataset {
         });
     }
 
-    private updateDataStructure(parsedData: string, id: string,
+    private updateDataStructure(parsedData: string, id: string, kind: InsightDatasetKind,
                                 resolve: (value?: (PromiseLike<string[]> | string[])) => void) {
         return this.getData(parsedData)
             .then((nestedMap) => {
-                return this.myInsightFacade.updateDataStructure(id, nestedMap, resolve);
+                return this.myInsightFacade.updateDataStructure(id, kind, nestedMap, resolve);
             });
     }
 
