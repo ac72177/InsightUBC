@@ -11,6 +11,7 @@ import {QueryObject} from "./QueryObject";
 import * as fs from "fs-extra";
 import {CoursesDataset} from "./CoursesDataset";
 import {RoomsDataset} from "./RoomsDataset";
+import * as http from "http";
 
 
 /**
@@ -61,11 +62,10 @@ export default class InsightFacade implements IInsightFacade {
             || kind === undefined || (kind !== InsightDatasetKind.Courses && kind !== InsightDatasetKind.Rooms)) {
             return Promise.reject(new InsightError());
         }
-
         return this.promiseToVerifyId(id)
             .then(() => {
                 if (this.courseMap.has(id) || this.roomMap.has(id)) {
-                    return Promise.reject(new InsightError());
+                    return Promise.reject(new InsightError()); // todo check why this fails sometimes
                 }
                 switch (kind) {
                     case InsightDatasetKind.Courses:
