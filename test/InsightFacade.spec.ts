@@ -21,7 +21,7 @@ export interface ITestQuery {
     filename: string;  // This is injected when reading the file
 }
 
-/*describe("InsightFacade Add/Remove/List Dataset", function () {
+describe("InsightFacade Add/Remove/List Dataset", function () {
     // Reference any datasets you've added to test/data here and they will
     // automatically be loaded in the 'before' hook.
     const datasetsToLoad: { [id: string]: string } = {
@@ -93,7 +93,47 @@ export interface ITestQuery {
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
 
-    it("Should add a valid dataset rooms", function () {
+    it("add rooms, list, add courses, list, remove rooms, list", function () {
+        const id: string = "rooms";
+        const expected: string[] = [id];
+        const myDataset1: InsightDataset = {
+            id: "rooms",
+            kind: InsightDatasetKind.Rooms,
+            numRows: 364,
+        };
+        const myDataset2: InsightDataset = {
+            id: "courses",
+            kind: InsightDatasetKind.Courses,
+            numRows: 64612,
+        };
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.eventually.deep.equal(expected).then(() => {
+            let expectedList: InsightDataset[] = [myDataset1];
+            let listResult: Promise<InsightDataset[]> = insightFacade.listDatasets();
+            return expect(listResult).to.eventually.deep.equal(expectedList).then(() => {
+                const id1: string = "courses";
+                const expected1: string[] = [id, id1];
+                const futureResult1: Promise<string[]> = insightFacade.addDataset(
+                    id1,
+                    datasets[id1],
+                    InsightDatasetKind.Courses);
+                return expect(futureResult1).to.eventually.deep.equal(expected1).then(() => {
+                    let expectedList1: InsightDataset[] = [myDataset1, myDataset2];
+                    let listResult1: Promise<InsightDataset[]> = insightFacade.listDatasets();
+                    return expect(listResult1).to.eventually.deep.equal(expectedList1).then(() => {
+                        let expectedRemove: string = id;
+                        let removeResult: Promise<string> = insightFacade.removeDataset(id);
+                        return expect(removeResult).to.eventually.deep.equal(expectedRemove);
+                    });
+                });
+             });
+         });
+    });
+
+    it("Should add rooms", function () {
         const id: string = "rooms";
         const expected: string[] = [id];
         const futureResult: Promise<string[]> = insightFacade.addDataset(
@@ -202,6 +242,16 @@ export interface ITestQuery {
             id,
             datasets[id],
             InsightDatasetKind.Courses,
+        );
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
+    it("Should not add mismatching kind and zip", function () {
+        const id: string = "courses";
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms,
         );
         return expect(futureResult).to.be.rejectedWith(InsightError);
     });
@@ -750,7 +800,7 @@ export interface ITestQuery {
         const futureResult: Promise<string> = insightFacade.removeDataset(undefined);
         return expect(futureResult).to.be.rejectedWith(InsightError);
     });
-});*/
+});
 
 /*
  * This test suite dynamically generates tests from the JSON files in test/queries.
