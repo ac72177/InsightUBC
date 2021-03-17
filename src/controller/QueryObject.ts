@@ -21,11 +21,13 @@ export class QueryObject {
     private currentRooms: string[] = [];
     private roomsMap: any; // TODO: modify constructor to instantiate these 2 variables
 
-    constructor(query: any, datasets: string[], coursesMap: any) {
+    constructor(query: any, coursesDatasets: string[], coursesMap: any, roomsDatasets: string[], roomsMap: any) {
         this.currentID = "";
-        this.currentCourses = datasets;
+        this.currentCourses = coursesDatasets;
         this.query = query;
         this.coursesMap = coursesMap;
+        this.currentRooms = roomsDatasets;
+        this.roomsMap = roomsMap;
         return;
     }
 

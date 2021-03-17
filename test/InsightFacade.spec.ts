@@ -20,7 +20,7 @@ export interface ITestQuery {
     filename: string;  // This is injected when reading the file
 }
 
-describe("InsightFacade Add/Remove/List Dataset", function () {
+/*describe("InsightFacade Add/Remove/List Dataset", function () {
     // Reference any datasets you've added to test/data here and they will
     // automatically be loaded in the 'before' hook.
     const datasetsToLoad: { [id: string]: string } = {
@@ -742,7 +742,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.be.rejectedWith(InsightError);
     });
 
-});
+});*/
 
 /*
  * This test suite dynamically generates tests from the JSON files in test/queries.
@@ -759,7 +759,7 @@ describe("InsightFacade PerformQuery", () => {
     // Load all the test queries, and call addDataset on the insightFacade instance for all the datasets
     before(function () {
         Log.test(`Before: ${this.test.parent.title}`);
-        this.timeout(100000);
+        this.timeout(200000000);
         // Load the query JSON files under test/queries.
         // Fail if there is a problem reading ANY query.
         try {
@@ -786,6 +786,16 @@ describe("InsightFacade PerformQuery", () => {
 
     after(function () {
         Log.test(`After: ${this.test.parent.title}`);
+        // This section resets the data directory (removing any cached data) and resets the InsightFacade instance
+        // This runs after each test, which should make each test independent from the previous one
+        const cacheDir = __dirname + "/../data";
+        try {
+            fs.removeSync(cacheDir);
+            fs.mkdirSync(cacheDir);
+            insightFacade = new InsightFacade();
+        } catch (err) {
+            Log.error(err);
+        }
     });
 
     afterEach(function () {
@@ -865,15 +875,15 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/tComplex.json") {
+            if (test.filename === "test/queries/tSimpleExtra.json") {
                 testQuery = test;
                 break;
             }
         }
-        const queryValidity: Promise<boolean> = insightFacade.testQueryValidity(testQuery.query);
-        return expect(queryValidity).to.eventually.deep.equal(testQuery.isQueryValid);
-        // const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
-        // return TestUtil.verifyQueryResult(futureResult, testQuery);
+        // const queryValidity: Promise<boolean> = insightFacade.testQueryValidity(testQuery.query);
+        // return expect(queryValidity).to.eventually.deep.equal(testQuery.isQueryValid);
+        const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
+        return TestUtil.verifyQueryResult(futureResult, testQuery);
         // const lenRes: Promise<number> = insightFacade.testQueryResLength(testQuery.query);
         // return expect(lenRes).to.eventually.deep.equal(testQuery.result.length);
     });
