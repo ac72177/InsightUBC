@@ -198,7 +198,9 @@ export default class InsightFacade implements IInsightFacade {
 
     public performQuery(query: any): Promise<any[]> {
         try {
-            let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap); // TODO add rooms
+            let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap,
+                this.roomDS, this.roomMap);
+            // let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap);
             queryObject.syntaxCheck();
             let res: object[];
             res = queryObject.getQueryResults();
@@ -223,7 +225,9 @@ export default class InsightFacade implements IInsightFacade {
 
     public testQueryResLength(query: any): Promise<number> {
         try {
-            let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap); // TODO add rooms
+            let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap,
+                this.roomDS, this.roomMap);
+            // let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap);
             queryObject.syntaxCheck();
             // queryObject.getQueryResults();
             return Promise.resolve(queryObject.testGetResLength());
@@ -234,7 +238,9 @@ export default class InsightFacade implements IInsightFacade {
 
     public testQueryValidity(query: any): Promise<boolean> {
         try {
-            let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap); // TODO add rooms
+            let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap,
+                this.roomDS, this.roomMap);
+            // let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap);
             queryObject.syntaxCheck();
             // queryObject.getQueryResults();
             // return Promise.resolve(queryObject.testGetResLength());
