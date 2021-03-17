@@ -65,7 +65,7 @@ export class QueryObjectTransfChecker {
     }
 
     private syntaxCheckAPPLY(queryArr: any) {
-        if (!Array.isArray(queryArr) || queryArr.length <= 0) {
+        if (!Array.isArray(queryArr) || queryArr.length < 0) { // Apply arr can be empty
             throw new InsightError();
         }
         for (const i in queryArr) {

@@ -1,0 +1,32 @@
+{
+    "title": "SELECT dept, id, avg WHERE avg == 95 || avg > 90 && dept == 'adhe' ORDER BY avg",
+    "query": {
+  "WHERE": {
+    "IS": {
+      "courses_dept": "math"
+    }
+  },
+  "OPTIONS": {
+    "COLUMNS": [
+      "courses_title",
+      "overallAvg"
+    ]
+  },
+  "TRANSFORMATIONS": {
+    "GROUP": [
+      "courses_title"
+    ],
+    "APPLY": [
+      {
+        "overallAvg": {
+          "AVG": "courses_avg"
+        }
+      }
+    ]
+  }
+},
+    "isQueryValid": true,
+    "result": [
+      {"courses_title":"df calc ap ph sc","overallAvg":69.86},{"courses_title":"int calc ap ph s","overallAvg":65.33},{"courses_title":"df calc app lf s","overallAvg":69.96},{"courses_title":"int calc ap lf s","overallAvg":67.67},{"courses_title":"dff calc ap c&ss","overallAvg":69.11},{"courses_title":"int calc ap c&ss","overallAvg":66.92},{"courses_title":"diff calculus","overallAvg":61.74},{"courses_title":"differ calculus","overallAvg":77.77},{"courses_title":"integral calculu","overallAvg":74.92},{"courses_title":"linear systems","overallAvg":65.81},{"courses_title":"dif calc phys ap","overallAvg":61.09},{"courses_title":"calc socsci comm","overallAvg":63.01},{"courses_title":"calculus survey","overallAvg":66.78},{"courses_title":"calculus 3","overallAvg":67.18},{"courses_title":"intro math compu","overallAvg":70},{"courses_title":"elem diff eq i","overallAvg":70.48},{"courses_title":"mltvar&vctr calc","overallAvg":76},{"courses_title":"math proof","overallAvg":64.43},{"courses_title":"matrix algebra","overallAvg":68.92},{"courses_title":"linear algebra i","overallAvg":75.13},{"courses_title":"adv calculus i","overallAvg":75.66},{"courses_title":"adv calculus ii","overallAvg":81.26},{"courses_title":"multivrbl calc","overallAvg":69.83},{"courses_title":"ord diff equtns","overallAvg":68.57},{"courses_title":"diff equations","overallAvg":70.45},{"courses_title":"partl diff equat","overallAvg":68.83},{"courses_title":"vctr calc el eng","overallAvg":62.85},{"courses_title":"intr complex var","overallAvg":66.24},{"courses_title":"applied analysis","overallAvg":70.31},{"courses_title":"intr probability","overallAvg":69.96},{"courses_title":"intr stoch proc","overallAvg":68.84},{"courses_title":"apld complx anly","overallAvg":66.67},{"courses_title":"appl linear algb","overallAvg":69.21},{"courses_title":"euclidn geometry","overallAvg":71.38},{"courses_title":"abstr linear alg","overallAvg":66.19},{"courses_title":"intr number thry","overallAvg":68.66},{"courses_title":"tpcs number thry","overallAvg":70.53},{"courses_title":"diff equations 2","overallAvg":73.43},{"courses_title":"calculus iv","overallAvg":69.03},{"courses_title":"prob phys app","overallAvg":69.8},{"courses_title":"real variabls i","overallAvg":70.47},{"courses_title":"real variabls ii","overallAvg":69.28},{"courses_title":"intr algebra","overallAvg":73.84},{"courses_title":"intr grp theory","overallAvg":72.02},{"courses_title":"int rings&module","overallAvg":73.75},{"courses_title":"intro to math","overallAvg":79.11},{"courses_title":"intro lin prog","overallAvg":69.94},{"courses_title":"alg coding crypt","overallAvg":72.81},{"courses_title":"algbr & cod thry","overallAvg":69.63},{"courses_title":"appl nonln dy&ch","overallAvg":71.24},{"courses_title":"math modl in sci","overallAvg":78.2},{"courses_title":"app part diff eq","overallAvg":68.55},{"courses_title":"green's func&var","overallAvg":73.96},{"courses_title":"num mthds dff eq","overallAvg":80.32},{"courses_title":"var & aprx mtds","overallAvg":79.23},{"courses_title":"math demonstrtns","overallAvg":80.54},{"courses_title":"probability","overallAvg":80.74},{"courses_title":"stochastic proc","overallAvg":82.37},{"courses_title":"real analysis i","overallAvg":80.81},{"courses_title":"real analysis ii","overallAvg":83.1},{"courses_title":"groups&fields","overallAvg":80.94},{"courses_title":"flds&galois thry","overallAvg":72.81},{"courses_title":"tpcs algebra","overallAvg":84.25},{"courses_title":"intr mod diff ge","overallAvg":82.21},{"courses_title":"topics topology","overallAvg":86.78},{"courses_title":"number theory","overallAvg":74.32},{"courses_title":"complex analysis","overallAvg":83.11},{"courses_title":"mod discr opt pr","overallAvg":73.7},{"courses_title":"opt grphs&netwks","overallAvg":74.34},{"courses_title":"math rsrch&writn","overallAvg":82.68},{"courses_title":"asymp&prtb mthds","overallAvg":87.8},{"courses_title":"algebra i","overallAvg":88.43},{"courses_title":"algebra ii","overallAvg":90.96},{"courses_title":"discrete math","overallAvg":88.74},{"courses_title":"meas thry&integr","overallAvg":84.23},{"courses_title":"complex analy","overallAvg":90.82},{"courses_title":"complex analy i","overallAvg":89.3},{"courses_title":"functional analy","overallAvg":90.26},{"courses_title":"ptl dif eqn flud","overallAvg":89.5},{"courses_title":"prt diff equa i","overallAvg":90.68},{"courses_title":"num anly prtl df","overallAvg":87.21},{"courses_title":"combinatorial op","overallAvg":91.14},{"courses_title":"diff geometry i","overallAvg":89.76},{"courses_title":"algb topology i","overallAvg":91.6},{"courses_title":"algb geometry i","overallAvg":92.15},{"courses_title":"lie theory i","overallAvg":91.22},{"courses_title":"elem number thry","overallAvg":87.8},{"courses_title":"analyt num thry","overallAvg":88.62},{"courses_title":"harmonic anal i","overallAvg":93},{"courses_title":"probability i","overallAvg":90.17},{"courses_title":"probability ii","overallAvg":91.47},{"courses_title":"cnt tme stchastc","overallAvg":91.91},{"courses_title":"mthds asymp anal","overallAvg":89.18},{"courses_title":"pertrb diff equa","overallAvg":90.03},{"courses_title":"intr dyn systems","overallAvg":89.59},{"courses_title":"complex fluids","overallAvg":89.75},{"courses_title":"math electrophys","overallAvg":85.53},{"courses_title":"msc major essay","overallAvg":90.34}
+    ]
+}
