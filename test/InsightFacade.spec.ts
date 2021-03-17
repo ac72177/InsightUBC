@@ -21,7 +21,7 @@ export interface ITestQuery {
     filename: string;  // This is injected when reading the file
 }
 
-/*describe("InsightFacade Add/Remove/List Dataset", function () {
+describe("InsightFacade Add/Remove/List Dataset", function () {
     // Reference any datasets you've added to test/data here and they will
     // automatically be loaded in the 'before' hook.
     const datasetsToLoad: { [id: string]: string } = {
@@ -202,6 +202,16 @@ export interface ITestQuery {
             id,
             datasets[id],
             InsightDatasetKind.Courses,
+        );
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
+    it("Should not add mismatching kind and zip", function () {
+        const id: string = "courses";
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms,
         );
         return expect(futureResult).to.be.rejectedWith(InsightError);
     });
@@ -750,7 +760,7 @@ export interface ITestQuery {
         const futureResult: Promise<string> = insightFacade.removeDataset(undefined);
         return expect(futureResult).to.be.rejectedWith(InsightError);
     });
-});*/
+});
 
 /*
  * This test suite dynamically generates tests from the JSON files in test/queries.

@@ -94,7 +94,7 @@ export class RoomsDataset {
         });
     }
 
-    public getGeolocation(url: string, rawAddr: string): Promise<any> { // todo add return type
+    public getGeolocation(url: string, rawAddr: string): Promise<any> {
         return new Promise<any>((resolve, reject) => {
             let link = url + encodeURIComponent(rawAddr);
 
@@ -138,7 +138,13 @@ export class RoomsDataset {
         }
         if (element.childNodes && element.childNodes.length > 0) {
             for (let child of element.childNodes) {
-                let possibleArray = this.findArray(child);
+                let possibleArray;
+                try {
+                    possibleArray = this.findArray(child);
+                } catch (e) {
+                    continue;
+                }
+
                 if (possibleArray.length > 0) {
                     return possibleArray;
                 }
