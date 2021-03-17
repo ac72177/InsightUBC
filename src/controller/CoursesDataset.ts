@@ -54,8 +54,8 @@ export class CoursesDataset {
                             let DesiredJSONString;
                             if (CoursesDataset.verifyHasCorrectProperties(JSONObjectSection)) {
                                 DesiredJSONString = CoursesDataset.createNewJSONCourseStringData(JSONObjectSection);
-                                if (!nestedMap1.has(JSONObjectSection.id)) {
-                                    nestedMap1.set(JSONObjectSection.id, DesiredJSONString);
+                                if (!nestedMap1.has(JSONObjectSection.id.toString())) {
+                                    nestedMap1.set(JSONObjectSection.id.toString(), DesiredJSONString);
                                     hasValidCourseSection = true;
                                 }
                             }
