@@ -50,27 +50,30 @@ export class RoomsDataset {
                 "views-field views-field-field-building-address");
             let path: string = this.findInAttrs(element,  "a", "href");
             path = "rooms" + path.substring(1);
-            let lat: number = 0;
-            let lon: number = 0;
-            // let res: Promise<any> = this.getGeolocation(
-            //    "http://cs310.students.cs.ubc.ca:11316/api/v1/project_team062/", addr);
-            // return Promise.resolve(res)
-            //  .then((geodata) => {});
-            let futureFile = this.globalJSZip.file(path);
-            let fileData = futureFile.async("string");
+            let lat: number;
+            let lon: number;
+            let url: string = "http://cs310.students.cs.ubc.ca:11316/api/v1/project_team062/";
             try {
-                Promise.resolve(fileData)
-                    .then((myFile) => {
-                        let parsedBuildingData = this.parse5.parse(myFile);
-                        let roomArray = this.findArray(parsedBuildingData);
-                        for (let room of roomArray) {
-                            let elem = this.findNumberAndHREFLocation(room);
-                            let num = this.findNumber(elem);
-                            let name = sn + " " + num;
-                            nestedMap.set(name,
-                                this.createNewJSONRoomStringData(room, elem, fn, sn, num, name, addr, lat, lon));
-                        }
-                    });
+                let futureGeoData = this.getGeolocation(url, addr);
+                futureGeoData.then((res) => {
+                    lat = res.lat;
+                    lon = res.lon;
+                }).then(() => {
+                    let futureFile = this.globalJSZip.file(path);
+                    let fileData = futureFile.async("string");
+                    Promise.resolve(fileData)
+                        .then((myFile) => {
+                            let parsedBuildingData = this.parse5.parse(myFile);
+                            let roomArray = this.findArray(parsedBuildingData);
+                            for (let room of roomArray) {
+                                let elem = this.findNumberAndHREFLocation(room);
+                                let num = this.findNumber(elem);
+                                let name = sn + " " + num;
+                                nestedMap.set(name,
+                                    this.createNewJSONRoomStringData(room, elem, fn, sn, num, name, addr, lat, lon));
+                            }
+                        });
+                });
             } catch (e) {
                 continue;
             }
@@ -91,22 +94,29 @@ export class RoomsDataset {
         });
     }
 
-    // private getGeolocation(url: string, rawAddr: string): Promise<any> { // todo add return type
-    //     let link = url + encodeURIComponent(rawAddr);
-    //     http.get(link, (res) => {
-    //         res.setEncoding("utf8");
-    //         let rawData = "";
-    //         res.on("data", (chunk) => {
-    //             rawData += chunk;
-    //         });
-    //         res.on("end", () => {
-    //                 const parsedData = JSON.parse(rawData);
-    //                 return Promise.resolve(parsedData);
-    //         });
-    //     }).on("error", (e) => {
-    //         return Promise.reject(new InsightError());
-    //     });
-    // }
+    public getGeolocation(url: string, rawAddr: string): Promise<any> { // todo add return type
+        return new Promise<any>((resolve, reject) => {
+            let link = url + encodeURIComponent(rawAddr);
+
+            http.get(link, (res) => {
+                res.setEncoding("utf8");
+                let rawData = "";
+                res.on("data", (chunk) => {
+                    rawData += chunk;
+                });
+                res.on("end", () => {
+                    try {
+                        const parsedData = JSON.parse(rawData);
+                        return resolve(parsedData);
+                    } catch (e) {
+                        return reject(new InsightError());
+                    }
+                });
+            }).on("error", (e) => {
+                return reject(new InsightError());
+            });
+        });
+    }
 
     private findArray(element: any): any[] {
         let array: any[] = [];

@@ -6,6 +6,7 @@ import {InsightDataset, InsightDatasetKind, InsightError, NotFoundError} from ".
 import InsightFacade from "../src/controller/InsightFacade";
 import Log from "../src/Util";
 import TestUtil from "./TestUtil";
+import {RoomsDataset} from "../src/controller/RoomsDataset";
 
 // This extends chai with assertions that natively support Promises
 chai.use(chaiAsPromised);
@@ -99,6 +100,14 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
             id,
             datasets[id],
             InsightDatasetKind.Rooms);
+        return expect(futureResult).to.eventually.deep.equal(expected);
+    });
+
+    it("GeoLocation Test", function () {
+        let roomsDataset = new RoomsDataset(insightFacade);
+        const futureResult: Promise<any> = roomsDataset.getGeolocation(
+            "http://cs310.students.cs.ubc.ca:11316/api/v1/project_team062/", "6245 Agronomy Road V6T 1Z4");
+        const expected = {lat: 49.26125, lon: -123.24807};
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
 
@@ -741,6 +750,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         const futureResult: Promise<string> = insightFacade.removeDataset(undefined);
         return expect(futureResult).to.be.rejectedWith(InsightError);
     });
+
 
 });
 
