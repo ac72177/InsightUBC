@@ -117,8 +117,8 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
                 const id1: string = "courses";
                 const expected1: string[] = [id, id1];
                 const futureResult1: Promise<string[]> = insightFacade.addDataset(
-                    id,
-                    datasets[id],
+                    id1,
+                    datasets[id1],
                     InsightDatasetKind.Courses);
                 return expect(futureResult1).to.eventually.deep.equal(expected1).then(() => {
                     let expectedList1: InsightDataset[] = [myDataset1, myDataset2];
@@ -129,8 +129,8 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
                         return expect(removeResult).to.eventually.deep.equal(expectedRemove);
                     });
                 });
-            });
-        });
+             });
+         });
     });
 
     it("Should add rooms", function () {

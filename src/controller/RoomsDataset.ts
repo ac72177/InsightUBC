@@ -7,6 +7,7 @@ export class RoomsDataset {
     private parse5 = require("parse5");
     private globalJSZip: JSZip;
     private myInsightFacade: InsightFacade;
+
     constructor(param: InsightFacade) {
         this.myInsightFacade = param;
     }
@@ -32,7 +33,7 @@ export class RoomsDataset {
 
     private getAndUpdateData(parsedData: string, id: string, kind: InsightDatasetKind,
                              resolve: (value?: (PromiseLike<string[]> | string[])) => void) {
-        return this.getData(parsedData)
+        this.getData(parsedData)
             .then((nestedMap) => {
                 return this.myInsightFacade.updateDataStructure(id, kind, nestedMap, resolve);
             });
@@ -41,48 +42,50 @@ export class RoomsDataset {
     private getData(parsedData: string): Promise<Map<string, string>> {
         let nestedMap: Map<string, string> = new Map<string, string>();
         let buildingArray = this.findArray(parsedData);
-        return new Promise<Map<string, string>>((resolve, reject) => {
-            for (let row of buildingArray) {
-                let parsedBuildingData;
-                let element = this.findFullNameAndAddressLocation(row);
-                let fn: string = this.findInChildNodes(element, "a", "#text");
-                let sn: string = this.findInChildFromAttrs(row, "td",
-                    "views-field views-field-field-building-code");
-                let addr: string = this.findInChildFromAttrs(row, "td",
-                    "views-field views-field-field-building-address");
-                let path: string = this.findInAttrs(element, "a", "href");
-                path = "rooms" + path.substring(1);
-                let lat: number;
-                let lon: number;
-                let url: string = "http://cs310.students.cs.ubc.ca:11316/api/v1/project_team062/";
-                try {
-                    let futureGeoData = this.getGeolocation(url, addr);
-                    futureGeoData.then((res) => {
-                        lat = res.lat;
-                        lon = res.lon;
-                    }).then(() => {
-                        let futureFile = this.globalJSZip.file(path);
-                        let fileData = futureFile.async("string");
-                        return Promise.resolve(fileData);
-                    }).then((myFile) => {
-                        parsedBuildingData = this.parse5.parse(myFile);
-                        let roomArray = this.findArray(parsedBuildingData);
-                        for (let room of roomArray) {
-                            let elem = this.findNumberAndHREFLocation(room);
-                            let num = this.findNumber(elem);
-                            let name = sn + " " + num;
-                            nestedMap.set(name,
-                                this.createNewJSONRoomStringData(room, elem, fn, sn, num, name, addr, lat, lon));
-                        }
-                    });
-                } catch (e) {
-                    continue;
-                }
+        let futurePromises: Array<Promise<any>> = [];
+        for (let row of buildingArray) {
+            let parsedBuildingData;
+            let element = this.findFullNameAndAddressLocation(row);
+            let fn: string = this.findInChildNodes(element, "a", "#text");
+            let sn: string = this.findInChildFromAttrs(row, "td",
+                "views-field views-field-field-building-code");
+            let addr: string = this.findInChildFromAttrs(row, "td",
+                "views-field views-field-field-building-address");
+            let path: string = this.findInAttrs(element, "a", "href");
+            path = "rooms" + path.substring(1);
+            let lat: number;
+            let lon: number;
+            let url: string = "http://cs310.students.cs.ubc.ca:11316/api/v1/project_team062/";
+            try {
+                let futureGeoData = this.getGeolocation(url, addr);
+                let futurePromise = futureGeoData.then((res) => {
+                    lat = res.lat;
+                    lon = res.lon;
+                }).then(() => {
+                    let futureFile = this.globalJSZip.file(path);
+                    let fileData = futureFile.async("string");
+                    return Promise.resolve(fileData);
+                }).then((myFile) => {
+                    parsedBuildingData = this.parse5.parse(myFile);
+                    let roomArray = this.findArray(parsedBuildingData);
+                    for (let room of roomArray) {
+                        let elem = this.findNumberAndHREFLocation(room);
+                        let num = this.findNumber(elem);
+                        let name = sn + " " + num;
+                        nestedMap.set(name,
+                            this.createNewJSONRoomStringData(room, elem, fn, sn, num, name, addr, lat, lon));
+                    }
+                });
+                futurePromises.push(futurePromise);
+            } catch (e) {
+                continue;
             }
-            return resolve(nestedMap); // todo this is resolving too early
-        });
+        }
+        return Promise.all(futurePromises).then(() => {
+            return Promise.resolve(nestedMap);
+        }); // todo this is resolving too early
+        //  });
     }
-
 
     private createNewJSONRoomStringData(roomData: string, element: any, fn: string, sn: string, num: string,
                                         name: string, addr: string, latitude: number, longitude: number): string {
