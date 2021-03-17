@@ -22,7 +22,7 @@ export class RoomsDataset {
                     return Promise.resolve(futureFile)
                         .then((currentIndex) => {
                             let parsedData: string = this.parse5.parse(currentIndex);
-                            return this.updateDataStructure(parsedData, id, kind, resolve);
+                            return this.getAndUpdateData(parsedData, id, kind, resolve);
                         });
                 }).catch((error) => {
                     return reject(new InsightError());
@@ -30,8 +30,8 @@ export class RoomsDataset {
         });
     }
 
-    private updateDataStructure(parsedData: string, id: string, kind: InsightDatasetKind,
-                                resolve: (value?: (PromiseLike<string[]> | string[])) => void) {
+    private getAndUpdateData(parsedData: string, id: string, kind: InsightDatasetKind,
+                             resolve: (value?: (PromiseLike<string[]> | string[])) => void) {
         return this.getData(parsedData)
             .then((nestedMap) => {
                 return this.myInsightFacade.updateDataStructure(id, kind, nestedMap, resolve);
@@ -41,50 +41,59 @@ export class RoomsDataset {
     private getData(parsedData: string): Promise<Map<string, string>> {
         let nestedMap: Map<string, string> = new Map<string, string>();
         let buildingArray = this.findArray(parsedData);
-        for (let row of buildingArray) {
-            let element = this.findFullNameAndAddressLocation(row);
-            let fn: string = this.findInChildNodes(element, "a", "#text");
-            let sn: string = this.findInChildFromAttrs(row, "td",
-                "views-field views-field-field-building-code");
-            let addr: string = this.findInChildFromAttrs(row, "td",
-                "views-field views-field-field-building-address");
-            let path: string = this.findInAttrs(element,  "a", "href");
-            path = "rooms" + path.substring(1);
-            let lat: number;
-            let lon: number;
-            let url: string = "http://cs310.students.cs.ubc.ca:11316/api/v1/project_team062/";
-            try {
-                let futureGeoData = this.getGeolocation(url, addr);
-                futureGeoData.then((res) => {
-                    lat = res.lat;
-                    lon = res.lon;
-                }).then(() => {
-                    let futureFile = this.globalJSZip.file(path);
-                    let fileData = futureFile.async("string");
-                    Promise.resolve(fileData)
-                        .then((myFile) => {
-                            let parsedBuildingData = this.parse5.parse(myFile);
-                            let roomArray = this.findArray(parsedBuildingData);
-                            for (let room of roomArray) {
-                                let elem = this.findNumberAndHREFLocation(room);
-                                let num = this.findNumber(elem);
-                                let name = sn + " " + num;
-                                nestedMap.set(name,
-                                    this.createNewJSONRoomStringData(room, elem, fn, sn, num, name, addr, lat, lon));
-                            }
-                        });
-                });
-            } catch (e) {
-                continue;
+        return new Promise<Map<string, string>>((resolve, reject) => {
+            for (let row of buildingArray) {
+                let parsedBuildingData;
+                let element = this.findFullNameAndAddressLocation(row);
+                let fn: string = this.findInChildNodes(element, "a", "#text");
+                let sn: string = this.findInChildFromAttrs(row, "td",
+                    "views-field views-field-field-building-code");
+                let addr: string = this.findInChildFromAttrs(row, "td",
+                    "views-field views-field-field-building-address");
+                let path: string = this.findInAttrs(element, "a", "href");
+                path = "rooms" + path.substring(1);
+                let lat: number;
+                let lon: number;
+                let url: string = "http://cs310.students.cs.ubc.ca:11316/api/v1/project_team062/";
+                try {
+                    let futureGeoData = this.getGeolocation(url, addr);
+                    futureGeoData.then((res) => {
+                        lat = res.lat;
+                        lon = res.lon;
+                    }).then(() => {
+                        let futureFile = this.globalJSZip.file(path);
+                        let fileData = futureFile.async("string");
+                        return Promise.resolve(fileData);
+                    }).then((myFile) => {
+                        parsedBuildingData = this.parse5.parse(myFile);
+                        let roomArray = this.findArray(parsedBuildingData);
+                        for (let room of roomArray) {
+                            let elem = this.findNumberAndHREFLocation(room);
+                            let num = this.findNumber(elem);
+                            let name = sn + " " + num;
+                            nestedMap.set(name,
+                                this.createNewJSONRoomStringData(room, elem, fn, sn, num, name, addr, lat, lon));
+                        }
+                    });
+                } catch (e) {
+                    continue;
+                }
             }
-        }
-        return Promise.resolve(nestedMap);
+            return resolve(nestedMap); // todo this is resolving too early
+        });
     }
+
 
     private createNewJSONRoomStringData(roomData: string, element: any, fn: string, sn: string, num: string,
                                         name: string, addr: string, latitude: number, longitude: number): string {
         return JSON.stringify({
-            fullName: fn, shortName: sn, number: num, name: name, address: addr, lat: latitude, lon: longitude,
+            fullName: fn,
+            shortName: sn,
+            number: num,
+            name: name,
+            address: addr,
+            lat: latitude,
+            lon: longitude,
             seats: parseInt(this.findInChildFromAttrs(roomData, "td",
                 "views-field views-field-field-room-capacity"), 10),
             type: this.findInChildFromAttrs(roomData, "td", "views-field views-field-field-room-type"),
@@ -94,7 +103,7 @@ export class RoomsDataset {
         });
     }
 
-    public getGeolocation(url: string, rawAddr: string): Promise<any> { // todo add return type
+    public getGeolocation(url: string, rawAddr: string): Promise<any> {
         return new Promise<any>((resolve, reject) => {
             let link = url + encodeURIComponent(rawAddr);
 
@@ -138,7 +147,13 @@ export class RoomsDataset {
         }
         if (element.childNodes && element.childNodes.length > 0) {
             for (let child of element.childNodes) {
-                let possibleArray = this.findArray(child);
+                let possibleArray;
+                try {
+                    possibleArray = this.findArray(child);
+                } catch (e) {
+                    continue;
+                }
+
                 if (possibleArray.length > 0) {
                     return possibleArray;
                 }
