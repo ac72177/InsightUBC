@@ -11,8 +11,6 @@ import {QueryObject} from "./QueryObject";
 import * as fs from "fs-extra";
 import {CoursesDataset} from "./CoursesDataset";
 import {RoomsDataset} from "./RoomsDataset";
-import * as http from "http";
-
 
 /**
  * This is the main programmatic entry point for the project.
@@ -24,13 +22,15 @@ export default class InsightFacade implements IInsightFacade {
     private roomMap: Map<string, Map<string, string>> = new Map();
     private currentDatasets: string[];
     private currentInsightList: InsightDataset[];
+    private courseDS: string[] = [];
+    private roomDS: string[] = [];
 
     constructor() {
         if (fs.existsSync("./data/myRoomData")) {
-            this.loadMapFromDisk(this.roomMap, "./data/myRoomData");
+            this.loadMapFromDisk(this.roomMap, InsightDatasetKind.Rooms, "./data/myRoomData");
         }
         if (fs.existsSync("./data/myCourseData")) {
-            this.loadMapFromDisk(this.courseMap, "./data/myCourseData");
+            this.loadMapFromDisk(this.courseMap, InsightDatasetKind.Courses, "./data/myCourseData");
         }
         if (fs.existsSync("./data/myListData")) {
             this.loadListsFromDisk("./data/myListData");
@@ -41,7 +41,7 @@ export default class InsightFacade implements IInsightFacade {
         Log.trace("InsightFacadeImpl::init()");
     }
 
-    private loadMapFromDisk(map: Map<string, Map<string, string>>, path: string) {
+    private loadMapFromDisk(map: Map<string, Map<string, string>>, kind: InsightDatasetKind, path: string) {
         let loadedData = fs.readFileSync(path).toString("utf8");
         try {
             let JSONObjectData = JSON.parse(loadedData);
@@ -53,6 +53,12 @@ export default class InsightFacade implements IInsightFacade {
                     nestedMap.set(key, nestedMapObject[key]);
                 }
                 map.set(nestedMapKey, nestedMap);
+            }
+            switch (kind) {
+                case InsightDatasetKind.Courses:
+                    this.courseDS = JSONObjectData.DatasetListString;
+                case InsightDatasetKind.Rooms:
+                    this.roomDS = JSONObjectData.DatasetListString;
             }
         } catch (e) {
             Log.error("Could not load map from disk");
@@ -120,6 +126,7 @@ export default class InsightFacade implements IInsightFacade {
         switch (kind) {
             case InsightDatasetKind.Courses:
                 this.courseMap.set(id, nestedMap);
+                this.courseDS.push(id);
                 this.currentDatasets.push(id);
                 const myCourseDataset: InsightDataset = {
                     id: id,
@@ -134,6 +141,7 @@ export default class InsightFacade implements IInsightFacade {
 
             case InsightDatasetKind.Rooms:
                 this.roomMap.set(id, nestedMap);
+                this.roomDS.push(id);
                 this.currentDatasets.push(id);
                 const myRoomDataset: InsightDataset = {
                     id: id,
@@ -154,11 +162,12 @@ export default class InsightFacade implements IInsightFacade {
         }
         return this.promiseToVerifyId(id)
             .then(() => {
+                let removedIndex = this.currentDatasets.indexOf(id);
                 if (!this.courseMap.has(id) && !this.roomMap.has(id)) {
                     return Promise.reject(new NotFoundError());
                 } else if (this.courseMap.has(id)) {
                     this.courseMap.delete(id);
-                    let removedIndex = this.currentDatasets.indexOf(id);
+                    this.courseDS.splice(this.courseDS.indexOf(id), 1);
                     this.currentDatasets.splice(removedIndex, 1);
                     this.currentInsightList.splice(removedIndex, 1);
                     return this.writeToDisk(InsightDatasetKind.Courses)
@@ -167,7 +176,7 @@ export default class InsightFacade implements IInsightFacade {
                         });
                 } else {
                     this.roomMap.delete(id);
-                    let removedIndex = this.currentDatasets.indexOf(id);
+                    this.roomDS.splice(this.courseDS.indexOf(id), 1);
                     this.currentDatasets.splice(removedIndex, 1);
                     this.currentInsightList.splice(removedIndex, 1);
                     return this.writeToDisk(InsightDatasetKind.Rooms)
@@ -182,13 +191,15 @@ export default class InsightFacade implements IInsightFacade {
     private writeToDisk(kind: InsightDatasetKind): Promise<void> {
         switch (kind) {
             case InsightDatasetKind.Courses:
-                return fs.writeFile("./data/myCourseData", InsightFacade.makeMapDiskData(this.courseMap)).then(() => {
-                    return this.writeListsToDisk();
-                });
+                return fs.writeFile("./data/myCourseData", InsightFacade.makeMapDiskData(this.courseMap, this.courseDS))
+                    .then(() => {
+                        return this.writeListsToDisk();
+                    });
             case InsightDatasetKind.Rooms:
-                return fs.writeFile("./data/myRoomData", InsightFacade.makeMapDiskData(this.roomMap)).then(() => {
-                    return this.writeListsToDisk();
-                });
+                return fs.writeFile("./data/myRoomData", InsightFacade.makeMapDiskData(this.roomMap, this.roomDS))
+                    .then(() => {
+                        return this.writeListsToDisk();
+                    });
         }
     }
 
@@ -197,7 +208,7 @@ export default class InsightFacade implements IInsightFacade {
                                                                                     this.currentInsightList));
     }
 
-    private static makeMapDiskData(map: Map<string, Map<string, string>>): string {
+    private static makeMapDiskData(map: Map<string, Map<string, string>>, ds: string[]): string {
         let JSONMap: { [x: string]: any; } = {};
         map.forEach((value, key) => {
             let nestedJSONMap: { [x: string]: string; } = {};
@@ -208,6 +219,7 @@ export default class InsightFacade implements IInsightFacade {
         });
         return JSON.stringify ({
             Map: JSONMap,
+            DatasetListString: ds,
         });
     }
 
@@ -247,8 +259,8 @@ export default class InsightFacade implements IInsightFacade {
 
     public testQueryResLength(query: any): Promise<number> {
         try {
-            let queryObject: QueryObject = new QueryObject(query, this.currentDatasets, this.courseMap,
-                this.currentDatasets, this.roomMap);
+            let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap,
+                this.roomDS, this.roomMap);
             // let queryObject: QueryObject = new QueryObject(query, this.currentDatasets, this.courseMap);
             queryObject.syntaxCheck();
             // queryObject.getQueryResults();
@@ -260,8 +272,8 @@ export default class InsightFacade implements IInsightFacade {
 
     public testQueryValidity(query: any): Promise<boolean> {
         try {
-            let queryObject: QueryObject = new QueryObject(query, this.currentDatasets, this.courseMap,
-                this.currentDatasets, this.roomMap);
+            let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap,
+                this.roomDS, this.roomMap);
             // let queryObject: QueryObject = new QueryObject(query, this.currentDatasets, this.courseMap);
             queryObject.syntaxCheck();
             // queryObject.getQueryResults();
