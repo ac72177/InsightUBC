@@ -72,7 +72,7 @@ export class QueryObjectPerformer {
     }
 
     private convertToRes() {
-        this.res = this.uuidRes.map((uuid) => {
+        this.res = this.uuidRes.map((uuid: string) => {
             let obj = JSON.parse(this.map.get(uuid));
             let ret: any = {};
             for (const key of this.query.OPTIONS.COLUMNS) {
