@@ -810,6 +810,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
 describe("InsightFacade PerformQuery", () => {
     const datasetsToQuery: { [id: string]: {path: string, kind: InsightDatasetKind} } = {
         courses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
+        rooms: {path: "./test/data/rooms.zip", kind: InsightDatasetKind.Rooms},
     };
     let insightFacade: InsightFacade;
     let testQueries: ITestQuery[] = [];
@@ -820,6 +821,14 @@ describe("InsightFacade PerformQuery", () => {
         this.timeout(200000000);
         // Load the query JSON files under test/queries.
         // Fail if there is a problem reading ANY query.
+        // const cacheDir = __dirname + "/../data";
+        // try {
+        //     fs.removeSync(cacheDir);
+        //     fs.mkdirSync(cacheDir);
+        //     insightFacade = new InsightFacade();
+        // } catch (err) {
+        //     Log.error(err);
+        // }
         try {
             testQueries = TestUtil.readTestQueries();
         } catch (err) {
@@ -933,7 +942,7 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/tSimpleExtra.json") {
+            if (test.filename === "test/queries/simple.json") {
                 testQuery = test;
                 break;
             }
