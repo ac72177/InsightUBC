@@ -83,8 +83,7 @@ export class RoomsDataset {
         }
         return Promise.all(futurePromises).then(() => {
             return Promise.resolve(nestedMap);
-        }); // todo this is resolving too early
-        //  });
+        });
     }
 
     private createNewJSONRoomStringData(roomData: string, element: any, fn: string, sn: string, num: string,
