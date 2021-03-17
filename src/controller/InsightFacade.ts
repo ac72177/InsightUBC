@@ -232,8 +232,8 @@ export default class InsightFacade implements IInsightFacade {
 
     public performQuery(query: any): Promise<any[]> {
         try {
-            let queryObject: QueryObject = new QueryObject(query, this.currentDatasets, this.courseMap,
-                this.currentDatasets, this.roomMap);
+            let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap,
+                this.roomDS, this.roomMap);
             // let queryObject: QueryObject = new QueryObject(query, this.currentDatasets, this.courseMap);
             queryObject.syntaxCheck();
             let res: object[];
