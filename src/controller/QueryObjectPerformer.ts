@@ -1,35 +1,29 @@
 import {InsightError, NotFoundError, ResultTooLargeError} from "./IInsightFacade";
 import {stringify} from "querystring";
+import {QueryFields} from "./QueryFields";
+import {QueryObjectTransfPerformer} from "./QueryObjectTransfPerformer";
 
 const LOGIC: string[] = ["AND", "OR"];
 const MCOMPARATOR: string[] = ["GT", "EQ", "LT"];
-const Mfield: string[] = ["avg", "pass", "fail", "audit", "year"];
 const SCOMPARATOR: string[] = ["IS"];
-const Sfield: string[] = ["dept", "id", "instructor", "title", "uuid"];
 const NEG: string[] = ["NOT"];
 
 export class QueryObjectPerformer {
     private MAX_RES_SIZE: number = 5000;
     private readonly query: any;
-    private map: any;
+    private readonly map: any;
     private uuidRes: string[] = [];
     private res: object[] = []; // initialize as an empty array
+    private fieldChecker: QueryFields;
 
 
-    constructor(query: any, map: any) {
+    constructor(query: any, map: any, fieldChecker: QueryFields) {
         this.query = query;
         this.map = map;
+        this.fieldChecker = fieldChecker;
         return;
     }
 
-    /*
-    Overall Strategy: When performing the filters themselves, return only the uuid of the results.
-    E.g perform MComparator operation: return an array of the uuid of the selected courses
-    Once all of the resulting uuids are in this.uuidRes, we run convertToRes()
-    This method will take the uuids and retrieve the course objects (containing only the fields
-    specified by this.query.OPTIONS), and place those objects into this.res. Afterwards, rearrange/sort
-    the order of the objects according to this.query.OPTIONS.ORDER.
-    */
     public getQueryResults(): object[] {
         if (Object.keys(this.query.WHERE).length === 0) {
             this.map.forEach((obj: any, uuid: string) => {
@@ -38,6 +32,12 @@ export class QueryObjectPerformer {
         } else {
             this.uuidRes = this.performFilter(this.query.WHERE, false);
         }
+        if (this.query.hasOwnProperty("TRANSFORMATIONS")) {
+            let queryObjTransfPerformer = new QueryObjectTransfPerformer(this.query.TRANSFORMATIONS, this.query.OPTIONS,
+                this.map, this.uuidRes, this.fieldChecker);
+            return queryObjTransfPerformer.performTransformation();
+        }
+
         if (this.uuidRes.length > this.MAX_RES_SIZE) {
             throw new ResultTooLargeError();
         }
@@ -71,12 +71,7 @@ export class QueryObjectPerformer {
         return res;
     }
 
-
-    // this.uuidRes is a string[] containing the uuid of the results.
-    // we want to get the actual objects of those uuid and store them in this.res ^^
     private convertToRes() {
-        // maps this.uuidRes to this.res according to this.query.OPTIONS
-        // sorts elements of this.res according to this.query.OPTIONS.ORDER if it exists
         this.res = this.uuidRes.map((uuid) => {
             let obj = JSON.parse(this.map.get(uuid));
             let ret: any = {};
@@ -88,25 +83,60 @@ export class QueryObjectPerformer {
         });
 
         if (this.query.OPTIONS.hasOwnProperty("ORDER")) {
-            let key = this.query.OPTIONS.ORDER;
-            let field = key.split("_")[1];
-            if (Mfield.includes(field) || field === "id" || field === "uuid") {
-                this.res.sort((obj1: any, obj2: any) => {
-                    return obj1[key] - obj2[key];
-                });
-            } else {
-                this.res.sort((obj1: any, obj2: any) => {
-                    return obj1[key] > obj2[key] ? 1 : -1;
-                });
+            if (typeof this.query.OPTIONS.ORDER === "string") {
+                this.performOrderSortString();
+            } else { // ORDER must be an object
+                this.performOrderSortObj();
             }
-
-            // this.res.sort((obj1: any, obj2: any) => {
-            //     return obj1[key] - obj2[key];
-            // });
         }
         return;
     }
 
+    private performOrderSortString() { // only runs when there are no TRANSFORMATIONS
+        let key = this.query.OPTIONS.ORDER;
+        let field = key.split("_")[1];
+        // TODO: account for rooms fields in the line below
+        if (this.fieldChecker.includesMField(field) || field === "id" || field === "uuid") {
+            this.res.sort((obj1: any, obj2: any) => {
+                return obj1[key] - obj2[key];
+            });
+        } else {
+            this.res.sort((obj1: any, obj2: any) => {
+                return obj1[key] > obj2[key] ? 1 : -1;
+            });
+        }
+    }
+
+    private performOrderSortObj() {
+        let dir: string = this.query.OPTIONS.ORDER["dir"];
+        let keys: string[] = this.query.OPTIONS.ORDER["keys"];
+        this.res.sort((obj1: any, obj2: any) => {
+            let key: string = keys[keys.length - 1]; // set the sort key default to the last key
+            for (const i in keys) {
+                if (obj1[keys[i]] !== obj2[keys[i]]) {
+                    key = keys[i];
+                    break;
+                }
+            }
+            if (this.isNumeric(key)) {
+                if (dir === "UP") { // TODO: write tests for this. Maybe change the minus signs to "<"?
+                    return obj1[key] - obj2[key];
+                } else {
+                    return obj2[key] - obj1[key];
+                }
+            } else { // not a numeric key
+                if (dir === "UP") {
+                    return obj1[key] > obj2[key] ? 1 : -1;
+                } else {
+                    return obj1[key] < obj2[key] ? 1 : -1;
+                }
+            }
+        });
+    }
+
+    private isNumeric(field: string): boolean {
+        return this.fieldChecker.includesMField(field) || field === "id" || field === "uuid";
+    }
 
     private performLogic(queryArr: any, key: string, neg: boolean): string[] {
         let uuidRes: string[] = [];
@@ -120,23 +150,24 @@ export class QueryObjectPerformer {
             key = (key === "AND") ? "OR" : "AND";
         }
 
-        if (filterRes.length === 1) { return filterRes[0]; }
+        if (filterRes.length === 1) {
+            return filterRes[0];
+        }
         switch (key) { // filterRes.length >= 2
             case "AND":
                 for (const uuid0 of filterRes[0]) {
                     if (filterRes[1].includes(uuid0)) {
                         uuidRes.push(uuid0);
                     }
-                    // for (const uuid1 of filterRes[1]) {
-                    //     if (uuid0 === uuid1) {
-                    //         uuidRes.push(uuid0);
-                    //     }
-                    // }
                 }
 
                 for (const i in filterRes) {
-                    if (uuidRes.length === 0) { break; }
-                    if (Number(i) < 2) { continue; }
+                    if (uuidRes.length === 0) {
+                        break;
+                    }
+                    // if (Number(i) < 2) {
+                    //     continue;
+                    // }
                     let j = 0;
                     while (j < uuidRes.length) {
                         if (!filterRes[i].includes(uuidRes[j])) {
@@ -167,28 +198,22 @@ export class QueryObjectPerformer {
         let val: number = query[mkey];
         switch (key) {
             case "GT":
-                if (neg) {
-                    this.map.forEach((obj: any, uuid: string) => {
-                        obj = JSON.parse(obj);
-                        if (obj[mfield] <= val) { uuidRes.push(uuid); }
-                    });
-                } else {
-                    this.map.forEach((obj: any, uuid: string) => {
-                        obj = JSON.parse(obj);
-                        if (obj[mfield] > val) { uuidRes.push(uuid); }
-                    });
-                }
+                this.performMComparatorGT(mfield, uuidRes, neg, val);
                 break;
             case "EQ":
                 if (neg) {
                     this.map.forEach((obj: any, uuid: string) => {
                         obj = JSON.parse(obj);
-                        if (obj[mfield] !== val) { uuidRes.push(uuid); }
+                        if (obj[mfield] !== val) {
+                            uuidRes.push(uuid);
+                        }
                     });
                 } else {
                     this.map.forEach((obj: any, uuid: string) => {
                         obj = JSON.parse(obj);
-                        if (obj[mfield] === val) { uuidRes.push(uuid); }
+                        if (obj[mfield] === val) {
+                            uuidRes.push(uuid);
+                        }
                     });
                 }
                 break;
@@ -196,12 +221,16 @@ export class QueryObjectPerformer {
                 if (neg) {
                     this.map.forEach((obj: any, uuid: string) => {
                         obj = JSON.parse(obj);
-                        if (obj[mfield] >= val) { uuidRes.push(uuid); }
+                        if (obj[mfield] >= val) {
+                            uuidRes.push(uuid);
+                        }
                     });
                 } else {
                     this.map.forEach((obj: any, uuid: string) => {
                         obj = JSON.parse(obj);
-                        if (obj[mfield] < val) { uuidRes.push(uuid); }
+                        if (obj[mfield] < val) {
+                            uuidRes.push(uuid);
+                        }
                     });
                 }
                 break;
@@ -209,6 +238,26 @@ export class QueryObjectPerformer {
                 break;
         }
         return uuidRes;
+    }
+
+    // The only purpose of this method is so that Lint stops complaining. Originally, it was just
+    // the GT case of this.performMComparator. =_=
+    private performMComparatorGT(mfield: string, uuidRes: any, neg: boolean, val: number) {
+        if (neg) {
+            this.map.forEach((obj: any, uuid: string) => {
+                obj = JSON.parse(obj);
+                if (obj[mfield] <= val) {
+                    uuidRes.push(uuid);
+                }
+            });
+        } else {
+            this.map.forEach((obj: any, uuid: string) => {
+                obj = JSON.parse(obj);
+                if (obj[mfield] > val) {
+                    uuidRes.push(uuid);
+                }
+            });
+        }
     }
 
     private performSComparator(query: any, key: string, neg: boolean): string[] {
@@ -225,7 +274,9 @@ export class QueryObjectPerformer {
         let regex = new RegExp("^" + str.replace(/\*/g, ".*") + "$");
 
         this.map.forEach((obj: any, uuid: string) => {
-            if (regex.test( JSON.parse(obj)[sfield]) !== neg) { uuidRes.push(uuid); }
+            if (regex.test( JSON.parse(obj)[sfield]) !== neg) {
+                uuidRes.push(uuid);
+            }
         });
         return uuidRes;
     }
