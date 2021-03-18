@@ -1,0 +1,62 @@
+{
+    "title": "SELECT dept, id, avg WHERE avg == 95 || avg > 90 && dept == 'adhe' ORDER BY avg",
+    "query": {
+  "WHERE": {
+    "AND": [
+      {
+        "GT": {
+          "rooms_seats": 20
+        }
+      },
+      {
+        "GT": {
+          "rooms_lat": 0
+        }
+      },
+      {
+        "LT": {
+          "rooms_lon": 0
+        }
+      },
+      {
+        "LT": {
+          "rooms_lon": 0
+        }
+      },
+      {
+        "IS": {
+          "rooms_shortname": "BUCH"
+        }
+      }
+    ]
+  },
+  "OPTIONS": {
+    "COLUMNS": [
+      "rooms_shortname",
+      "rooms_lat",
+      "rooms_lon"
+    ],
+    "ORDER": {
+      "dir": "DOWN",
+      "keys": [
+        "rooms_lon",
+        "rooms_lat"
+      ]
+    }
+  },
+  "TRANSFORMATIONS": {
+    "GROUP": [
+      "rooms_lat",
+      "rooms_lon",
+      "rooms_shortname"
+    ],
+    "APPLY": [
+
+    ]
+  }
+},
+    "isQueryValid": true,
+    "result": [
+      {"rooms_shortname":"BUCH","rooms_lat":49.26826,"rooms_lon":-123.25468}
+    ]
+}

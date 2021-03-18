@@ -4,9 +4,9 @@ import Decimal from "decimal.js";
 
 export class QueryObjectTransfPerformer {
     private MAX_RES_SIZE: number = 5000;
-    private queryTransf: any;
-    private queryOptions: any;
-    private map: any;
+    private readonly queryTransf: any;
+    private readonly queryOptions: any;
+    private readonly map: any;
     private uuidRes: string[];
     private fieldChecker: QueryFields;
     private finalRes: object[];

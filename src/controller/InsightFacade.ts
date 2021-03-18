@@ -280,7 +280,8 @@ export default class InsightFacade implements IInsightFacade {
             // return Promise.resolve(queryObject.testGetResLength());
             return Promise.resolve(true);
         } catch (e) {
-            // return Promise.resolve(-1);
+            // eslint-disable-next-line no-console
+            console.log(e.message);
             return Promise.resolve(false);
         }
     }
