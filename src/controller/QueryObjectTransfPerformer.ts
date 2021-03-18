@@ -97,7 +97,7 @@ export class QueryObjectTransfPerformer {
             let ret: any = {};
             for (const applyObj of this.queryTransf["APPLY"]) {
                 let applyKey: string = Object.keys(applyObj)[0];
-                let applyRes: any = this.performApplyElem(group, applyObj[applyKey]);
+                let applyRes: number = this.performApplyElem(group, applyObj[applyKey]);
                 ret[applyKey] = applyRes;
             }
             return ret;
@@ -106,7 +106,7 @@ export class QueryObjectTransfPerformer {
     }
 
     // get the applyToken and the key. Do the apply, return the result
-    private performApplyElem(group: string[], applyElem: any): any {
+    private performApplyElem(group: string[], applyElem: any): number {
         let applyToken: string = Object.keys(applyElem)[0];
         let key: string = applyElem[applyToken];
         key = key.split("_")[1];
@@ -128,12 +128,24 @@ export class QueryObjectTransfPerformer {
                 break;
             default:
                 // count
-                return group.length;
+                return this.performApplyCount(mappedGroup);
                 break;
         }
     }
 
-    private performApplyMax(group: any[]): any {
+    private performApplyCount(group: any[]): number {
+        let count: number = 0;
+        let rsf: any[] = [];
+        for (const elem of group) {
+            if (!rsf.includes(elem)) {
+                rsf.push(elem);
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private performApplyMax(group: any[]): number {
         let max: any = group[0];
         for (const elem of group) {
             if (elem > max) {
@@ -143,7 +155,7 @@ export class QueryObjectTransfPerformer {
         return max;
     }
 
-    private performApplyMin(group: any[]): any {
+    private performApplyMin(group: any[]): number {
         let min: any = group[0];
         for (const elem of group) {
             if (elem < min) {
@@ -153,7 +165,7 @@ export class QueryObjectTransfPerformer {
         return min;
     }
 
-    private performApplySum(group: any[]): any {
+    private performApplySum(group: any[]): number {
         let sum: Decimal = new Decimal(0);
         for (const elem of group) {
             sum = Decimal.add(sum, new Decimal(elem));
@@ -161,7 +173,7 @@ export class QueryObjectTransfPerformer {
         return Number(sum.toFixed(2));
     }
 
-    private performApplyAvg(group: any[]): any {
+    private performApplyAvg(group: any[]): number {
         let sum: Decimal = new Decimal(0);
         for (const elem of group) {
             sum = Decimal.add(sum, new Decimal(elem));
@@ -212,9 +224,9 @@ export class QueryObjectTransfPerformer {
                 }
             }
             if (this.isNumeric(key)) {
-                if (dir === "UP") { // TODO: write tests for this. Maybe change the minus signs to "<"?
+                if (dir === "UP") { // go down the list, val increases
                     return obj1[key] - obj2[key];
-                } else {
+                } else { // go down the list, val decreases
                     return obj2[key] - obj1[key];
                 }
             } else { // not a numeric key

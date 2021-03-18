@@ -103,7 +103,6 @@ export class QueryObjectTransfChecker {
         if (!Sfield.includes(parsed[1]) && !Mfield.includes(parsed[1])) {
             throw new InsightError();
         }
-        // TODO: finish this check
         if (key !== "COUNT" && (!this.fieldChecker.includesMField(parsed[1]))) {
             throw new InsightError();
         }
