@@ -27,6 +27,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
     const datasetsToLoad: { [id: string]: string } = {
         courses: "./test/data/courses.zip",
         rooms: "./test/data/rooms.zip",
+        rooms1: "./test/data/rooms1.zip",
         courses0: "./test/data/courses.zip",
         empty: "./test/data/empty.zip",
         noValidJSON: "./test/data/noValidJSON.zip",
@@ -135,6 +136,16 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
 
     it("Should add rooms", function () {
         const id: string = "rooms";
+        const expected: string[] = [id];
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.eventually.deep.equal(expected);
+    });
+
+    it("Should add rooms1", function () {
+        const id: string = "rooms1";
         const expected: string[] = [id];
         const futureResult: Promise<string[]> = insightFacade.addDataset(
             id,
@@ -800,7 +811,10 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         const futureResult: Promise<string> = insightFacade.removeDataset(undefined);
         return expect(futureResult).to.be.rejectedWith(InsightError);
     });
+
+    // add every
 });
+
 
 /*
  * This test suite dynamically generates tests from the JSON files in test/queries.
@@ -810,9 +824,12 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
 describe("InsightFacade PerformQuery", () => {
     const datasetsToQuery: { [id: string]: {path: string, kind: InsightDatasetKind} } = {
         courses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
-        totallyNotCourses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
+        // totallyNotCourses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
         rooms: {path: "./test/data/rooms.zip", kind: InsightDatasetKind.Rooms},
-        totallyNotRooms: {path: "./test/data/rooms.zip", kind: InsightDatasetKind.Rooms},
+        // totallyNotRooms: {path: "./test/data/rooms.zip", kind: InsightDatasetKind.Rooms},
+        rooms1: {path: "./test/data/rooms1.zip", kind: InsightDatasetKind.Rooms},
+        // noCoursesDirectory: {path: "./test/data/noCoursesDirectory.zip", kind: InsightDatasetKind.Courses},
+        // noRoomsDirectory: {path: "./test/data/noRoomsDirectory.zip", kind: InsightDatasetKind.Rooms}
     };
     let insightFacade: InsightFacade;
     let testQueries: ITestQuery[] = [];
@@ -861,6 +878,7 @@ describe("InsightFacade PerformQuery", () => {
         try {
             fs.removeSync(cacheDir);
             fs.mkdirSync(cacheDir);
+
 
         } catch (err) {
             Log.error(err);
