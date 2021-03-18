@@ -10,30 +10,26 @@ export class CoursesDataset {
 
     public promiseToAddVerifiedDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
         let currentZip = new JSZip();
-        return new Promise<string[]>((resolve, reject) => {
-            return currentZip.loadAsync(content, {base64: true})
-                .then((jsZip) => {
-                    let coursesUnzippedArray = jsZip.folder("courses");
-                    let futureFiles: Array<Promise<string>> = [];
-                    coursesUnzippedArray.forEach((relativePath, file) => {
-                        futureFiles.push(file.async("string"));
-                    });
-                    return Promise.all(futureFiles)
-                        .then((currentFiles) => {
-                            return this.updateDataStructure(currentFiles, id, kind, resolve);
-                        });
-                }).catch((error) => {
-                    return reject(new InsightError());
+        let futurePromise: Promise<string[]> = currentZip.loadAsync(content, {base64: true})
+            .then((jsZip) => {
+                let coursesUnzippedArray = jsZip.folder("courses");
+                let futureFiles: Array<Promise<string>> = [];
+                coursesUnzippedArray.forEach((relativePath, file) => {
+                    futureFiles.push(file.async("string"));
                 });
-        });
+                return Promise.all(futureFiles);
+            }).then((currentFiles) => {
+            return this.updateDataStructure(currentFiles, id, kind);
+            }).catch((error) => {
+                    return Promise.reject(new InsightError());
+            });
+        return Promise.resolve(futurePromise);
     }
 
-    private updateDataStructure(currentFiles: string[],
-                                id: string, kind: InsightDatasetKind,
-                                resolve: (value?: (PromiseLike<string[]> | string[])) => void) {
+    private updateDataStructure(currentFiles: string[], id: string, kind: InsightDatasetKind): Promise<string[]> {
         return this.addToDataStructureIfValid(currentFiles)
             .then((nestedMap) => {
-                return this.myInsightFacade.updateDataStructure(id, kind, nestedMap, resolve);
+                return this.myInsightFacade.updateDataStructure(id, kind, nestedMap);
             });
     }
 
@@ -70,7 +66,6 @@ export class CoursesDataset {
             } else {
                 return reject(new InsightError());
             }
-
         });
     }
 
