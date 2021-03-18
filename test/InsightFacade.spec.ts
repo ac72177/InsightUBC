@@ -144,6 +144,24 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
 
+    it("Should not add rooms mismatch type", function () {
+        const id: string = "rooms";
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Courses);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
+    it("Should not add courses mismatch type", function () {
+        const id: string = "courses";
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
     it("Should add rooms1", function () {
         const id: string = "rooms1";
         const expected: string[] = [id];
