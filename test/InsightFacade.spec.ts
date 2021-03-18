@@ -829,8 +829,6 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         const futureResult: Promise<string> = insightFacade.removeDataset(undefined);
         return expect(futureResult).to.be.rejectedWith(InsightError);
     });
-
-    // add every
 });
 
 
