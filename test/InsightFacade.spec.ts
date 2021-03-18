@@ -20,7 +20,7 @@ export interface ITestQuery {
     result: any;
     filename: string;  // This is injected when reading the file
 }
-/*
+
 describe("InsightFacade Add/Remove/List Dataset", function () {
     // Reference any datasets you've added to test/data here and they will
     // automatically be loaded in the 'before' hook.
@@ -801,8 +801,6 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.be.rejectedWith(InsightError);
     });
 });
-
-*/
 
 /*
  * This test suite dynamically generates tests from the JSON files in test/queries.
