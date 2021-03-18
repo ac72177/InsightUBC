@@ -14,28 +14,26 @@ export class RoomsDataset {
 
     public promiseToAddVerifiedDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
         let currentZip = new JSZip();
-        return new Promise<string[]>((resolve, reject) => {
-            return currentZip.loadAsync(content, {base64: true})
-                .then((jsZip) => {
-                    this.globalJSZip = jsZip;
-                    let roomsIndex = jsZip.file("rooms/index.htm");
-                    let futureFile: Promise<string> = roomsIndex.async("string");
-                    return Promise.resolve(futureFile)
-                        .then((currentIndex) => {
-                            let parsedData: string = this.parse5.parse(currentIndex);
-                            return this.getAndUpdateData(parsedData, id, kind, resolve);
-                        });
-                }).catch((error) => {
-                    return reject(new InsightError());
-                });
-        });
+        let futurePromise: Promise<string[]> = currentZip.loadAsync(content, {base64: true})
+            .then((jsZip) => {
+                this.globalJSZip = jsZip;
+                let roomsIndex = jsZip.file("rooms/index.htm");
+                let futureFile: Promise<string> = roomsIndex.async("string");
+                return Promise.resolve(futureFile)
+                    .then((currentIndex) => {
+                        let parsedData: string = this.parse5.parse(currentIndex);
+                        return this.getAndUpdateData(parsedData, id, kind);
+                    });
+            }).catch((error) => {
+                return Promise.reject(new InsightError());
+            });
+        return Promise.resolve(futurePromise);
     }
 
-    private getAndUpdateData(parsedData: string, id: string, kind: InsightDatasetKind,
-                             resolve: (value?: (PromiseLike<string[]> | string[])) => void) {
-        this.getData(parsedData)
+    private getAndUpdateData(parsedData: string, id: string, kind: InsightDatasetKind): Promise<string[]> {
+        return this.getData(parsedData)
             .then((nestedMap) => {
-                return this.myInsightFacade.updateDataStructure(id, kind, nestedMap, resolve);
+                return this.myInsightFacade.updateDataStructure(id, kind, nestedMap);
             });
     }
 
