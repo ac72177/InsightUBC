@@ -840,12 +840,10 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
 describe("InsightFacade PerformQuery", () => {
     const datasetsToQuery: { [id: string]: {path: string, kind: InsightDatasetKind} } = {
         courses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
-        // totallyNotCourses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
+        totallyNotCourses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
         rooms: {path: "./test/data/rooms.zip", kind: InsightDatasetKind.Rooms},
-        // totallyNotRooms: {path: "./test/data/rooms.zip", kind: InsightDatasetKind.Rooms},
-        rooms1: {path: "./test/data/rooms1.zip", kind: InsightDatasetKind.Rooms},
-        // noCoursesDirectory: {path: "./test/data/noCoursesDirectory.zip", kind: InsightDatasetKind.Courses},
-        // noRoomsDirectory: {path: "./test/data/noRoomsDirectory.zip", kind: InsightDatasetKind.Rooms}
+        totallyNotRooms: {path: "./test/data/rooms.zip", kind: InsightDatasetKind.Rooms},
+        rooms1: {path: "./test/data/rooms1.zip", kind: InsightDatasetKind.Rooms}
     };
     let insightFacade: InsightFacade;
     let testQueries: ITestQuery[] = [];
