@@ -1,5 +1,5 @@
 {
-    "title": "Invalid ORDER direction.",
+    "title": "All ORDER keys must be in COLUMNS.",
     "query": {
         "WHERE": {
             "OR": [
@@ -40,11 +40,11 @@
                 "rooms_shortname",
                 "rooms_lat",
                 "rooms_lon",
-                "maxSeats",
+                "max_Seats",
                 "seatCount"
             ],
             "ORDER": {
-                "dir": "up",
+                "dir": "DOWN",
                 "keys": [
                     "rooms_lon",
                     "rooms_lat",
@@ -61,7 +61,7 @@
             ],
             "APPLY": [
                 {
-                    "maxSeats": {
+                    "max_Seats": {
                         "MAX": "rooms_seats"
                     }
                 },

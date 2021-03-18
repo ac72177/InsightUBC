@@ -28,6 +28,6 @@
     "ORDER": "courses_year"
   }
 },
-    "isQueryValid": false,
+    "isQueryValid": true,
     "result": "ResultTooLargeError"
 }

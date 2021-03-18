@@ -1,0 +1,69 @@
+{
+    "title": "negative number in room_seats",
+    "query": {
+        "WHERE": {
+            "OR": [
+                {
+                    "AND": [
+                        {
+                            "IS": {
+                                "rooms_furniture": "*Tables*"
+                            }
+                        },
+                        {
+                            "LT": {
+                                "rooms_seats": -5
+                            }
+                        }
+                    ]
+                },
+                {
+                    "NOT": {
+                        "IS": {
+                            "rooms_furniture": "*Table*"
+                        }
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_shortname",
+                "maxSeats"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": [
+                    "maxSeats"
+                ]
+            }
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "rooms_shortname"
+            ],
+            "APPLY": [
+                {
+                    "maxSeats": {
+                        "MAX": "rooms_seats"
+                    }
+                }
+            ]
+        }
+    },
+    "isQueryValid": true,
+    "result": [
+        {
+            "rooms_shortname": "ESB",
+            "maxSeats": 150
+        },
+        {
+            "rooms_shortname": "ORCH",
+            "maxSeats": 72
+        },
+        {
+            "rooms_shortname": "UCLL",
+            "maxSeats": 30
+        }
+    ]
+}
