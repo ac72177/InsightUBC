@@ -163,7 +163,7 @@ export default class InsightFacade implements IInsightFacade {
         if (id === null || id === undefined) {
             return Promise.reject(new InsightError());
         }
-        let futurePromise: Promise<void[]> =  this.promiseToVerifyId(id)
+        this.promiseToVerifyId(id)
             .then(() => {
                 let removedIndex = this.currentDatasets.indexOf(id);
                 if (!this.courseMap.has(id) && !this.roomMap.has(id)) {
@@ -181,10 +181,9 @@ export default class InsightFacade implements IInsightFacade {
                     this.currentInsightList.splice(removedIndex, 1);
                     return this.writeToDisk(InsightDatasetKind.Rooms);
                 }
+            }).then(() => {
+                return Promise.resolve(id);
             });
-        return Promise.resolve(futurePromise).then(() => {
-            return Promise.resolve(id);
-        });
     }
 
     private writeToDisk(kind: InsightDatasetKind): Promise<void[]> {
