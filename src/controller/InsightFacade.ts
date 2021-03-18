@@ -132,6 +132,7 @@ export default class InsightFacade implements IInsightFacade {
             case InsightDatasetKind.Courses:
                 this.courseMap.set(id, nestMap);
                 this.courseDS.push(id);
+                this.currentDatasets.push(id);
                 const myCourseDataset: InsightDataset = {
                     id: id,
                     kind: InsightDatasetKind.Courses,
@@ -143,6 +144,7 @@ export default class InsightFacade implements IInsightFacade {
             case InsightDatasetKind.Rooms:
                 this.roomMap.set(id, nestMap);
                 this.roomDS.push(id);
+                this.currentDatasets.push(id);
                 const myRoomDataset: InsightDataset = {
                     id: id,
                     kind: InsightDatasetKind.Rooms,
@@ -152,19 +154,14 @@ export default class InsightFacade implements IInsightFacade {
                 break;
         }
         return this.writeToDisk(kind).then(() => {
-            this.currentDatasets.push(id);
             return this.currentDatasets;
         });
-            // .then(() => {
-            //     return this.currentDatasets;
-            // });
     }
 
     public removeDataset(id: string): Promise<string> {
         if (id === null || id === undefined) {
             return Promise.reject(new InsightError());
         }
-        let futurePromiseArray: Array<Promise<void[]>> = [];
         return this.promiseToVerifyId(id)
             .then(() => {
                 let removedIndex = this.currentDatasets.indexOf(id);
