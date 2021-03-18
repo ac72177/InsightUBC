@@ -1,0 +1,49 @@
+{
+    "title": "SELECT dept, id, avg WHERE avg == 95 || avg > 90 && dept == 'adhe' ORDER BY avg",
+    "query": {
+      "WHERE": {
+        "AND": [
+          {
+            "IS": {
+              "totallyNotRooms_furniture": "*Tables*"
+            }
+          },
+          {
+            "GT": {
+              "totallyNotRooms_seats": 300
+            }
+          }
+        ]
+      },
+      "OPTIONS": {
+        "COLUMNS": [
+          "totallyNotRooms_shortname",
+          "maxSeats"
+        ],
+        "ORDER": {
+          "dir": "DOWN",
+          "keys": [
+            "maxSeats"
+          ]
+        }
+      },
+      "TRANSFORMATIONS": {
+        "GROUP": [
+          "totallyNotRooms_shortname"
+        ],
+        "APPLY": [
+          {
+            "maxSeats": {
+              "MAX": "totallyNotRooms_seats"
+            }
+          }
+        ]
+      }
+    },
+    "isQueryValid": true,
+    "result": [
+      {"totallyNotRooms_shortname":"OSBO","maxSeats":442},
+      {"totallyNotRooms_shortname":"HEBB","maxSeats":375},
+      {"totallyNotRooms_shortname":"LSC","maxSeats":350}
+    ]
+}
