@@ -941,15 +941,15 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery: any;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/tEmptyApply2.json") {
+            if (test.filename === "test/queries/tColsNotInGroups.json") {
                 testQuery = test;
                 break;
             }
         }
-        // const queryValidity: Promise<boolean> = insightFacade.testQueryValidity(testQuery.query);
-        // return expect(queryValidity).to.eventually.deep.equal(testQuery.isQueryValid);
-        let futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
-        return TestUtil.verifyQueryResult(futureResult, testQuery);
+        const queryValidity: Promise<boolean> = insightFacade.testQueryValidity(testQuery.query);
+        return expect(queryValidity).to.eventually.deep.equal(testQuery.isQueryValid);
+        // let futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
+        // return TestUtil.verifyQueryResult(futureResult, testQuery);
 
         // .then(() => {
         //     for (const test of testQueries) {

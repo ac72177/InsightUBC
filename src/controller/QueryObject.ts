@@ -271,7 +271,7 @@ export class QueryObject {
             if (!this.query.OPTIONS["COLUMNS"].includes(query)) {
                 throw new InsightError();
             }
-        } else { // else order is a json
+        } else if (query.constructor === jsonConstructor) { // else order is a json
             let queryKeys = Object.keys(query);
             if (!(queryKeys.length === 2 && queryKeys.includes("dir") && queryKeys.includes("keys"))) {
                 throw new InsightError();
@@ -285,6 +285,8 @@ export class QueryObject {
                     throw new InsightError();
                 }
             }
+        } else {
+            throw new InsightError();
         }
         return;
     }
