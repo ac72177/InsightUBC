@@ -1,0 +1,75 @@
+{
+    "title": "All ORDER keys must be in COLUMNS.",
+    "query": {
+        "WHERE": {
+            "OR": [
+                {
+                    "IS": {
+                        "rooms_fullname": "Hugh Dempster Pavilion"
+                    }
+                },
+                {
+                    "GT": {
+                        "rooms_seats": 200
+                    }
+                },
+                {
+                    "GT": {
+                        "rooms_lat": 0
+                    }
+                },
+                {
+                    "LT": {
+                        "rooms_lon": 0
+                    }
+                },
+                {
+                    "EQ": {
+                        "rooms_seats": 40
+                    }
+                },
+                {
+                    "IS": {
+                        "rooms_shortname": "BUCH"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_shortname",
+                "rooms_lat"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": [
+                    "rooms_lon",
+                    "rooms_lat",
+                    "maxSeats",
+                    "seatCount"
+                ]
+            }
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "rooms_lat",
+                "rooms_lon",
+                "rooms_shortname"
+            ],
+            "APPLY": [
+                {
+                    "maxSeats": {
+                        "MAX": "rooms_seats"
+                    }
+                },
+                {
+                    "seatCount": {
+                        "COUNT": "rooms_seats"
+                    }
+                }
+            ]
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}
