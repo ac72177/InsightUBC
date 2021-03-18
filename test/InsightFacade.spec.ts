@@ -810,7 +810,9 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
 describe("InsightFacade PerformQuery", () => {
     const datasetsToQuery: { [id: string]: {path: string, kind: InsightDatasetKind} } = {
         courses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
+        totallyNotCourses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
         rooms: {path: "./test/data/rooms.zip", kind: InsightDatasetKind.Rooms},
+        totallyNotRooms: {path: "./test/data/rooms.zip", kind: InsightDatasetKind.Rooms},
     };
     let insightFacade: InsightFacade;
     let testQueries: ITestQuery[] = [];
@@ -859,7 +861,7 @@ describe("InsightFacade PerformQuery", () => {
         try {
             fs.removeSync(cacheDir);
             fs.mkdirSync(cacheDir);
-            insightFacade = new InsightFacade();
+
         } catch (err) {
             Log.error(err);
         }
@@ -940,17 +942,29 @@ describe("InsightFacade PerformQuery", () => {
     // });
 
     it("Should validate test", function () {
-        let testQuery;
+        let testQuery: any;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/simple.json") {
+            if (test.filename === "test/queries/tMegaQuery.json") {
                 testQuery = test;
                 break;
             }
         }
         // const queryValidity: Promise<boolean> = insightFacade.testQueryValidity(testQuery.query);
         // return expect(queryValidity).to.eventually.deep.equal(testQuery.isQueryValid);
-        const futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
+        let futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
         return TestUtil.verifyQueryResult(futureResult, testQuery);
+
+        // .then(() => {
+        //     for (const test of testQueries) {
+        //         if (test.filename === "test/queries/ANDMComparator.json") {
+        //             testQuery = test;
+        //             break;
+        //         }
+        //     }
+        //     futureResult = insightFacade.performQuery(testQuery.query);
+        //     return TestUtil.verifyQueryResult(futureResult, testQuery);
+        // });
+
         // const lenRes: Promise<number> = insightFacade.testQueryResLength(testQuery.query);
         // return expect(lenRes).to.eventually.deep.equal(testQuery.result.length);
     });

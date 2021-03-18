@@ -81,7 +81,7 @@ export default class InsightFacade implements IInsightFacade {
             || kind === undefined || (kind !== InsightDatasetKind.Courses && kind !== InsightDatasetKind.Rooms)) {
             return Promise.reject(new InsightError());
         }
-        return this.promiseToVerifyId(id)
+        let futurePromise: Promise<string[]> = this.promiseToVerifyId(id)
             .then(() => {
                 if (this.courseMap.has(id) || this.roomMap.has(id)) {
                     return Promise.reject(new InsightError());
@@ -96,6 +96,7 @@ export default class InsightFacade implements IInsightFacade {
                         return roomsDataset.promiseToAddVerifiedDataset(id, content, kind);
                 }
             });
+        return Promise.resolve(futurePromise);
     }
 
     /**
@@ -121,46 +122,48 @@ export default class InsightFacade implements IInsightFacade {
         });
     }
 
-    public updateDataStructure(id: string, kind: InsightDatasetKind, nestedMap: Map<string, string>,
-                               resolve: (value?: (PromiseLike<string[]> | string[])) => void) {
-        switch (kind) {
-            case InsightDatasetKind.Courses:
-                this.courseMap.set(id, nestedMap);
-                this.courseDS.push(id);
-                this.currentDatasets.push(id);
-                const myCourseDataset: InsightDataset = {
-                    id: id,
-                    kind: InsightDatasetKind.Courses,
-                    numRows: nestedMap.size,
-                };
-                this.currentInsightList.push(myCourseDataset);
-                return this.writeToDisk(kind)
-                    .then(() => {
-                        return resolve(this.currentDatasets);
-                    });
+    public updateDataStructure(id: string, kind: InsightDatasetKind, nestMap: Map<string, string>): Promise<string[]> {
+        return new Promise<string[]> ((resolve, reject) => {
 
-            case InsightDatasetKind.Rooms:
-                this.roomMap.set(id, nestedMap);
-                this.roomDS.push(id);
-                this.currentDatasets.push(id);
-                const myRoomDataset: InsightDataset = {
-                    id: id,
-                    kind: InsightDatasetKind.Rooms,
-                    numRows: nestedMap.size,
-                };
-                this.currentInsightList.push(myRoomDataset);
-                return this.writeToDisk(kind)
-                    .then(() => {
-                        return resolve(this.currentDatasets);
-                    });
-        }
+            switch (kind) {
+                case InsightDatasetKind.Courses:
+                    this.courseMap.set(id, nestMap);
+                    this.courseDS.push(id);
+                    this.currentDatasets.push(id);
+                    const myCourseDataset: InsightDataset = {
+                        id: id,
+                        kind: InsightDatasetKind.Courses,
+                        numRows: nestMap.size,
+                    };
+                    this.currentInsightList.push(myCourseDataset);
+                    return this.writeToDisk(kind)
+                        .then(() => {
+                            return resolve(this.currentDatasets);
+                        });
+
+                case InsightDatasetKind.Rooms:
+                    this.roomMap.set(id, nestMap);
+                    this.roomDS.push(id);
+                    this.currentDatasets.push(id);
+                    const myRoomDataset: InsightDataset = {
+                        id: id,
+                        kind: InsightDatasetKind.Rooms,
+                        numRows: nestMap.size,
+                    };
+                    this.currentInsightList.push(myRoomDataset);
+                    return this.writeToDisk(kind)
+                        .then(() => {
+                            return resolve(this.currentDatasets);
+                        });
+            }
+        });
     }
 
     public removeDataset(id: string): Promise<string> {
         if (id === null || id === undefined) {
             return Promise.reject(new InsightError());
         }
-        return this.promiseToVerifyId(id)
+        let futurePromise: Promise<void[]> =  this.promiseToVerifyId(id)
             .then(() => {
                 let removedIndex = this.currentDatasets.indexOf(id);
                 if (!this.courseMap.has(id) && !this.roomMap.has(id)) {
@@ -170,42 +173,40 @@ export default class InsightFacade implements IInsightFacade {
                     this.courseDS.splice(this.courseDS.indexOf(id), 1);
                     this.currentDatasets.splice(removedIndex, 1);
                     this.currentInsightList.splice(removedIndex, 1);
-                    return this.writeToDisk(InsightDatasetKind.Courses)
-                        .then(() => {
-                            return Promise.resolve(id);
-                        });
+                    return this.writeToDisk(InsightDatasetKind.Courses);
                 } else {
                     this.roomMap.delete(id);
                     this.roomDS.splice(this.courseDS.indexOf(id), 1);
                     this.currentDatasets.splice(removedIndex, 1);
                     this.currentInsightList.splice(removedIndex, 1);
-                    return this.writeToDisk(InsightDatasetKind.Rooms)
-                        .then(() => {
-                            return Promise.resolve(id);
-                        });
+                    return this.writeToDisk(InsightDatasetKind.Rooms);
                 }
-                return Promise.resolve(id);
             });
+        return Promise.resolve(futurePromise).then(() => {
+            return Promise.resolve(id);
+        });
     }
 
-    private writeToDisk(kind: InsightDatasetKind): Promise<void> {
+    private writeToDisk(kind: InsightDatasetKind): Promise<void[]> {
+        let futurePromiseArray: Array<Promise<void>> = [];
+        let futureMapWrite: Promise<void>;
+        let futureListWrite: Promise<void> = fs.writeFile("./data/myListData",
+                                            InsightFacade.makeListsDiskData(this.currentDatasets,
+                                                                            this.currentInsightList));
+        futurePromiseArray.push(futureListWrite);
         switch (kind) {
             case InsightDatasetKind.Courses:
-                return fs.writeFile("./data/myCourseData", InsightFacade.makeMapDiskData(this.courseMap, this.courseDS))
-                    .then(() => {
-                        return this.writeListsToDisk();
-                    });
+                futureMapWrite = fs.writeFile("./data/myCourseData",
+                                                    InsightFacade.makeMapDiskData(this.courseMap, this.courseDS));
+                futurePromiseArray.push(futureMapWrite);
+                break;
             case InsightDatasetKind.Rooms:
-                return fs.writeFile("./data/myRoomData", InsightFacade.makeMapDiskData(this.roomMap, this.roomDS))
-                    .then(() => {
-                        return this.writeListsToDisk();
-                    });
+                futureMapWrite = fs.writeFile("./data/myRoomData",
+                                                    InsightFacade.makeMapDiskData(this.roomMap, this.roomDS));
+                futurePromiseArray.push(futureMapWrite);
+                break;
         }
-    }
-
-    private writeListsToDisk(): Promise<void> {
-        return fs.writeFile("./data/myListData", InsightFacade.makeListsDiskData(this.currentDatasets,
-                                                                                    this.currentInsightList));
+        return Promise.all(futurePromiseArray);
     }
 
     private static makeMapDiskData(map: Map<string, Map<string, string>>, ds: string[]): string {
@@ -280,7 +281,6 @@ export default class InsightFacade implements IInsightFacade {
             // return Promise.resolve(queryObject.testGetResLength());
             return Promise.resolve(true);
         } catch (e) {
-            // return Promise.resolve(-1);
             return Promise.resolve(false);
         }
     }
