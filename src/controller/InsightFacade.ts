@@ -81,7 +81,7 @@ export default class InsightFacade implements IInsightFacade {
             || kind === undefined || (kind !== InsightDatasetKind.Courses && kind !== InsightDatasetKind.Rooms)) {
             return Promise.reject(new InsightError());
         }
-        let futurePromise: Promise<string[]> = this.promiseToVerifyId(id)
+        return this.promiseToVerifyId(id)
             .then(() => {
                 if (this.courseMap.has(id) || this.roomMap.has(id)) {
                     return Promise.reject(new InsightError());
@@ -95,8 +95,9 @@ export default class InsightFacade implements IInsightFacade {
                         let roomsDataset = new RoomsDataset(this);
                         return roomsDataset.promiseToAddVerifiedDataset(id, content, kind);
                 }
+            }).then(() => {
+                return this.currentDatasets;
             });
-        return Promise.resolve(futurePromise);
     }
 
     /**
@@ -163,7 +164,8 @@ export default class InsightFacade implements IInsightFacade {
         if (id === null || id === undefined) {
             return Promise.reject(new InsightError());
         }
-        this.promiseToVerifyId(id)
+        let futurePromiseArray: Array<Promise<void[]>> = [];
+        return this.promiseToVerifyId(id)
             .then(() => {
                 let removedIndex = this.currentDatasets.indexOf(id);
                 if (!this.courseMap.has(id) && !this.roomMap.has(id)) {
@@ -182,7 +184,7 @@ export default class InsightFacade implements IInsightFacade {
                     return this.writeToDisk(InsightDatasetKind.Rooms);
                 }
             }).then(() => {
-                return Promise.resolve(id);
+                return id;
             });
     }
 
