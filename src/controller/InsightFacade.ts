@@ -168,7 +168,7 @@ export default class InsightFacade implements IInsightFacade {
                     this.writeToDisk(InsightDatasetKind.Courses);
                 } else {
                     this.roomMap.delete(id);
-                    this.roomDS.splice(this.courseDS.indexOf(id), 1);
+                    this.roomDS.splice(this.roomDS.indexOf(id), 1);
                     this.currentDatasets.splice(removedIndex, 1);
                     this.currentInsightList.splice(removedIndex, 1);
                     this.writeToDisk(InsightDatasetKind.Rooms);
