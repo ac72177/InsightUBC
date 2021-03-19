@@ -1076,7 +1076,7 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery: any;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/tComplexRooms1.json") {
+            if (test.filename === "test/queries/tRoomsAllFields1.json") {
                 testQuery = test;
                 break;
             }
