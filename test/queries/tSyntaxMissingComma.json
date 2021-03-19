@@ -1,0 +1,6 @@
+{
+    "title": "Error: Invalid query string. missing comma",
+    "query": "{\n  \"WHERE\": {\n    \"AND\": [\n      {\n        \"IS\": {\n          \"rooms_furniture\": \"*Tables*\"\n        }\n      },\n      {\n        \"GT\": {\n          \"rooms_seats\": 300\n        }\n      }\n    ]\n  },\n  \"OPTIONS\": {\n    \"COLUMNS\": [\n      \"rooms_shortname\",\n      \"maxSeats\"\n    ],\n    \"ORDER\": {\n      \"dir\": \"DOWN\",\n      \"keys\": [\n        \"maxSeats\"\n      ]\n    }\n  },\n  \"TRANSFORMATIONS\": {\n    \"GROUP\": [\n      \"rooms_shortname\"\n    ],\n      \"GROUP\": [\n      \"rooms_shortname\"\n    ]\n    \"APPLY\": [\n      {\n        \"maxSeats\": {\n          \"MAX\": \"rooms_seats\"\n        }\n      }\n    ]\n  }\n}",
+    "isQueryValid": false,
+    "result": "InsightError"
+}

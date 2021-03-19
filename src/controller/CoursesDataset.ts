@@ -10,7 +10,7 @@ export class CoursesDataset {
 
     public promiseToAddVerifiedDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
         let currentZip = new JSZip();
-        let futurePromise: Promise<string[]> = currentZip.loadAsync(content, {base64: true})
+        return currentZip.loadAsync(content, {base64: true})
             .then((jsZip) => {
                 let coursesUnzippedArray = jsZip.folder("courses");
                 let futureFiles: Array<Promise<string>> = [];
@@ -19,11 +19,11 @@ export class CoursesDataset {
                 });
                 return Promise.all(futureFiles);
             }).then((currentFiles) => {
-            return this.updateDataStructure(currentFiles, id, kind);
+                return this.updateDataStructure(currentFiles, id, kind);
             }).catch((error) => {
                     return Promise.reject(new InsightError());
             });
-        return Promise.resolve(futurePromise);
+        // return Promise.resolve(futurePromise);
     }
 
     private updateDataStructure(currentFiles: string[], id: string, kind: InsightDatasetKind): Promise<string[]> {

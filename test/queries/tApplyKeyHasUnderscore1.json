@@ -1,0 +1,62 @@
+{
+    "title": "Cannot have underscore in applyKey.",
+    "query": {
+        "WHERE": {
+            "OR": [
+                {
+                    "AND": [
+                        {
+                            "IS": {
+                                "rooms_furniture": "*Tables*"
+                            }
+                        },
+                        {
+                            "GT": {
+                                "rooms_seats": 300
+                            }
+                        }
+                    ]
+                },
+                {
+                    "NOT": {
+                        "IS": {
+                            "rooms_href": "http://students.ubc.ca/campus/discover/buildings-and-classrooms/room/DMP-201"
+                        }
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_shortname",
+                "courses_uuid",
+                "maxSeats"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": [
+                    "maxSeats"
+                ]
+            }
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "rooms_shortname"
+            ],
+            "APPLY": [
+                {
+                    "maxSeats": {
+                        "MAX": "rooms_seats"
+                    }
+                },
+                {
+                    "courses_uuid": {
+                        "MIN": "room_seats"
+                    }
+                }
+            ]
+        }
+    },
+    "isQueryValid": false,
+    "result": "InsightError"
+}

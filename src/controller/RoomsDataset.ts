@@ -14,7 +14,8 @@ export class RoomsDataset {
 
     public promiseToAddVerifiedDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
         let currentZip = new JSZip();
-        let futurePromise: Promise<string[]> = currentZip.loadAsync(content, {base64: true})
+        // let futurePromise: Promise<string[]> =
+        return currentZip.loadAsync(content, {base64: true})
             .then((jsZip) => {
                 this.globalJSZip = jsZip;
                 let roomsIndex = jsZip.file("rooms/index.htm");
@@ -27,7 +28,7 @@ export class RoomsDataset {
             }).catch((error) => {
                 return Promise.reject(new InsightError());
             });
-        return Promise.resolve(futurePromise);
+        // return Promise.resolve(futurePromise); // todo check if need this
     }
 
     private getAndUpdateData(parsedData: string, id: string, kind: InsightDatasetKind): Promise<string[]> {

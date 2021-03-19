@@ -27,6 +27,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
     const datasetsToLoad: { [id: string]: string } = {
         courses: "./test/data/courses.zip",
         rooms: "./test/data/rooms.zip",
+        rooms1: "./test/data/rooms1.zip",
         courses0: "./test/data/courses.zip",
         empty: "./test/data/empty.zip",
         noValidJSON: "./test/data/noValidJSON.zip",
@@ -93,7 +94,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
 
-    it("add rooms, list, add courses, list, remove rooms, list", function () {
+    it("add rooms, list, add courses, list, remove rooms, list, new list", function () {
         const id: string = "rooms";
         const expected: string[] = [id];
         const myDataset1: InsightDataset = {
@@ -126,7 +127,15 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
                     return expect(listResult1).to.eventually.deep.equal(expectedList1).then(() => {
                         let expectedRemove: string = id;
                         let removeResult: Promise<string> = insightFacade.removeDataset(id);
-                        return expect(removeResult).to.eventually.deep.equal(expectedRemove);
+                        return expect(removeResult).to.eventually.deep.equal(expectedRemove).then(() => {
+                            let expectedList2: InsightDataset[] = [myDataset2];
+                            let listResult2: Promise<InsightDataset[]> = insightFacade.listDatasets();
+                            return expect(listResult2).to.eventually.deep.equal(expectedList2).then(() => {
+                                let diskFacade: InsightFacade = new InsightFacade();
+                                let listResult3: Promise<InsightDataset[]> = diskFacade.listDatasets();
+                                return expect(listResult3).to.eventually.deep.equal(expectedList2);
+                            });
+                        });
                     });
                 });
              });
@@ -135,6 +144,34 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
 
     it("Should add rooms", function () {
         const id: string = "rooms";
+        const expected: string[] = [id];
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.eventually.deep.equal(expected);
+    });
+
+    it("Should not add rooms mismatch type", function () {
+        const id: string = "rooms";
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Courses);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
+    it("Should not add courses mismatch type", function () {
+        const id: string = "courses";
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
+    it("Should add rooms1", function () {
+        const id: string = "rooms1";
         const expected: string[] = [id];
         const futureResult: Promise<string[]> = insightFacade.addDataset(
             id,
@@ -170,8 +207,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         const expected: string[] = [id];
         let futureResult: Promise<string[]> = insightFacade.addDataset(id, datasets[id], InsightDatasetKind.Courses);
         return expect(futureResult).to.eventually.deep.equal(expected).then(() => {
-            let diskFacade: InsightFacade;
-            diskFacade = new InsightFacade();
+            let diskFacade: InsightFacade = new InsightFacade();
             const myDataset1: InsightDataset = {
                 id: "courses",
                 kind: InsightDatasetKind.Courses,
@@ -802,6 +838,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
     });
 });
 
+
 /*
  * This test suite dynamically generates tests from the JSON files in test/queries.
  * You should not need to modify it; instead, add additional files to the queries directory.
@@ -813,6 +850,7 @@ describe("InsightFacade PerformQuery", () => {
         totallyNotCourses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
         rooms: {path: "./test/data/rooms.zip", kind: InsightDatasetKind.Rooms},
         totallyNotRooms: {path: "./test/data/rooms.zip", kind: InsightDatasetKind.Rooms},
+        rooms1: {path: "./test/data/rooms1.zip", kind: InsightDatasetKind.Rooms}
     };
     let insightFacade: InsightFacade;
     let testQueries: ITestQuery[] = [];
@@ -861,6 +899,7 @@ describe("InsightFacade PerformQuery", () => {
         try {
             fs.removeSync(cacheDir);
             fs.mkdirSync(cacheDir);
+
 
         } catch (err) {
             Log.error(err);
@@ -944,7 +983,7 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery: any;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/tMegaQuery.json") {
+            if (test.filename === "test/queries/tComplex.json") {
                 testQuery = test;
                 break;
             }
