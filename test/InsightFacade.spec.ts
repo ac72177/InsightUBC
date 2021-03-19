@@ -94,7 +94,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
 
-    it("add rooms, list, add courses, list, remove rooms, list", function () {
+    it("add rooms, list, add courses, list, remove rooms, list, new list", function () {
         const id: string = "rooms";
         const expected: string[] = [id];
         const myDataset1: InsightDataset = {
@@ -127,7 +127,15 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
                     return expect(listResult1).to.eventually.deep.equal(expectedList1).then(() => {
                         let expectedRemove: string = id;
                         let removeResult: Promise<string> = insightFacade.removeDataset(id);
-                        return expect(removeResult).to.eventually.deep.equal(expectedRemove);
+                        return expect(removeResult).to.eventually.deep.equal(expectedRemove).then(() => {
+                            let expectedList2: InsightDataset[] = [myDataset2];
+                            let listResult2: Promise<InsightDataset[]> = insightFacade.listDatasets();
+                            return expect(listResult2).to.eventually.deep.equal(expectedList2).then(() => {
+                                let diskFacade: InsightFacade = new InsightFacade();
+                                let listResult3: Promise<InsightDataset[]> = diskFacade.listDatasets();
+                                return expect(listResult3).to.eventually.deep.equal(expectedList2);
+                            });
+                        });
                     });
                 });
              });
@@ -199,8 +207,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         const expected: string[] = [id];
         let futureResult: Promise<string[]> = insightFacade.addDataset(id, datasets[id], InsightDatasetKind.Courses);
         return expect(futureResult).to.eventually.deep.equal(expected).then(() => {
-            let diskFacade: InsightFacade;
-            diskFacade = new InsightFacade();
+            let diskFacade: InsightFacade = new InsightFacade();
             const myDataset1: InsightDataset = {
                 id: "courses",
                 kind: InsightDatasetKind.Courses,
@@ -976,7 +983,7 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery: any;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/tCoursesGroup.json") {
+            if (test.filename === "test/queries/tComplex.json") {
                 testQuery = test;
                 break;
             }
