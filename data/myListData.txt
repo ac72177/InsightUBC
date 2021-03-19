@@ -1,0 +1,1 @@
+{"DatasetListString":["courses","totallyNotCourses","rooms","totallyNotRooms","rooms1"],"InsightDatasetList":[{"id":"courses","kind":"courses","numRows":64612},{"id":"totallyNotCourses","kind":"courses","numRows":64612},{"id":"rooms","kind":"rooms","numRows":364},{"id":"totallyNotRooms","kind":"rooms","numRows":364},{"id":"rooms1","kind":"rooms","numRows":364}]}

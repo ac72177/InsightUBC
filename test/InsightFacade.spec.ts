@@ -983,7 +983,7 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery: any;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/tCoursesGroup.json") {
+            if (test.filename === "test/queries/tComplex.json") {
                 testQuery = test;
                 break;
             }
