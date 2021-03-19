@@ -40,6 +40,11 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         shouldAddWithInvalid2: "./test/data/shouldAddWithInvalid2.zip",
         noCoursesDirectory: "./test/data/noCoursesDirectory.zip",
         noRoomsDirectory: "./test/data/noRoomsDirectory.zip",
+        noIndexhtm: "./test/data/noIndexhtm.zip",
+        roomsWithInvalid: "./test/data/roomsShouldAddWithInvalid.zip",
+        validRooms: "./test/data/validRooms.zip",
+        roomsSuperBad: "./test/data/roomsSuperBad.zip",
+        roomsKindaBad: "./test/data/roomsKindaBad.zip"
     };
     let datasets: { [id: string]: string } = {};
     let insightFacade: InsightFacade;
@@ -152,6 +157,24 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
 
+    it("Should not add super bad rooms", function () {
+        const id: string = "roomsSuperBad";
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
+    it("Should not add kinda bad rooms", function () {
+        const id: string = "roomsKindaBad";
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
     it("Should not add rooms mismatch type", function () {
         const id: string = "rooms";
         const futureResult: Promise<string[]> = insightFacade.addDataset(
@@ -180,6 +203,26 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
 
+    it("Should add validRooms", function () {
+        const id: string = "validRooms";
+        const expected: string[] = [id];
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
+    it("Should add rooms with a single invalid file", function () {
+        const id: string = "roomsShouldAddWithInvalid";
+        const expected: string[] = [id];
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
     it("GeoLocation Test", function () {
         let roomsDataset = new RoomsDataset(insightFacade);
         const futureResult: Promise<any> = roomsDataset.getGeolocation(
@@ -197,6 +240,13 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
 
     it("Should not add no Room directory", function () {
         const id: string = "noRoomsDirectory";
+        const futureResult: Promise<string[]> = insightFacade.addDataset(id,
+            datasets[id], InsightDatasetKind.Rooms);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
+    it("Should not add no index.htm directory", function () {
+        const id: string = "noIndexhtm";
         const futureResult: Promise<string[]> = insightFacade.addDataset(id,
             datasets[id], InsightDatasetKind.Rooms);
         return expect(futureResult).to.be.rejectedWith(InsightError);
@@ -899,8 +949,6 @@ describe("InsightFacade PerformQuery", () => {
         try {
             fs.removeSync(cacheDir);
             fs.mkdirSync(cacheDir);
-
-
         } catch (err) {
             Log.error(err);
         }
@@ -983,7 +1031,7 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery: any;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/tComplex.json") {
+            if (test.filename === "test/queries/tRoomsAllFields1.json") {
                 testQuery = test;
                 break;
             }

@@ -14,7 +14,6 @@ export class RoomsDataset {
 
     public promiseToAddVerifiedDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
         let currentZip = new JSZip();
-        // let futurePromise: Promise<string[]> =
         return currentZip.loadAsync(content, {base64: true})
             .then((jsZip) => {
                 this.globalJSZip = jsZip;
@@ -28,7 +27,6 @@ export class RoomsDataset {
             }).catch((error) => {
                 return Promise.reject(new InsightError());
             });
-        // return Promise.resolve(futurePromise); // todo check if need this
     }
 
     private getAndUpdateData(parsedData: string, id: string, kind: InsightDatasetKind): Promise<string[]> {
@@ -70,7 +68,7 @@ export class RoomsDataset {
                     for (let room of roomArray) {
                         let elem = this.findNumberAndHREFLocation(room);
                         let num = this.findNumber(elem);
-                        let name = sn + " " + num;
+                        let name = sn + "_" + num;
                         nestedMap.set(name,
                             this.createNewJSONRoomStringData(room, elem, fn, sn, num, name, addr, lat, lon));
                     }

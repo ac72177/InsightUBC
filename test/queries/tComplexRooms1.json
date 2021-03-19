@@ -1,0 +1,49 @@
+{
+    "title": "SELECT dept, id, avg WHERE avg == 95 || avg > 90 && dept == 'adhe' ORDER BY avg",
+    "query": {
+      "WHERE": {
+        "AND": [
+          {
+            "IS": {
+              "rooms1_furniture": "*Tables*"
+            }
+          },
+          {
+            "GT": {
+              "rooms1_seats": 300
+            }
+          }
+        ]
+      },
+      "OPTIONS": {
+        "COLUMNS": [
+          "rooms1_shortname",
+          "maxSeats"
+        ],
+        "ORDER": {
+          "dir": "DOWN",
+          "keys": [
+            "maxSeats"
+          ]
+        }
+      },
+      "TRANSFORMATIONS": {
+        "GROUP": [
+          "rooms1_shortname"
+        ],
+        "APPLY": [
+          {
+            "maxSeats": {
+              "MAX": "rooms1_seats"
+            }
+          }
+        ]
+      }
+    },
+    "isQueryValid": true,
+    "result": [
+      {"rooms1_shortname":"OSBO","maxSeats":442},
+      {"rooms1_shortname":"HEBB","maxSeats":375},
+      {"rooms1_shortname":"LSC","maxSeats":350}
+    ]
+}

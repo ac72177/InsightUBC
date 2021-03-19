@@ -11,7 +11,6 @@ const DIRECTION: string[] = ["UP", "DOWN"];
 // jsonConstructor check from https://stackoverflow.com/questions/11182924/how-to-check-if-javascript-object-is-json
 const jsonConstructor = ({}).constructor;
 
-// TODO: change current iterations of this.coursesMap to roomsMap where necessary
 export class QueryObject {
     private readonly query: any;
     private currentID: string;
@@ -19,7 +18,7 @@ export class QueryObject {
     private readonly coursesMap: any;
     private fieldChecker: QueryFields;
     private readonly currentRooms: string[] = [];
-    private readonly roomsMap: any; // TODO: modify constructor to instantiate these 2 variables
+    private readonly roomsMap: any;
 
     constructor(query: any, coursesDatasets: string[], coursesMap: any, roomsDatasets: string[], roomsMap: any) {
         this.currentID = "";
@@ -31,23 +30,32 @@ export class QueryObject {
         return;
     }
 
-    // TODO: comment out this method once finished testing
     public testGetResLength(): number {
-        let map = this.currentCourses.includes(this.currentID) ?
-            this.coursesMap.get(this.currentID) : this.roomsMap.get(this.currentID);
+        let map;
+        if (this.currentCourses.includes(this.currentID)) {
+            map = this.coursesMap.get(this.currentID);
+        } else if (this.currentRooms.includes(this.currentID)) {
+            map = this.roomsMap.get(this.currentID);
+        } else {
+            throw new NotFoundError();
+        }
         let queryPerformer: QueryObjectPerformer = new QueryObjectPerformer(this.query, map, this.fieldChecker);
         return queryPerformer.testGetResLength();
     }
 
     public getQueryResults(): object[] {
-        let map = this.currentCourses.includes(this.currentID) ?
-            this.coursesMap.get(this.currentID) : this.roomsMap.get(this.currentID);
-        // this.coursesMap = this.coursesMap.get(this.currentID); // this.coursesMap is now the courses coursesMap
+        let map;
+        if (this.currentCourses.includes(this.currentID)) {
+            map = this.coursesMap.get(this.currentID);
+        } else if (this.currentRooms.includes(this.currentID)) {
+            map = this.roomsMap.get(this.currentID);
+        } else {
+            throw new NotFoundError();
+        }
         let queryPerformer: QueryObjectPerformer = new QueryObjectPerformer(this.query, map, this.fieldChecker);
         return queryPerformer.getQueryResults();
     }
 
-    // query contains WHERE and OPTIONS, optionally contains TRANSFORMATIONS
     public syntaxCheck() {
         if (this.query.constructor !== jsonConstructor) {
             throw new InsightError();
@@ -72,7 +80,6 @@ export class QueryObject {
         return;
     }
 
-// WHERE contains only one FILTER object
     private syntaxCheckFilter(query: any) {
         if (!(query.constructor === jsonConstructor)) {
             throw new InsightError();
@@ -99,7 +106,6 @@ export class QueryObject {
         return;
     }
 
-// OPTIONS contains COLUMNS
     private syntaxCheckOPTIONS(query: any) {
         if (!query.hasOwnProperty("COLUMNS") || Object.keys(query).length > 2) {
             throw new InsightError();
@@ -115,7 +121,6 @@ export class QueryObject {
         return;
     }
 
-// LOGIC comparisons value must be array containing only FILTER JSON objs
     private syntaxCheckLogic(queryArr: any) { // query must be an array
         if (!Array.isArray(queryArr) || queryArr.length <= 0) {
             throw new InsightError();
@@ -141,7 +146,6 @@ export class QueryObject {
             throw new InsightError();
         }
         if (this.currentID === "") {
-            // ID is being read for the first time. Determine if rooms or courses here.
             if (this.currentCourses.includes(id)) {
                 this.currentID = id;
                 this.fieldChecker = new CoursesFields();
@@ -159,7 +163,6 @@ export class QueryObject {
 
     private syntaxCheckValidInputString(str: string) {
         let parsed = str.split("*");
-        // if (parsed.length > 3 || parsed[0].length < 1) { throw new InsightError(); }
         switch (parsed.length) {
             case 1:
                 break;
@@ -266,7 +269,6 @@ export class QueryObject {
         if (typeof query !== "string" && query.constructor !== jsonConstructor) {
             throw new InsightError();
         }
-        // if ORDER is just a string, it must be in columns
         if (typeof query === "string") {
             if (!this.query.OPTIONS["COLUMNS"].includes(query)) {
                 throw new InsightError();
