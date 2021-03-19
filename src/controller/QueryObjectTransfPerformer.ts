@@ -23,8 +23,6 @@ export class QueryObjectTransfPerformer {
         return;
     }
 
-    // TODO: Implement this method
-    // TODO: throw result too large error if too many columns
     public performTransformation(): object[] {
         this.getGroupAndApplyKeys();
         this.makeGroups();
@@ -36,7 +34,7 @@ export class QueryObjectTransfPerformer {
         if (this.queryOptions.hasOwnProperty("ORDER")) {
             if (typeof this.queryOptions.ORDER === "string") {
                 this.performOrderSortString();
-            } else { // ORDER must be an object
+            } else {
                 this.performOrderSortObj();
             }
         }
@@ -199,7 +197,6 @@ export class QueryObjectTransfPerformer {
     private performOrderSortString() { // only runs when there are no TRANSFORMATIONS
         let key = this.queryOptions.ORDER;
         let field = key.split("_")[1];
-        // TODO: account for rooms fields in the line below
         if (this.fieldChecker.includesMField(field) || field === "id" || field === "uuid") {
             this.finalRes.sort((obj1: any, obj2: any) => {
                 return obj1[key] - obj2[key];
