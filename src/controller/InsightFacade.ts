@@ -245,9 +245,7 @@ export default class InsightFacade implements IInsightFacade {
         try {
             let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap,
                 this.roomDS, this.roomMap);
-            // let queryObject: QueryObject = new QueryObject(query, this.currentDatasets, this.courseMap);
             queryObject.syntaxCheck();
-            // queryObject.getQueryResults();
             return Promise.resolve(queryObject.testGetResLength());
         } catch (e) {
             return Promise.resolve(-1);
@@ -258,10 +256,7 @@ export default class InsightFacade implements IInsightFacade {
         try {
             let queryObject: QueryObject = new QueryObject(query, this.courseDS, this.courseMap,
                 this.roomDS, this.roomMap);
-            // let queryObject: QueryObject = new QueryObject(query, this.currentDatasets, this.courseMap);
             queryObject.syntaxCheck();
-            // queryObject.getQueryResults();
-            // return Promise.resolve(queryObject.testGetResLength());
             return Promise.resolve(true);
         } catch (e) {
             return Promise.resolve(false);
