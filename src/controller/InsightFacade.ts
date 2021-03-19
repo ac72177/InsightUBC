@@ -83,9 +83,9 @@ export default class InsightFacade implements IInsightFacade {
         }
         return this.promiseToVerifyId(id)
             .then(() => {
-                if (this.courseMap.has(id) || this.roomMap.has(id)) {
-                    return Promise.reject( new InsightError());
-                }
+                // if (this.currentDatasets.includes(id)) {
+                //     return Promise.reject( new InsightError());
+                // }
                 switch (kind) {
                     case InsightDatasetKind.Courses:
                         let coursesDataset = new CoursesDataset(this);
@@ -104,6 +104,9 @@ export default class InsightFacade implements IInsightFacade {
      */
     private promiseToVerifyId(id: string): Promise<void> {
         return new Promise<void> ((resolve, reject) => {
+            if (this.currentDatasets.includes(id)) {
+                return Promise.reject( new InsightError());
+            }
             let allWhiteSpace: boolean = true;
             for (let char of id) {
                 if (char === "_") {
