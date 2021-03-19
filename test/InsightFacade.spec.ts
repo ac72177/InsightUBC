@@ -40,6 +40,9 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         shouldAddWithInvalid2: "./test/data/shouldAddWithInvalid2.zip",
         noCoursesDirectory: "./test/data/noCoursesDirectory.zip",
         noRoomsDirectory: "./test/data/noRoomsDirectory.zip",
+        noIndexhtm: "./test/data/noIndexhtm.zip",
+        roomsWithInvalid: "./test/data/roomsShouldAddWithInvalid.zip",
+        validRooms: "./test/data/validRooms.zip",
     };
     let datasets: { [id: string]: string } = {};
     let insightFacade: InsightFacade;
@@ -180,6 +183,28 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
 
+    // TODO: check if this is a valid dataset
+    it("Should add validRooms", function () {
+        const id: string = "validRooms";
+        const expected: string[] = [id];
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.eventually.deep.equal(expected);
+    });
+
+    // TODO: Check if the following is an invalid dataset
+    it("Should add rooms with a single invalid file", function () {
+        const id: string = "roomsShouldAddWithInvalid";
+        const expected: string[] = [id];
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.eventually.deep.equal(expected);
+    });
+
     it("GeoLocation Test", function () {
         let roomsDataset = new RoomsDataset(insightFacade);
         const futureResult: Promise<any> = roomsDataset.getGeolocation(
@@ -197,6 +222,13 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
 
     it("Should not add no Room directory", function () {
         const id: string = "noRoomsDirectory";
+        const futureResult: Promise<string[]> = insightFacade.addDataset(id,
+            datasets[id], InsightDatasetKind.Rooms);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
+    it("Should not add no index.htm directory", function () {
+        const id: string = "noIndexhtm";
         const futureResult: Promise<string[]> = insightFacade.addDataset(id,
             datasets[id], InsightDatasetKind.Rooms);
         return expect(futureResult).to.be.rejectedWith(InsightError);
@@ -847,9 +879,9 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
 describe("InsightFacade PerformQuery", () => {
     const datasetsToQuery: { [id: string]: {path: string, kind: InsightDatasetKind} } = {
         courses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
-        totallyNotCourses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
+        // totallyNotCourses: {path: "./test/data/courses.zip", kind: InsightDatasetKind.Courses},
         rooms: {path: "./test/data/rooms.zip", kind: InsightDatasetKind.Rooms},
-        totallyNotRooms: {path: "./test/data/rooms.zip", kind: InsightDatasetKind.Rooms},
+        // totallyNotRooms: {path: "./test/data/rooms.zip", kind: InsightDatasetKind.Rooms},
         rooms1: {path: "./test/data/rooms1.zip", kind: InsightDatasetKind.Rooms}
     };
     let insightFacade: InsightFacade;
@@ -899,8 +931,6 @@ describe("InsightFacade PerformQuery", () => {
         try {
             fs.removeSync(cacheDir);
             fs.mkdirSync(cacheDir);
-
-
         } catch (err) {
             Log.error(err);
         }
@@ -983,7 +1013,7 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery: any;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/tComplex.json") {
+            if (test.filename === "test/queries/tComplexRooms1.json") {
                 testQuery = test;
                 break;
             }
