@@ -53,29 +53,31 @@ export class RoomsDataset {
             let lat: number;
             let lon: number;
             let url: string = "http://cs310.students.cs.ubc.ca:11316/api/v1/project_team062/";
-            try {
-                let futureGeoData = this.getGeolocation(url, addr);
-                let futurePromise = futureGeoData.then((res) => {
-                    lat = res.lat;
-                    lon = res.lon;
-                }).then(() => {
-                    let futureFile = this.globalJSZip.file(path);
-                    let fileData = futureFile.async("string");
-                    return Promise.resolve(fileData);
-                }).then((myFile) => {
-                    parsedBuildingData = this.parse5.parse(myFile);
-                    let roomArray = this.findArray(parsedBuildingData);
-                    for (let room of roomArray) {
-                        let elem = this.findNumberAndHREFLocation(room);
-                        let num = this.findNumber(elem);
-                        let name = sn + "_" + num;
-                        nestedMap.set(name,
-                            this.createNewJSONRoomStringData(room, elem, fn, sn, num, name, addr, lat, lon));
-                    }
-                });
-                futurePromises.push(futurePromise);
-            } catch (e) {
-                continue;
+            if (addr !== "") {
+                try {
+                    let futureGeoData = this.getGeolocation(url, addr);
+                    let futurePromise = futureGeoData.then((res) => {
+                        lat = res.lat;
+                        lon = res.lon;
+                    }).then(() => {
+                        let futureFile = this.globalJSZip.file(path);
+                        let fileData = futureFile.async("string");
+                        return Promise.resolve(fileData);
+                    }).then((myFile) => {
+                        parsedBuildingData = this.parse5.parse(myFile);
+                        let roomArray = this.findArray(parsedBuildingData);
+                        for (let room of roomArray) {
+                            let elem = this.findNumberAndHREFLocation(room);
+                            let num = this.findNumber(elem);
+                            let name = sn + "_" + num;
+                            nestedMap.set(name,
+                                this.createNewJSONRoomStringData(room, elem, fn, sn, num, name, addr, lat, lon));
+                        }
+                    });
+                    futurePromises.push(futurePromise);
+                } catch (e) {
+                    continue;
+                }
             }
         }
         return Promise.all(futurePromises).then(() => {
@@ -85,6 +87,15 @@ export class RoomsDataset {
 
     private createNewJSONRoomStringData(roomData: string, element: any, fn: string, sn: string, num: string,
                                         name: string, addr: string, latitude: number, longitude: number): string {
+        let myStringSeats: string = this.findInChildFromAttrs(roomData, "td",
+            "views-field views-field-field-room-capacity");
+        let myNumSeats: number;
+        if (myStringSeats === "") {
+            myNumSeats = 0;
+        } else {
+            myNumSeats = parseInt(this.findInChildFromAttrs(roomData, "td",
+                "views-field views-field-field-room-capacity"), 10);
+        }
         return JSON.stringify({
             fullname: fn,
             shortname: sn,
@@ -93,8 +104,7 @@ export class RoomsDataset {
             address: addr,
             lat: latitude,
             lon: longitude,
-            seats: parseInt(this.findInChildFromAttrs(roomData, "td",
-                "views-field views-field-field-room-capacity"), 10),
+            seats: myNumSeats,
             type: this.findInChildFromAttrs(roomData, "td", "views-field views-field-field-room-type"),
             furniture: this.findInChildFromAttrs(roomData, "td",
                 "views-field views-field-field-room-furniture"),

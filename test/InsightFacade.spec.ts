@@ -44,7 +44,11 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         roomsWithInvalid: "./test/data/roomsShouldAddWithInvalid.zip",
         validRooms: "./test/data/validRooms.zip",
         roomsSuperBad: "./test/data/roomsSuperBad.zip",
-        roomsKindaBad: "./test/data/roomsKindaBad.zip"
+        roomsKindaBad: "./test/data/roomsKindaBad.zip",
+        emptyString: "./test/data/EmptyString.zip",
+        emptyAddr: "./test/data/emptyAddr.zip",
+        emptySN: "./test/data/emptySN.zip",
+        emptyFN: "./test/data/emptyFN.zip",
     };
     let datasets: { [id: string]: string } = {};
     let insightFacade: InsightFacade;
@@ -156,6 +160,47 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
             InsightDatasetKind.Rooms);
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
+
+    it("Should add empty String Zip", function () {
+        const id: string = "emptyString";
+        const expected: string[] = [id];
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.eventually.deep.equal(expected);
+    });
+
+    it("Should add no address", function () {
+        const id: string = "emptyAddr";
+        const expected: string[] = [id];
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.eventually.deep.equal(expected);
+    });
+
+    it("Should add no fullname", function () {
+        const id: string = "emptyFN";
+        const expected: string[] = [id];
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.eventually.deep.equal(expected);
+    });
+
+    it("Should add no SN", function () {
+        const id: string = "emptySN";
+        const expected: string[] = [id];
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.eventually.deep.equal(expected);
+    });
+
 
     it("Should not add super bad rooms", function () {
         const id: string = "roomsSuperBad";
