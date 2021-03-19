@@ -23,7 +23,6 @@ export class CoursesDataset {
             }).catch((error) => {
                     return Promise.reject(new InsightError());
             });
-        // return Promise.resolve(futurePromise);
     }
 
     private updateDataStructure(currentFiles: string[], id: string, kind: InsightDatasetKind): Promise<string[]> {
