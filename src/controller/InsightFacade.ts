@@ -128,7 +128,7 @@ export default class InsightFacade implements IInsightFacade {
         });
     }
 
-    public updateDataStructure(id: string, kind: InsightDatasetKind, nestMap: Map<string, string>): Promise<string[]> {
+    public updateDataStructure(id: string, kind: InsightDatasetKind, nestMap: Map<string, string>): string[] {
         switch (kind) {
             case InsightDatasetKind.Courses:
                 this.courseMap.set(id, nestMap);
@@ -154,9 +154,11 @@ export default class InsightFacade implements IInsightFacade {
                 this.currentInsightList.push(myRoomDataset);
                 break;
         }
-        return this.writeToDisk(kind).then(() => {
-            return this.currentDatasets;
-        });
+        // return // todo remove comments
+        this.writeToDisk(kind);
+        //    .then(() => {
+        return this.currentDatasets;
+        // });
     }
 
     public removeDataset(id: string): Promise<string> {
@@ -174,39 +176,44 @@ export default class InsightFacade implements IInsightFacade {
                     this.courseDS.splice(this.courseDS.indexOf(id), 1);
                     this.currentDatasets.splice(removedIndex, 1);
                     this.currentInsightList.splice(removedIndex, 1);
-                    return this.writeToDisk(InsightDatasetKind.Courses);
+                    // return
+                    this.writeToDisk(InsightDatasetKind.Courses);
                 } else {
                     this.roomMap.delete(id);
                     this.roomDS.splice(this.courseDS.indexOf(id), 1);
                     this.currentDatasets.splice(removedIndex, 1);
                     this.currentInsightList.splice(removedIndex, 1);
-                    return this.writeToDisk(InsightDatasetKind.Rooms);
+                    // return
+                    this.writeToDisk(InsightDatasetKind.Rooms);
                 }
             }).then(() => {
                 return id;
             });
     }
 
-    private writeToDisk(kind: InsightDatasetKind): Promise<void[]> {
+    private writeToDisk(kind: InsightDatasetKind): void {
         let futurePromiseArray: Array<Promise<void>> = [];
         let futureMapWrite: Promise<void>;
-        let futureListWrite: Promise<void> = fs.writeFile("./data/myListData.txt",
+        // let futureListWrite: Promise<void> =
+        fs.writeFileSync("./data/myListData.txt",
                                             InsightFacade.makeListsDiskData(this.currentDatasets,
                                                                             this.currentInsightList));
-        futurePromiseArray.push(futureListWrite);
+        // futurePromiseArray.push(futureListWrite);
         switch (kind) {
             case InsightDatasetKind.Courses:
-                futureMapWrite = fs.writeFile("./data/myCourseData.txt",
+                // futureMapWrite =
+                fs.writeFileSync("./data/myCourseData.txt",
                                                     InsightFacade.makeMapDiskData(this.courseMap, this.courseDS));
-                futurePromiseArray.push(futureMapWrite);
+                // futurePromiseArray.push(futureMapWrite);
                 break;
             case InsightDatasetKind.Rooms:
-                futureMapWrite = fs.writeFile("./data/myRoomData.txt",
+                // futureMapWrite =
+                fs.writeFileSync("./data/myRoomData.txt",
                                                     InsightFacade.makeMapDiskData(this.roomMap, this.roomDS));
-                futurePromiseArray.push(futureMapWrite);
+                // futurePromiseArray.push(futureMapWrite);
                 break;
         }
-        return Promise.all(futurePromiseArray);
+        // return Promise.all(futurePromiseArray);
     }
 
     private static makeMapDiskData(map: Map<string, Map<string, string>>, ds: string[]): string {

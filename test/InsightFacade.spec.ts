@@ -43,6 +43,8 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         noIndexhtm: "./test/data/noIndexhtm.zip",
         roomsWithInvalid: "./test/data/roomsShouldAddWithInvalid.zip",
         validRooms: "./test/data/validRooms.zip",
+        roomsSuperBad: "./test/data/roomsSuperBad.zip",
+        roomsKindaBad: "./test/data/roomsKindaBad.zip"
     };
     let datasets: { [id: string]: string } = {};
     let insightFacade: InsightFacade;
@@ -155,6 +157,24 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
 
+    it("Should not add super bad rooms", function () {
+        const id: string = "roomsSuperBad";
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
+    it("Should not add kinda bad rooms", function () {
+        const id: string = "roomsKindaBad";
+        const futureResult: Promise<string[]> = insightFacade.addDataset(
+            id,
+            datasets[id],
+            InsightDatasetKind.Rooms);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
+    });
+
     it("Should not add rooms mismatch type", function () {
         const id: string = "rooms";
         const futureResult: Promise<string[]> = insightFacade.addDataset(
@@ -183,7 +203,6 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
 
-    // TODO: check if this is a valid dataset
     it("Should add validRooms", function () {
         const id: string = "validRooms";
         const expected: string[] = [id];
@@ -191,10 +210,9 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
             id,
             datasets[id],
             InsightDatasetKind.Rooms);
-        return expect(futureResult).to.eventually.deep.equal(expected);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
     });
 
-    // TODO: Check if the following is an invalid dataset
     it("Should add rooms with a single invalid file", function () {
         const id: string = "roomsShouldAddWithInvalid";
         const expected: string[] = [id];
@@ -202,7 +220,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
             id,
             datasets[id],
             InsightDatasetKind.Rooms);
-        return expect(futureResult).to.eventually.deep.equal(expected);
+        return expect(futureResult).to.be.rejectedWith(InsightError);
     });
 
     it("GeoLocation Test", function () {
