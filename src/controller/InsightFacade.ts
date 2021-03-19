@@ -84,7 +84,7 @@ export default class InsightFacade implements IInsightFacade {
         return this.promiseToVerifyId(id)
             .then(() => {
                 if (this.courseMap.has(id) || this.roomMap.has(id)) {
-                    throw new InsightError();
+                    return Promise.reject( new InsightError());
                 }
                 switch (kind) {
                     case InsightDatasetKind.Courses:
@@ -159,7 +159,7 @@ export default class InsightFacade implements IInsightFacade {
             .then(() => {
                 let removedIndex = this.currentDatasets.indexOf(id);
                 if (!this.courseMap.has(id) && !this.roomMap.has(id)) {
-                    throw new NotFoundError();
+                    return Promise.reject(new NotFoundError());
                 } else if (this.courseMap.has(id)) {
                     this.courseMap.delete(id);
                     this.courseDS.splice(this.courseDS.indexOf(id), 1);
@@ -229,14 +229,11 @@ export default class InsightFacade implements IInsightFacade {
                 case "InsightError":
                     return Promise.reject(new InsightError());
                     break;
-                case "NotFoundError":
-                    return Promise.reject(new NotFoundError());
-                    break;
                 case "ResultTooLargeError":
                     return Promise.reject(new ResultTooLargeError());
                     break;
                 default:
-                    throw e;
+                    return Promise.reject(new NotFoundError());
             }
         }
     }
