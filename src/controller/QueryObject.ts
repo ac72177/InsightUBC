@@ -18,7 +18,7 @@ export class QueryObject {
     private readonly coursesMap: any;
     private fieldChecker: QueryFields;
     private readonly currentRooms: string[] = [];
-    private readonly roomsMap: any; // TODO: modify constructor to instantiate these 2 variables
+    private readonly roomsMap: any;
 
     constructor(query: any, coursesDatasets: string[], coursesMap: any, roomsDatasets: string[], roomsMap: any) {
         this.currentID = "";

@@ -66,8 +66,7 @@ export class QueryObjectTransfPerformer {
         let finalGroup: string[][] = [];
         for (const innerArr of this.groupArr) {
             let temp: any[] = innerArr.map((uuid: string) => {
-                return JSON.parse(this.map.get(uuid))[key]; // TODO: look into why casting to number is need
-                // TODO: (cont.) here, but no other files. Source of bug in other files?
+                return JSON.parse(this.map.get(uuid))[key];
             });
             let unique: any[] = temp.filter(this.onlyUnique); // stackoverflow link for this line below
             let resArr: string[][] = [];

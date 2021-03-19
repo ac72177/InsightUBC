@@ -45,7 +45,6 @@ export class QueryObjectPerformer {
         return this.res;
     }
 
-    // TODO: comment out this test method after finish testing
     public testGetResLength(): number {
         this.uuidRes = this.performFilter(this.query.WHERE, false);
         if (this.uuidRes.length > this.MAX_RES_SIZE) {
@@ -95,7 +94,6 @@ export class QueryObjectPerformer {
     private performOrderSortString() { // only runs when there are no TRANSFORMATIONS
         let key = this.query.OPTIONS.ORDER;
         let field = key.split("_")[1];
-        // TODO: account for rooms fields in the line below
         if (this.fieldChecker.includesMField(field) || field === "id" || field === "uuid") {
             this.res.sort((obj1: any, obj2: any) => {
                 return obj1[key] - obj2[key];
@@ -119,7 +117,7 @@ export class QueryObjectPerformer {
                 }
             }
             if (this.isNumeric(key)) {
-                if (dir === "UP") { // TODO: write tests for this. Maybe change the minus signs to "<"?
+                if (dir === "UP") {
                     return obj1[key] - obj2[key];
                 } else {
                     return obj2[key] - obj1[key];
