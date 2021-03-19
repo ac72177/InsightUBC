@@ -1,0 +1,83 @@
+{
+    "title": "Query with all filters used",
+    "query": {
+  "WHERE": {
+    "AND": [
+      {
+        "AND": [
+          {
+            "EQ": {
+              "courses_year": 2012
+            }
+          },
+          {
+            "GT": {
+              "courses_pass": 130
+            }
+          },
+          {
+            "LT": {
+              "courses_fail": 10
+            }
+          }
+        ]
+      },
+      {
+        "AND": [
+          {
+            "NOT": {
+              "EQ": {
+                "courses_year": 1900
+              }
+            }
+          },
+          {
+            "LT": {
+              "courses_pass": 150
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "OPTIONS": {
+    "COLUMNS": [
+      "courses_dept",
+      "courses_title",
+      "courseMin",
+      "courseCount"
+    ],
+    "ORDER": {
+      "dir": "DOWN",
+      "keys": [
+        "courseMin",
+        "courseCount",
+        "courses_dept",
+        "courses_title"
+      ]
+    }
+  },
+  "TRANSFORMATIONS": {
+    "GROUP": [
+      "courses_dept",
+      "courses_title"
+    ],
+    "APPLY": [
+      {
+        "courseMin": {
+          "MIN": "courses_avg"
+        }
+      },
+      {
+        "courseCount": {
+          "COUNT": "courses_uuid"
+        }
+      }
+    ]
+  }
+},
+    "isQueryValid": true,
+    "result":[
+      {"courses_dept":"civl","courses_title":"opt&dcs anl civl","courseMin":90.11,"courseCount":1},{"courses_dept":"civl","courses_title":"eng desig&anly 1","courseMin":87.41,"courseCount":1},{"courses_dept":"phar","courses_title":"non-pres drug 3","courseMin":86.64,"courseCount":1},{"courses_dept":"chbe","courses_title":"int chem&bio eng","courseMin":86.56,"courseCount":1},{"courses_dept":"phar","courses_title":"non-pres drug 4","courseMin":86.49,"courseCount":1},{"courses_dept":"civl","courses_title":"desig & analys 2","courseMin":85.75,"courseCount":1},{"courses_dept":"phar","courses_title":"phar chem ii","courseMin":83.84,"courseCount":1},{"courses_dept":"mech","courses_title":"mech eng project","courseMin":83.55,"courseCount":1},{"courses_dept":"phar","courses_title":"pharmacology iv","courseMin":82.91,"courseCount":1},{"courses_dept":"phar","courses_title":"nat hlth prodcts","courseMin":82.53,"courseCount":1},{"courses_dept":"frst","courses_title":"forest genetics","courseMin":82.21,"courseCount":1},{"courses_dept":"civl","courses_title":"steel&timbr dsgn","courseMin":81.96,"courseCount":1},{"courses_dept":"phar","courses_title":"pathopysio ii","courseMin":81.9,"courseCount":1},{"courses_dept":"phar","courses_title":"pharmacology iii","courseMin":80.32,"courseCount":1},{"courses_dept":"bioc","courses_title":"bioc laboratory","courseMin":80.28,"courseCount":1},{"courses_dept":"phar","courses_title":"pathophysio iii","courseMin":79.11,"courseCount":1},{"courses_dept":"eosc","courses_title":"catastroph earth","courseMin":78.66,"courseCount":1},{"courses_dept":"phar","courses_title":"therapeutics iv","courseMin":78.45,"courseCount":1},{"courses_dept":"civl","courses_title":"civl eng matl","courseMin":78.18,"courseCount":1},{"courses_dept":"phys","courses_title":"elec & magnetism","courseMin":78.16,"courseCount":1},{"courses_dept":"phys","courses_title":"energy & waves","courseMin":78.15,"courseCount":1},{"courses_dept":"eosc","courses_title":"erth&life th tme","courseMin":77.94,"courseCount":1},{"courses_dept":"astr","courses_title":"int astronomy i","courseMin":77.77,"courseCount":1},{"courses_dept":"phar","courses_title":"ped geri drg thp","courseMin":77.51,"courseCount":1},{"courses_dept":"astr","courses_title":"intr stars&galxs","courseMin":76.97,"courseCount":1},{"courses_dept":"civl","courses_title":"struc analys","courseMin":76.3,"courseCount":1},{"courses_dept":"clst","courses_title":"grek & romn myth","courseMin":75.78,"courseCount":1},{"courses_dept":"asia","courses_title":"chinese cinema","courseMin":74.71,"courseCount":1},{"courses_dept":"civl","courses_title":"wtr treat&wst mg","courseMin":74.62,"courseCount":1},{"courses_dept":"fnh","courses_title":"explor our food","courseMin":74.55,"courseCount":1},{"courses_dept":"math","courses_title":"int calc ap ph s","courseMin":74.27,"courseCount":1},{"courses_dept":"econ","courses_title":"econ of envirnmt","courseMin":74.26,"courseCount":1},{"courses_dept":"civl","courses_title":"dsgn concr struc","courseMin":73.99,"courseCount":1},{"courses_dept":"phar","courses_title":"therapeutics iii","courseMin":73.69,"courseCount":1},{"courses_dept":"psyc","courses_title":"evolutnary psych","courseMin":73.57,"courseCount":1},{"courses_dept":"astr","courses_title":"explring univ ii","courseMin":73.51,"courseCount":1},{"courses_dept":"poli","courses_title":"intro global pol","courseMin":73.45,"courseCount":1},{"courses_dept":"soci","courses_title":"soci of family","courseMin":73.2,"courseCount":1},{"courses_dept":"poli","courses_title":"intro to politic","courseMin":73.08,"courseCount":3},{"courses_dept":"cpsc","courses_title":"intro comp sys","courseMin":73.07,"courseCount":1},{"courses_dept":"phar","courses_title":"pharm scie iii","courseMin":72.96,"courseCount":1},{"courses_dept":"phar","courses_title":"phar chem iii","courseMin":72.93,"courseCount":1},{"courses_dept":"psyc","courses_title":"applied dev psyc","courseMin":72.46,"courseCount":1},{"courses_dept":"chem","courses_title":"physical chem","courseMin":72.4,"courseCount":1},{"courses_dept":"bioc","courses_title":"proteins","courseMin":72.3,"courseCount":1},{"courses_dept":"poli","courses_title":"quant mthd poli","courseMin":72.24,"courseCount":1},{"courses_dept":"engl","courses_title":"intro literature","courseMin":72.21,"courseCount":4},{"courses_dept":"chem","courses_title":"analytical chem","courseMin":72.13,"courseCount":1},{"courses_dept":"econ","courses_title":"prncpls micrecon","courseMin":71.71,"courseCount":1},{"courses_dept":"fnh","courses_title":"intro wine scie","courseMin":71.59,"courseCount":2},{"courses_dept":"biol","courses_title":"gentcs ecol&evol","courseMin":71.58,"courseCount":1},{"courses_dept":"poli","courses_title":"cur poli thought","courseMin":71.55,"courseCount":1},{"courses_dept":"econ","courses_title":"intro int fin","courseMin":71.42,"courseCount":3},{"courses_dept":"asia","courses_title":"intr trdtl asia","courseMin":71.15,"courseCount":1},{"courses_dept":"psyc","courses_title":"health psycholgy","courseMin":70.92,"courseCount":2},{"courses_dept":"psyc","courses_title":"childhood & adol","courseMin":69.42,"courseCount":1},{"courses_dept":"psyc","courses_title":"infancy","courseMin":69.08,"courseCount":2}
+    ]
+}
