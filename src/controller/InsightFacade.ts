@@ -104,9 +104,6 @@ export default class InsightFacade implements IInsightFacade {
      */
     private promiseToVerifyId(id: string): Promise<void> {
         return new Promise<void> ((resolve, reject) => {
-            if (this.currentDatasets.includes(id)) {
-                return Promise.reject( new InsightError());
-            }
             let allWhiteSpace: boolean = true;
             for (let char of id) {
                 if (char === "_") {
@@ -124,7 +121,10 @@ export default class InsightFacade implements IInsightFacade {
         });
     }
 
-    public updateDataStructure(id: string, kind: InsightDatasetKind, nestMap: Map<string, string>): string[] {
+    public updateDataStructure(id: string, kind: InsightDatasetKind, nestMap: Map<string, string>): Promise<string[]> {
+        if (this.currentDatasets.includes(id)) {
+            return Promise.reject( new InsightError());
+        }
         switch (kind) {
             case InsightDatasetKind.Courses:
                 this.courseMap.set(id, nestMap);
@@ -151,7 +151,7 @@ export default class InsightFacade implements IInsightFacade {
                 break;
         }
         this.writeToDisk(kind);
-        return this.currentDatasets;
+        return Promise.resolve(this.currentDatasets);
     }
 
     public removeDataset(id: string): Promise<string> {
