@@ -53,15 +53,14 @@ export class QueryObjectPerformer {
         } else {
             this.uuidRes = this.performFilter(this.query.WHERE, false);
         }
-        this.uuidRes = this.performFilter(this.query.WHERE, false);
-        if (this.uuidRes.length > this.MAX_RES_SIZE) {
-            throw new ResultTooLargeError();
-        }
         if (this.query.hasOwnProperty("TRANSFORMATIONS")) {
             let queryObjTransfPerformer = new QueryObjectTransfPerformer(this.query.TRANSFORMATIONS, this.query.OPTIONS,
                 this.map, this.uuidRes, this.fieldChecker);
             let res: object[] = queryObjTransfPerformer.performTransformation();
             return res.length;
+        }
+        if (this.uuidRes.length > this.MAX_RES_SIZE) {
+            throw new ResultTooLargeError();
         }
         return this.uuidRes.length;
     }
