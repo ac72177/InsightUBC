@@ -44,11 +44,7 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
         roomsWithInvalid: "./test/data/roomsShouldAddWithInvalid.zip",
         validRooms: "./test/data/validRooms.zip",
         roomsSuperBad: "./test/data/roomsSuperBad.zip",
-        roomsKindaBad: "./test/data/roomsKindaBad.zip",
-        emptyString: "./test/data/EmptyString.zip",
-        emptyAddr: "./test/data/emptyAddr.zip",
-        emptySN: "./test/data/emptySN.zip",
-        emptyFN: "./test/data/emptyFN.zip",
+        roomsKindaBad: "./test/data/roomsKindaBad.zip"
     };
     let datasets: { [id: string]: string } = {};
     let insightFacade: InsightFacade;
@@ -160,47 +156,6 @@ describe("InsightFacade Add/Remove/List Dataset", function () {
             InsightDatasetKind.Rooms);
         return expect(futureResult).to.eventually.deep.equal(expected);
     });
-
-    it("Should add empty String Zip", function () {
-        const id: string = "emptyString";
-        const expected: string[] = [id];
-        const futureResult: Promise<string[]> = insightFacade.addDataset(
-            id,
-            datasets[id],
-            InsightDatasetKind.Rooms);
-        return expect(futureResult).to.eventually.deep.equal(expected);
-    });
-
-    it("Should add no address", function () {
-        const id: string = "emptyAddr";
-        const expected: string[] = [id];
-        const futureResult: Promise<string[]> = insightFacade.addDataset(
-            id,
-            datasets[id],
-            InsightDatasetKind.Rooms);
-        return expect(futureResult).to.eventually.deep.equal(expected);
-    });
-
-    it("Should add no fullname", function () {
-        const id: string = "emptyFN";
-        const expected: string[] = [id];
-        const futureResult: Promise<string[]> = insightFacade.addDataset(
-            id,
-            datasets[id],
-            InsightDatasetKind.Rooms);
-        return expect(futureResult).to.eventually.deep.equal(expected);
-    });
-
-    it("Should add no SN", function () {
-        const id: string = "emptySN";
-        const expected: string[] = [id];
-        const futureResult: Promise<string[]> = insightFacade.addDataset(
-            id,
-            datasets[id],
-            InsightDatasetKind.Rooms);
-        return expect(futureResult).to.eventually.deep.equal(expected);
-    });
-
 
     it("Should not add super bad rooms", function () {
         const id: string = "roomsSuperBad";
@@ -1016,32 +971,32 @@ describe("InsightFacade PerformQuery", () => {
     //     });
     // });
 
-    // it("Should check length of results are the same", function () {
-    //     describe("Dynamic InsightFacade PerformQuery tests", function () {
-    //         for (const test of testQueries) {
-    //             if (test.isQueryValid) {
-    //                 it(`[${test.filename}] ${test.title}`, function () {
-    //                     const futureResult: Promise<number> = insightFacade.testQueryResLength(test.query);
-    //                     // return TestUtil.verifyQueryResult(futureResult, test);
-    //                     return expect(futureResult).to.eventually.deep.equal(test.result.length);
-    //                 });
-    //             }
-    //         }
-    //     });
-    // });
-
-    // Dynamically create and run a test for each query in testQueries
-    // Tests that the query syntax and semantic checks are working properly
-    it("Should validate query properly", function () {
+    it("Should check length of results are the same", function () {
         describe("Dynamic InsightFacade PerformQuery tests", function () {
             for (const test of testQueries) {
-                it(`[${test.filename}] ${test.title}`, function () {
-                    const queryValidity: Promise<boolean> = insightFacade.testQueryValidity(test.query);
-                    return expect(queryValidity).to.eventually.deep.equal(test.isQueryValid);
-                });
+                if (test.isQueryValid) {
+                    it(`[${test.filename}] ${test.title}`, function () {
+                        const futureResult: Promise<number> = insightFacade.testQueryResLength(test.query);
+                        // return TestUtil.verifyQueryResult(futureResult, test);
+                        return expect(futureResult).to.eventually.deep.equal(test.result.length);
+                    });
+                }
             }
         });
     });
+
+    // Dynamically create and run a test for each query in testQueries
+    // Tests that the query syntax and semantic checks are working properly
+    // it("Should validate query properly", function () {
+    //     describe("Dynamic InsightFacade PerformQuery tests", function () {
+    //         for (const test of testQueries) {
+    //             it(`[${test.filename}] ${test.title}`, function () {
+    //                 const queryValidity: Promise<boolean> = insightFacade.testQueryValidity(test.query);
+    //                 return expect(queryValidity).to.eventually.deep.equal(test.isQueryValid);
+    //             });
+    //         }
+    //     });
+    // });
 
 
     // it("Should query simple query", function () {
@@ -1076,15 +1031,15 @@ describe("InsightFacade PerformQuery", () => {
     it("Should validate test", function () {
         let testQuery: any;
         for (const test of testQueries) {
-            if (test.filename === "test/queries/tRoomsAllFields1.json") {
+            if (test.filename === "test/queries/tSimple.json") {
                 testQuery = test;
                 break;
             }
         }
         // const queryValidity: Promise<boolean> = insightFacade.testQueryValidity(testQuery.query);
         // return expect(queryValidity).to.eventually.deep.equal(testQuery.isQueryValid);
-        let futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
-        return TestUtil.verifyQueryResult(futureResult, testQuery);
+        // let futureResult: Promise<any[]> = insightFacade.performQuery(testQuery.query);
+        // return TestUtil.verifyQueryResult(futureResult, testQuery);
 
         // .then(() => {
         //     for (const test of testQueries) {
@@ -1097,7 +1052,7 @@ describe("InsightFacade PerformQuery", () => {
         //     return TestUtil.verifyQueryResult(futureResult, testQuery);
         // });
 
-        // const lenRes: Promise<number> = insightFacade.testQueryResLength(testQuery.query);
-        // return expect(lenRes).to.eventually.deep.equal(testQuery.result.length);
+        const lenRes: Promise<number> = insightFacade.testQueryResLength(testQuery.query);
+        return expect(lenRes).to.eventually.deep.equal(testQuery.result.length);
     });
 });

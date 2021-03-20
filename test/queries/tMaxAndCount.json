@@ -1,0 +1,56 @@
+{
+    "title": "SELECT dept, id, avg WHERE avg == 95 || avg > 90 && dept == 'adhe' ORDER BY avg",
+    "query": {
+  "WHERE": {
+    "AND": [
+      {
+        "IS": {
+          "rooms_furniture": "*Tables*"
+        }
+      },
+      {
+        "GT": {
+          "rooms_seats": 100
+        }
+      }
+    ]
+  },
+  "OPTIONS": {
+    "COLUMNS": [
+      "rooms_shortname",
+      "rooms_fullname",
+      "maxSeats",
+      "countSeats"
+    ],
+    "ORDER": {
+      "dir": "DOWN",
+      "keys": [
+        "maxSeats",
+        "countSeats"
+      ]
+    }
+  },
+  "TRANSFORMATIONS": {
+    "GROUP": [
+      "rooms_shortname",
+      "rooms_fullname"
+    ],
+    "APPLY": [
+      {
+        "maxSeats": {
+          "MAX": "rooms_seats"
+        }
+      },
+      {
+        "countSeats": {
+          "COUNT": "rooms_seats"
+        }
+      }
+    ]
+  }
+},
+    "isQueryValid": true,
+    "result": [
+      {"rooms_shortname":"OSBO","rooms_fullname":"Robert F. Osborne Centre","maxSeats":442,"countSeats":1},{"rooms_shortname":"HEBB","rooms_fullname":"Hebb","maxSeats":375,"countSeats":1},{"rooms_shortname":"LSC","rooms_fullname":"Life Sciences Centre","maxSeats":350,"countSeats":2},{"rooms_shortname":"SRC","rooms_fullname":"Student Recreation Centre","maxSeats":299,"countSeats":1},{"rooms_shortname":"ANGU","rooms_fullname":"Henry Angus","maxSeats":260,"countSeats":1},{"rooms_shortname":"PHRM","rooms_fullname":"Pharmaceutical Sciences Building","maxSeats":236,"countSeats":2},{"rooms_shortname":"LSK","rooms_fullname":"Leonard S. Klinck (also known as CSCI)","maxSeats":205,"countSeats":2},{"rooms_shortname":"CHBE","rooms_fullname":"Chemical and Biological Engineering Building","maxSeats":200,"countSeats":1},{"rooms_shortname":"SWNG","rooms_fullname":"West Mall Swing Space","maxSeats":190,"countSeats":3},{"rooms_shortname":"DMP","rooms_fullname":"Hugh Dempster Pavilion","maxSeats":160,"countSeats":2},{"rooms_shortname":"FRDM","rooms_fullname":"Friedman Building","maxSeats":160,"countSeats":1},{"rooms_shortname":"IBLC","rooms_fullname":"Irving K Barber Learning Centre","maxSeats":154,"countSeats":2},{"rooms_shortname":"MCLD","rooms_fullname":"MacLeod","maxSeats":136,"countSeats":2},{"rooms_shortname":"WOOD","rooms_fullname":"Woodward (Instructional Resources Centre-IRC)","maxSeats":120,"countSeats":1},{"rooms_shortname":"BUCH","rooms_fullname":"Buchanan","maxSeats":108,"countSeats":1}
+    ]
+}

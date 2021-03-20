@@ -46,7 +46,19 @@ export class QueryObjectPerformer {
     }
 
     public testGetResLength(): number {
-        this.uuidRes = this.performFilter(this.query.WHERE, false);
+        if (Object.keys(this.query.WHERE).length === 0) {
+            this.map.forEach((obj: any, uuid: string) => {
+                this.uuidRes.push(uuid.toString());
+            });
+        } else {
+            this.uuidRes = this.performFilter(this.query.WHERE, false);
+        }
+        if (this.query.hasOwnProperty("TRANSFORMATIONS")) {
+            let queryObjTransfPerformer = new QueryObjectTransfPerformer(this.query.TRANSFORMATIONS, this.query.OPTIONS,
+                this.map, this.uuidRes, this.fieldChecker);
+            let res: object[] = queryObjTransfPerformer.performTransformation();
+            return res.length;
+        }
         if (this.uuidRes.length > this.MAX_RES_SIZE) {
             throw new ResultTooLargeError();
         }
